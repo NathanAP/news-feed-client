@@ -27,6 +27,8 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 
 ## Versão 0.3.0.0
 
+- [ ] Roteador (React Router) com estrutura de rotas base
+    - Sei que nesse momento é difícil mas por favor tente deixar ele escalável
 - [ ] Instância base do Axios em `src/services/api/` + interceptors (Bearer, refresh no 401, 503)
 - [ ] Provider do TanStack Query
 - [ ] Criar login no Axios
@@ -37,7 +39,6 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 
 ## Versão 0.4.0.0
 
-- [ ] Roteador (React Router) com estrutura de rotas base
 - [ ] Material UI + tema (dark/light)
 - [ ] react-i18next (PT/EN)
 

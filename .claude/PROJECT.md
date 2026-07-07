@@ -2,7 +2,7 @@
 
 ## Foco deste projeto
 
-- Frontend utilizando TypeScript, React, Material UI e Next.js.
+- Frontend utilizando TypeScript e React.
 
 ## Ideia geral
 
@@ -36,9 +36,11 @@ O Threads é uma rede social com foco em opiniões e diversidade que é muito re
 - Feeds podem acabar sendo iguais: através das palavras-chave é possível que hajam feeds idênticos.
 - Interação entre usuários: apesar de estar nos planos, atualmente não pensamos em fazer usuários poder interagir uns com os outros.
 
-## Sobre variáveis de ambiente
+## Variáveis de ambiente
 
-- Variáveis de ambiente no Vite são embutidas no bundle em tempo de build e ficam públicas no navegador. O `.env` do cliente é "configuração pública por ambiente" e não cofre de segredos. Não há segredo real no frontend (o segredo do OAuth vive no backend). Variáveis expostas ao cliente exigem o prefixo `VITE_`. Detalhes em `rules/architecture.md`.
+- No frontend Vite, variáveis de ambiente são embutidas no bundle em tempo de build e ficam públicas no navegador.
+- Não há segredo real no cliente: o segredo do Google OAuth vive no backend. O `.env` do frontend é "configuração pública por ambiente", não cofre de segredos.
+- Variáveis expostas ao cliente exigem o prefixo `VITE_` (exemplo: `VITE_API_URL`).
 
 ## Sessão e autenticação
 
@@ -71,12 +73,6 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
     - ao receber 503 (guard de manutenção global), acionam a tela de manutenção do app.
 - Um arquivo de serviço por modelo da API (`auth`, `users`, `sources`, `articles`, `feeds`, `system`, `health`), cada um com uma função por endpoint. Tipos/enums espelham `memory/api.md`.
 - Os hooks de TanStack Query ficam em `raiz/src/hooks/` e consomem esses serviços.
-
-## Variáveis de ambiente (frontend)
-
-- No frontend Vite, variáveis de ambiente são embutidas no bundle em tempo de build e ficam públicas no navegador.
-- Não há segredo real no cliente: o segredo do Google OAuth vive no backend. O `.env` do frontend é "configuração pública por ambiente", não cofre de segredos.
-- Variáveis expostas ao cliente exigem o prefixo `VITE_` (exemplo: `VITE_API_URL`).
 
 ## Datas
 

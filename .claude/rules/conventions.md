@@ -4,6 +4,7 @@ Aqui estão as convenções de código quie devem ser seguidas para garantir um 
 
 - Código estrito, altamente tipado.
 - Garanta sempre estar seguindo a filosofia da orientação à objetos.
+    - Dito isso, você tem total incentivo para criar classes herdáveis, interfaces e abstrações para garantir que o código seja reaproveitável.
 - Variáveis, comentários e mensagens finais sempre em inglês.
 - Garanta que variáveis tenham nomes claros.
 - Prefira o uso de Enums em campos de multipla escolha ao invés de string crua.
