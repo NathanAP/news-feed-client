@@ -29,7 +29,8 @@ Aqui estão todas as convenções de internacionalização.
     - Português
 - A filosofia base aqui é: tudo se torna internacionalizado, seja em labels, mensagens, etc.
 - Você tem liberdade total para decidir como organizar os arquivos de internacionalização, mas deve garantir que eles estejam organizados de forma clara e consistente.
-    - Lembrando que a notícia vinda da API deve ser mostrada conforme o envio da API.
+    - Lembrando que a notícia vinda da API deve ser mostrada conforme o envio da API, independente do idioma.
+    - Mais tarde teremos a funcionalidade de tradução que ajudará bastante nesses casos.
 
 # Versionamento
 
