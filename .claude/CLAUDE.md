@@ -89,6 +89,3 @@ Você tem liberdade para acessar qualquer arquivo da pasta `.claude`.
 
 - Bibliotecas da devem sempre estar na versão mais atualizada possível.
 
-## Porta
-
-- A porta da API está presente na variável de ambiente `API_PORT`.
