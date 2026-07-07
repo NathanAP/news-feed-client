@@ -88,4 +88,3 @@ Você tem liberdade para acessar qualquer arquivo da pasta `.claude`.
 ## Regras da stack
 
 - Bibliotecas da devem sempre estar na versão mais atualizada possível.
-

@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.2.0.0
+0.3.0.0
 
 ## Versão 0.1.0.0
 
@@ -27,15 +27,15 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 
 ## Versão 0.3.0.0
 
-- [ ] Roteador (React Router) com estrutura de rotas base
-    - Sei que nesse momento é difícil mas por favor tente deixar ele escalável
-- [ ] Instância base do Axios em `src/services/api/` + interceptors (Bearer, refresh no 401, 503)
-- [ ] Provider do TanStack Query
-- [ ] Criar login no Axios
-- [ ] Criar tela de login através do Google + callback + erro
-    - Pode ser só um botão bem cru por enquanto, depois vamos trazer os elementos de UI para o jogo
-- [ ] Após o login, ir para uma tela com os dados básicos do usuário
-- [ ] Garantir que o `access_token` e `refresh_token` vieram corretamente
+- [x] Roteador (React Router) com estrutura de rotas base
+    - Feito com `createBrowserRouter`, paths centralizados, guardas (Protected/Public) e páginas por rota.
+- [x] Instância base do Axios em `src/services/api/` + interceptors (Bearer, refresh no 401, 503)
+- [x] Provider do TanStack Query
+- [x] Criar login no Axios
+- [x] Criar tela de login através do Google + callback + erro
+    - Botão cru por enquanto; UI real vem na 0.4.
+- [x] Após o login, ir para uma tela com os dados básicos do usuário
+- [x] Garantir que o `access_token` e `refresh_token` vieram corretamente
 
 ## Versão 0.4.0.0
 
@@ -50,3 +50,7 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 ## Versão 0.6.0.0
 
 - [ ] Definir testes
+
+## Versão 0.7.0.0
+
+- [ ] Definir Taskfile

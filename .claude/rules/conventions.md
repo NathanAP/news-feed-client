@@ -3,11 +3,13 @@
 Aqui estão as convenções de código quie devem ser seguidas para garantir um código limpo, consistente e de fácil manutenção.
 
 - Código estrito, altamente tipado.
+- Garanta que regras e códigos considerados legados no TypeScript e React não sejam utilizados.
 - Garanta sempre estar seguindo a filosofia da orientação à objetos.
     - Dito isso, você tem total incentivo para criar classes herdáveis, interfaces e abstrações para garantir que o código seja reaproveitável.
+    - A exceção desta regra é a camada de UI (componentes e roteador), que deve ser declarativa, baseada em funções + hooks. Class components são legado no React e não devem ser usados.
 - Variáveis, comentários e mensagens finais sempre em inglês.
 - Garanta que variáveis tenham nomes claros.
-- Prefira o uso de Enums em campos de multipla escolha ao invés de string crua.
+- Prefira conjuntos de valores fixos e tipados a strings cruas em campos de múltipla escolha. Em vez do `enum` do TypeScript, use um objeto `as const` com um tipo de união derivado (comporta-se como enum, mas é erasável, compatível com `erasableSyntaxOnly` e é a recomendação moderna do TS). Exemplo: `const Theme = { Light: 'light', Dark: 'dark' } as const; type Theme = (typeof Theme)[keyof typeof Theme]`.
 - Todas as requisições devem ser feitas através do `Axios`.
 - Tudo o que for relacionado a texto, seja em label, mensagens, placeholders, etc, deve estar presente no arquivo de internacionalização seguindo as convenções.
 - Utilize arquivos de ambiente local (arquivos .env) para guardar informações secretas ou confidenciais.
@@ -20,6 +22,7 @@ Aqui estão todas as convenções de componentização da aplicação.
 - Componentes devem ser criados na pasta `raiz/src/components/`.
 - Siga a filosofia de componentização do React conforme a documentação oficial.
 - Você tem liberdade em criar quaisquer tipo de componentes, desde que o motivo seja claro ou a reusabilidade traga benefícios.
+- Componentes e o roteador devem ser declarativos, baseados em funções + hooks. Class components são legado no React e não devem ser usados.
 
 # Convenções de internacionalização
 
