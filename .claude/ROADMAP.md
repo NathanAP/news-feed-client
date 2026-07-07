@@ -27,19 +27,25 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 
 ## Versão 0.3.0.0
 
-Fundação da aplicação — instalar e conectar as libs base (providers e app shell).
+- [ ] Instância base do Axios em `src/services/api/` + interceptors (Bearer, refresh no 401, 503)
+- [ ] Provider do TanStack Query
+- [ ] Criar login no Axios
+- [ ] Criar tela de login através do Google + callback + erro
+    - Pode ser só um botão bem cru por enquanto, depois vamos trazer os elementos de UI para o jogo
+- [ ] Após o login, ir para uma tela com os dados básicos do usuário
+- [ ] Garantir que o `access_token` e `refresh_token` vieram corretamente
+
+## Versão 0.4.0.0
 
 - [ ] Roteador (React Router) com estrutura de rotas base
 - [ ] Material UI + tema (dark/light)
-- [ ] Provider do TanStack Query
 - [ ] react-i18next (PT/EN)
-- [ ] Instância base do Axios em `src/services/api/` + interceptors (Bearer, refresh no 401, 503)
 
-## Versão 0.4.0.0
+## Versão 0.5.0.0
 
 - [ ] Definir layout básico
 - [ ] Definir páginas
 
-## Versão 0.5.0.0
+## Versão 0.6.0.0
 
 - [ ] Definir testes
