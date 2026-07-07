@@ -4,9 +4,10 @@ Este arquivo descreve a organização de pastas atual do projeto. Ele é um guia
 
 Mostramos apenas a hierarquia de pastas com uma descrição em parênteses. Arquivos individuais e arquivos ignorados pelo git (temporários, configuração local, banco local, etc.) não são listados aqui.
 
-> Estrutura-alvo definida na versão `0.1.0.0`. As pastas de código (`src/`, `tests/`, `cmd/`)
-> passam a existir de fato a partir da `0.2.0.0` (scaffold do Vite); este mapa é atualizado
-> conforme cada pasta é materializada.
+> Estrutura-alvo definida na versão `0.1.0.0`. Na `0.2.0.0` o scaffold do Vite materializou
+> `public/` e `src/` (apenas os arquivos de entrada: `main.tsx`, `App.tsx`, `index.css`). As
+> subpastas de `src/` e as pastas `tests/` e `cmd/` ainda não existem — passam a existir conforme
+> cada versão as exige. Este mapa é atualizado a cada materialização.
 
 ```
 raiz/
