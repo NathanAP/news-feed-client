@@ -1,6 +1,3 @@
 dist
 node_modules
 package-lock.json
-
-# Project context docs are authored by hand; don't reformat them.
-.claude
