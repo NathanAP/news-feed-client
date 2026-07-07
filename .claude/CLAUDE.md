@@ -72,11 +72,18 @@ Você tem liberdade para acessar qualquer arquivo da pasta `.claude`.
 - `TypeScript`: linguagem base.
 - `Vite.js`: ferramenta de desenvolvimento.
 - `React`: framework base.
+- `React router`: gerenciador de rotas.
+- `React context + localstorage`: gerenciador de memória e sessão.
+- `React hook form`: gerenciador de formulários.
+- `React-i18next + i18next`: internacionalização.
 - `Material UI`: framework de UI base.
-- `Tailwind CSS`: framework CSS.
-- `Next.js`: roteamento e organização de páginas.
 - `Axios`: envio de requisições.
-- `I18n`: internacionalização.
+- `Tanstack Query`: gerenciador de queries do servidor.
+- `Zod`: validação geral de formulários.
+- `DateFNS + tz`: gerenciador de datas.
+- `Vitest + React Testing Library + Playwright`: gerenciador de testes.
+- `DOMPurify`: sanitização de HTML.
+- `ESLint + Prettier`: padronização de código.
 
 ## Regras da stack
 

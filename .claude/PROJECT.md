@@ -34,3 +34,7 @@ O Threads é uma rede social com foco em opiniões e diversidade que é muito re
 - Posts livres: cada post do feed existe por conta de uma atualização de notícias.
 - Feeds podem acabar sendo iguais: através das palavras-chave é possível que hajam feeds idênticos.
 - Interação entre usuários: apesar de estar nos planos, atualmente não pensamos em fazer usuários poder interagir uns com os outros.
+
+## Sobre variáveis de ambiente
+
+- Variáveis de ambiente no Vite são embutidas no bundle em tempo de build e ficam públicas no navegador. O `.env` do cliente é "configuração pública por ambiente" e não cofre de segredos. Não há segredo real no frontend (o segredo do OAuth vive no backend). Variáveis expostas ao cliente exigem o prefixo `VITE_`. Detalhes em `rules/architecture.md`.
