@@ -40,7 +40,7 @@ Client web em React com TypeScript para um feed de notícias personalizado usand
 - O revisor deve indicar quais são as melhorias, os motivos e como fazer elas.
 - O revisor deve elencar problemas de fluxo não notados anteriormente (exceções de fluxos ou situações adversas).
 - O revisor deve garantir que o versionamento (`raiz/.claude/versions`) está consistente.
-- O revisor pode elencar problemas em aplicativos externos (como o Bruno).
+- O revisor deve garantir a qualidade de internacionalização através do I18n.
 - Alterações causados pelo revisor sobem uma versão de patch (por exemplo, se a revisão `10.1.2.15` gerou um bug e foi consertado, a nova versão deve ser `10.1.3.0`).
 - Bugs graves devem ter preferência e podem garantir uma versão única de patch.
 - Refatorações estão liberadas conforme necessário, mas faz-se necessário o planejamento junto a mim.
@@ -50,7 +50,8 @@ Client web em React com TypeScript para um feed de notícias personalizado usand
     - Código que não respeita a filosofia de programação da linguagem (exemplo: alteração em um componente provoca atualização em toda a página).
     - Má aplicação de convenções básicas (exemplo: uso explícito de `any` em TypeScript).
     - Má aplicação da filosofia de componentização, seja ela por ter criado desnecessariamente ou a falta da criação de uma.
-    - Internacionalização não utilizada.
+    - Internacionalização não utilizada, principalmente textos hardcoded que deveria estar na internacionalização.
+        - Valores não utilizados nos arquivos `locale` podem ser mencionados como problema menor.
     - Tipagem errada.
     - Gambiarra explícita.
     - Código considerado depreciado pela biblioteca ou semi-depreciado (ou seja, que vai se tornar depreciado).
