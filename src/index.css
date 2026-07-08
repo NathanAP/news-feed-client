@@ -1,9 +1,5 @@
-:root {
-    font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.5;
-    color-scheme: light dark;
-}
-
 body {
     margin: 0;
+    /* Dark-first: avoids a white flash before MUI's CssBaseline applies. */
+    background: #14161b;
 }

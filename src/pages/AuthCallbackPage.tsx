@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { useTranslation } from 'react-i18next'
 import { useSession } from '../hooks/useSession'
 import { RoutePath } from '../routes/paths'
 import type { AuthTokens } from '../types/auth'
@@ -26,8 +30,6 @@ function parseTokensFromHash(hash: string): AuthTokens | null {
     }
 }
 
-// Read the callback outcome once from the URL. Pure read (no side effects), so
-// it can run in a useState initializer instead of an effect.
 function readCallbackResult(): CallbackResult {
     const errorParam = new URLSearchParams(window.location.search).get('error')
     if (errorParam !== null) {
@@ -42,13 +44,21 @@ function readCallbackResult(): CallbackResult {
     return { status: 'success', tokens }
 }
 
-// Lands here after the backend redirects back from Google with tokens in the
-// URL fragment (#access_token=...&refresh_token=...&expires_in=...).
+const centeredSx = {
+    minHeight: '100dvh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 2,
+    bgcolor: 'background.default',
+} as const
+
 export function AuthCallbackPage() {
+    const { t } = useTranslation()
     const navigate = useNavigate()
     const { login } = useSession()
     const [result] = useState(readCallbackResult)
-    // StrictMode runs effects twice in dev; guard against double processing.
     const processed = useRef(false)
 
     useEffect(() => {
@@ -58,20 +68,27 @@ export function AuthCallbackPage() {
         processed.current = true
 
         login(result.tokens)
-        // Drop the fragment so tokens don't linger in the URL/history.
         window.history.replaceState(null, '', window.location.pathname)
         navigate(RoutePath.Home, { replace: true })
     }, [result, login, navigate])
 
     if (result.status === 'error') {
         return (
-            <main>
-                <h1>Login failed</h1>
-                <p>{result.reason}</p>
-                <a href={RoutePath.Login}>Back to login</a>
-            </main>
+            <Box sx={centeredSx}>
+                <Typography variant="h6">{t('auth.loginFailed')}</Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {result.reason}
+                </Typography>
+                <Button href={RoutePath.Login}>{t('auth.backToLogin')}</Button>
+            </Box>
         )
     }
 
-    return <p>Signing you in…</p>
+    return (
+        <Box sx={centeredSx}>
+            <Typography color="text.secondary">
+                {t('auth.signingIn')}
+            </Typography>
+        </Box>
+    )
 }

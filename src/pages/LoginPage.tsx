@@ -1,17 +1,37 @@
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import GoogleIcon from '@mui/icons-material/Google'
+import { useTranslation } from 'react-i18next'
 import { authService } from '../services/api'
 
 export function LoginPage() {
-    const handleLogin = () => {
-        window.location.href = authService.getGoogleLoginUrl()
-    }
+    const { t } = useTranslation()
 
-    // Raw button for now; real UI (MUI) and i18n arrive in 0.4.
     return (
-        <main>
-            <h1>news-feed-client</h1>
-            <button type="button" onClick={handleLogin}>
-                Sign in with Google
-            </button>
-        </main>
+        <Box
+            sx={{
+                minHeight: '100dvh',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                bgcolor: 'background.default',
+            }}
+        >
+            <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                {t('app.name')}
+            </Typography>
+            <Button
+                variant="contained"
+                startIcon={<GoogleIcon />}
+                onClick={() => {
+                    window.location.href = authService.getGoogleLoginUrl()
+                }}
+            >
+                {t('auth.signInWithGoogle')}
+            </Button>
+        </Box>
     )
 }

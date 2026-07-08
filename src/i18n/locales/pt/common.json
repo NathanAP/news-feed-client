@@ -1,0 +1,31 @@
+{
+    "app": { "name": "news-feed-client" },
+    "auth": {
+        "signInWithGoogle": "Entrar com o Google",
+        "signingIn": "Entrando…",
+        "loginFailed": "Falha no login",
+        "backToLogin": "Voltar ao login"
+    },
+    "menu": {
+        "open": "Abrir menu do usuário",
+        "profile": "Perfil",
+        "settings": "Configurações",
+        "language": "Idioma",
+        "signOut": "Sair"
+    },
+    "feed": {
+        "prefix": "Feed",
+        "create": "Criar feed",
+        "toggleTheme": "Alternar tema",
+        "articles_one": "{{count}} notícia",
+        "articles_other": "{{count}} notícias"
+    },
+    "maintenance": {
+        "title": "Em manutenção",
+        "body": "O serviço está temporariamente indisponível. Tente novamente em instantes."
+    },
+    "notFound": {
+        "title": "Página não encontrada",
+        "body": "A página que você procura não existe."
+    }
+}

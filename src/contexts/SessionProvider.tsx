@@ -24,6 +24,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     // would otherwise close over a stale value.
     const accessTokenRef = useRef<string | null>(null)
     const booted = useRef(false)
+    // Status captured at first render, before any callback login runs — so boot
+    // rehydration doesn't clobber a session that was just set via /auth/callback.
+    const initialStatusRef = useRef(status)
 
     const setAccessToken = useCallback((token: string | null) => {
         accessTokenRef.current = token
@@ -46,10 +49,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     )
 
     const logout = useCallback(() => {
-        // Best-effort server-side logout; local state is cleared regardless.
-        void authService.logout().catch(() => undefined)
-        queryClient.clear()
-        clearSession()
+        // Fire the server-side logout first — its interceptor still needs the
+        // access token — then clear the local session once it settles. The
+        // request is best-effort; the local session is cleared either way.
+        void authService
+            .logout()
+            .catch(() => undefined)
+            .finally(() => {
+                queryClient.clear()
+                clearSession()
+            })
     }, [clearSession])
 
     const refreshAccessToken = useCallback(async (): Promise<string | null> => {
@@ -88,6 +97,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             return
         }
         booted.current = true
+
+        // Only rehydrate when a token already existed on load (returning user),
+        // not when the session was just established by the callback page.
+        if (initialStatusRef.current !== 'initializing') {
+            return
+        }
 
         const refreshToken = localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)
         if (refreshToken === null) {

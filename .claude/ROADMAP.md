@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.3.0.0
+0.4.1.0
 
 ## Versão 0.1.0.0
 
@@ -39,13 +39,30 @@ Bootstrap enxuto — sem as libs de feature (que entram nas versões que as usam
 
 ## Versão 0.4.0.0
 
-- [ ] Material UI + tema (dark/light)
-- [ ] react-i18next (PT/EN)
+Casca do app com dados de exemplo (placeholder). Sem comunicação com a API ainda — isso é a 0.5.
+
+- [x] Definir layout básico
+    - Barra superior única: marca à esquerda, abas = feeds no centro, avatar à direita com menu (perfil, configurações, idioma, sair).
+    - Coluna central de notícias; card com título + tempo relativo no topo, corpo, e no rodapé data de criação + fonte.
+    - Título e corpo limitados a 2 linhas cada; indicador de não-lido (`is_read`) na aba e no card.
+    - Toggle de tema e switcher de idioma (PT/EN, client-side) no topo/menu; botão "+" nas abas para criar feed (o formulário em si fica para depois).
+- [x] Material UI + tema (dark/light)
+    - Tema dark-first em grafite azulado (não preto/cinza puro); toggle via `colorSchemes` + `useColorScheme` do MUI (persiste e evita flash).
+- [x] react-i18next (PT/EN)
+- [ ] Lembrete para a 0.5: o `ArticleResponse` hoje traz só `source_id`, não o nome/url da fonte. Para exibir a fonte no card com dados reais, o backend precisa incluir esse dado no `ArticleResponse` (senão seriam N requisições a `/sources/:id`).
+
+## Versão 0.4.1.0
+
+- [x] Bugfix: o "tempo relativo" do card (`há X min`/`há X h`) estava hardcoded em português nos dados de placeholder e não reagia à troca de idioma. Corrigido com `Intl.RelativeTimeFormat` localizado pelo idioma atual da UI.
 
 ## Versão 0.5.0.0
 
-- [ ] Definir layout básico
-- [ ] Definir páginas
+Comunicação com a API — trocar o placeholder por dados reais.
+
+- [ ] `FeedsService` (`GET /feeds`) — abas a partir dos feeds do usuário.
+- [ ] `ArticlesService` (`GET /feeds/:id/articles`) — notícias reais na coluna, com `is_read`.
+- [ ] Dependência de backend: incluir nome/url da fonte no `ArticleResponse` (ver lembrete da 0.4).
+- [ ] A definir depois: detalhe da notícia ao clicar; formulário de criar feed.
 
 ## Versão 0.6.0.0
 

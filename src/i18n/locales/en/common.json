@@ -1,0 +1,31 @@
+{
+    "app": { "name": "news-feed-client" },
+    "auth": {
+        "signInWithGoogle": "Sign in with Google",
+        "signingIn": "Signing you in…",
+        "loginFailed": "Login failed",
+        "backToLogin": "Back to login"
+    },
+    "menu": {
+        "open": "Open user menu",
+        "profile": "Profile",
+        "settings": "Settings",
+        "language": "Language",
+        "signOut": "Sign out"
+    },
+    "feed": {
+        "prefix": "Feed",
+        "create": "Create feed",
+        "toggleTheme": "Toggle theme",
+        "articles_one": "{{count}} article",
+        "articles_other": "{{count}} articles"
+    },
+    "maintenance": {
+        "title": "Under maintenance",
+        "body": "The service is temporarily unavailable. Please try again soon."
+    },
+    "notFound": {
+        "title": "Page not found",
+        "body": "The page you're looking for doesn't exist."
+    }
+}
