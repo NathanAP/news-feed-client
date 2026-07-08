@@ -49,7 +49,7 @@ Casca do app com dados de exemplo (placeholder). Sem comunicação com a API ain
 - [x] Material UI + tema (dark/light)
     - Tema dark-first em grafite azulado (não preto/cinza puro); toggle via `colorSchemes` + `useColorScheme` do MUI (persiste e evita flash).
 - [x] react-i18next (PT/EN)
-- [ ] Lembrete para a 0.5: o `ArticleResponse` hoje traz só `source_id`, não o nome/url da fonte. Para exibir a fonte no card com dados reais, o backend precisa incluir esse dado no `ArticleResponse` (senão seriam N requisições a `/sources/:id`).
+- [ ] Lembrete para a 0.5: o `ArticleResponse` hoje traz só `source_id`, não o nome/url da fonte. Para exibir a fonte no card com dados reais, o backend precisa incluir esse dado no `ArticleResponse` (senão seriam N requisições a `/sources/{id}`).
 
 ## Versão 0.4.1.0
 
@@ -60,9 +60,21 @@ Casca do app com dados de exemplo (placeholder). Sem comunicação com a API ain
 Comunicação com a API — trocar o placeholder por dados reais.
 
 - [ ] `FeedsService` (`GET /feeds`) — abas a partir dos feeds do usuário.
-- [ ] `ArticlesService` (`GET /feeds/:id/articles`) — notícias reais na coluna, com `is_read`.
+- [ ] `ArticlesService` (`GET /feeds/{id}/articles`) — notícias reais na coluna, com `is_read`.
 - [ ] Dependência de backend: incluir nome/url da fonte no `ArticleResponse` (ver lembrete da 0.4).
-- [ ] A definir depois: detalhe da notícia ao clicar; formulário de criar feed.
+- [ ] Criar tela de detalhe da notícia, que é acionada ao clicar na notícia
+    - `base_url/articles/{id}`
+    - Basicamente é a notícia completa pro usuário ler ela inteira
+    - Lembrando também que essa url dos detalhes da notícia é pública e não depende do usuário estar logado para ser acessada
+        - Entretanto, quando ele tiver logado, temos que marcar ela como lida em todos os feeds que ela está presente (tudo através da mesma rota)
+        - Quando não há sessão ou quando essa notícia não está na lista, nada acontece
+        - Você tem tudo isso mapeado? Ou precisa de mais detalhes?
+- [ ] Pequena alteração do layout
+    - Acho que vamos ter que mudar um pouco o layout de forma que o "há x min" esteja ao lado da hora da notícia
+    - E aí no lugar do atual (canto superior direito do card), vamos colocar "..." de opções
+    - Dentro dessas opções por enquanto vamos colocar a opção "marcar como lido" (quando não estiver lido)
+    - Inclusive, ao invés de "minutos" e "horas", vamos deixar como "min" e "h"
+    - Outra coisa, lá em cima eu to vendo "Feed: Tecnologia . 3 notícias" e eu acho que precisa ser "x novas . y totais"
 
 ## Versão 0.6.0.0
 
