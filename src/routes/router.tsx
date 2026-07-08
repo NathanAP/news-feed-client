@@ -4,6 +4,8 @@ import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { AppLayout } from '../components/layout/AppLayout'
 import { HomePage } from '../pages/HomePage'
+import { FeedPage } from '../pages/FeedPage'
+import { ArticleDetailPage } from '../pages/ArticleDetailPage'
 import { LoginPage } from '../pages/LoginPage'
 import { AuthCallbackPage } from '../pages/AuthCallbackPage'
 import { NotFoundPage } from '../pages/NotFoundPage'
@@ -20,6 +22,11 @@ export const router = createBrowserRouter([
                         element: <AppLayout />,
                         children: [
                             { path: RoutePath.Home, element: <HomePage /> },
+                            { path: RoutePath.Feed, element: <FeedPage /> },
+                            {
+                                path: RoutePath.ArticleDetail,
+                                element: <ArticleDetailPage />,
+                            },
                         ],
                     },
                 ],

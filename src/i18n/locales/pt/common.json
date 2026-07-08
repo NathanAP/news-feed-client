@@ -14,11 +14,26 @@
         "signOut": "Sair"
     },
     "feed": {
-        "prefix": "Feed",
         "create": "Criar feed",
         "toggleTheme": "Alternar tema",
-        "articles_one": "{{count}} notícia",
-        "articles_other": "{{count}} notícias"
+        "summary": "{{unread}} novas · {{total}} totais",
+        "noArticles": "Ainda não há notícias neste feed.",
+        "loadError": "Não foi possível carregar este feed.",
+        "moreOptions": "Mais opções",
+        "markAsRead": "Marcar como lido",
+        "timeAgo": {
+            "minutes": "há {{count}} min",
+            "hours": "há {{count}} h",
+            "days": "há {{count}} d"
+        },
+        "empty": {
+            "title": "Você ainda não tem feeds",
+            "body": "Crie um feed para começar a ver suas notícias personalizadas."
+        }
+    },
+    "article": {
+        "loadError": "Não foi possível carregar esta notícia.",
+        "back": "Voltar"
     },
     "maintenance": {
         "title": "Em manutenção",

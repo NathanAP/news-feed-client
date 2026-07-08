@@ -6,9 +6,10 @@ Mostramos apenas a hierarquia de pastas com uma descrição em parênteses. Arqu
 
 > Estrutura-alvo definida na versão `0.1.0.0`, materializada incrementalmente: `0.2.0.0` trouxe
 > `public/` e a base de `src/`; `0.3.0.0` criou `src/{routes,pages,contexts,hooks,services/api,config,types}`;
-> `0.4.0.0` criou `src/{components,theme,i18n,data}`; `0.4.1.0` criou `src/utils/`. As pastas `tests/`,
-> `cmd/` e `src/assets/` ainda não existem — passam a existir conforme cada versão as exige. Este mapa
-> é atualizado a cada materialização.
+> `0.4.0.0` criou `src/{components,theme,i18n,data}`; `0.4.1.0` criou `src/utils/`; `0.5.0.0` removeu
+> `src/data/` (dados de placeholder substituídos por dados reais da API). As pastas `tests/`, `cmd/`
+> e `src/assets/` ainda não existem — passam a existir conforme cada versão as exige. Este mapa é
+> atualizado a cada materialização.
 
 ```
 raiz/
@@ -23,7 +24,6 @@ raiz/
 │   ├── components/     (componentes de UI reutilizáveis)
 │   ├── config/         (configuração: env, QueryClient)
 │   ├── contexts/       (React Contexts globais: sessão/auth)
-│   ├── data/           (dados estáticos e placeholders)
 │   ├── hooks/          (hooks customizados reutilizáveis, incl. hooks de TanStack Query)
 │   ├── i18n/           (configuração e recursos de internacionalização — PT/EN)
 │   ├── pages/          (componentes de página, ligados às rotas)

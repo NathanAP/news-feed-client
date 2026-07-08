@@ -45,6 +45,11 @@ export class ApiClient {
         return response.data
     }
 
+    async put<T>(url: string, body?: unknown): Promise<T> {
+        const response = await this.instance.put<T>(url, body)
+        return response.data
+    }
+
     private setupInterceptors(): void {
         this.instance.interceptors.request.use((config) => {
             const token = this.handlers?.getAccessToken() ?? null

@@ -14,11 +14,26 @@
         "signOut": "Sign out"
     },
     "feed": {
-        "prefix": "Feed",
         "create": "Create feed",
         "toggleTheme": "Toggle theme",
-        "articles_one": "{{count}} article",
-        "articles_other": "{{count}} articles"
+        "summary": "{{unread}} new · {{total}} total",
+        "noArticles": "No articles in this feed yet.",
+        "loadError": "Could not load this feed.",
+        "moreOptions": "More options",
+        "markAsRead": "Mark as read",
+        "timeAgo": {
+            "minutes": "{{count}} min ago",
+            "hours": "{{count}}h ago",
+            "days": "{{count}}d ago"
+        },
+        "empty": {
+            "title": "You don't have any feeds yet",
+            "body": "Create a feed to start seeing your personalized news."
+        }
+    },
+    "article": {
+        "loadError": "Could not load this article.",
+        "back": "Back"
     },
     "maintenance": {
         "title": "Under maintenance",

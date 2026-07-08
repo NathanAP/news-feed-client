@@ -1,53 +1,44 @@
-import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Badge from '@mui/material/Badge'
 import IconButton from '@mui/material/IconButton'
 import AddIcon from '@mui/icons-material/Add'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { placeholderFeeds } from '../../data/placeholderNews'
+import { useFeeds } from '../../hooks/useFeeds'
+import { feedPath } from '../../routes/paths'
 
-// Placeholder tabs for the 0.4 shell. In 0.5 these come from GET /feeds and
-// selecting one drives the news column.
+// Tabs mirror the user's feeds; the active one is driven by the route
+// (/feeds/:feedId), not local state. The per-tab unread indicator is
+// deferred to 0.6.0.0 (would need a lightweight request per feed).
 export function FeedTabs() {
     const { t } = useTranslation()
-    const [value, setValue] = useState(0)
+    const navigate = useNavigate()
+    const { feedId } = useParams<{ feedId: string }>()
+    const { data: feeds } = useFeeds()
+    const activeFeed = feeds?.find((feed) => feed.id === feedId)
+    const activeValue: string | false = activeFeed?.id ?? false
 
     return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-            <Tabs
-                value={value}
-                onChange={(_, next: number) => setValue(next)}
-                variant="scrollable"
-                scrollButtons={false}
-                sx={{ minHeight: 40 }}
-            >
-                {placeholderFeeds.map((feed) => (
-                    <Tab
-                        key={feed.id}
-                        sx={{ minHeight: 40, textTransform: 'none' }}
-                        label={
-                            feed.hasUnread ? (
-                                <Badge
-                                    color="primary"
-                                    variant="dot"
-                                    sx={{
-                                        '& .MuiBadge-badge': {
-                                            right: -8,
-                                            top: 4,
-                                        },
-                                    }}
-                                >
-                                    {feed.name}
-                                </Badge>
-                            ) : (
-                                feed.name
-                            )
-                        }
-                    />
-                ))}
-            </Tabs>
+            {feeds !== undefined && feeds.length > 0 && (
+                <Tabs
+                    value={activeValue}
+                    onChange={(_, next: string) => navigate(feedPath(next))}
+                    variant="scrollable"
+                    scrollButtons={false}
+                    sx={{ minHeight: 40 }}
+                >
+                    {feeds.map((feed) => (
+                        <Tab
+                            key={feed.id}
+                            value={feed.id}
+                            label={feed.name}
+                            sx={{ minHeight: 40, textTransform: 'none' }}
+                        />
+                    ))}
+                </Tabs>
+            )}
             <IconButton
                 aria-label={t('feed.create')}
                 size="small"

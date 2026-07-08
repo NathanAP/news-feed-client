@@ -1,20 +1,21 @@
-// Localized "time ago" label (e.g. "12 minutes ago" / "há 12 minutos"),
-// driven by the current UI language so it updates when the user switches it.
-export function formatRelativeMinutes(
-    minutesAgo: number,
-    locale: string,
-): string {
-    const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' })
+import type { TFunction } from 'i18next'
 
-    if (minutesAgo < 60) {
-        return rtf.format(-minutesAgo, 'minute')
+// Abbreviated "time ago" label (e.g. "12 min ago" / "há 12 min"), built from
+// i18n keys (not Intl's short style) for exact control over the abbreviation.
+export function formatRelativeTime(createdAt: Date, t: TFunction): string {
+    const diffMinutes = Math.abs(
+        Math.round((Date.now() - createdAt.getTime()) / 60000),
+    )
+
+    if (diffMinutes < 60) {
+        return t('feed.timeAgo.minutes', { count: diffMinutes })
     }
 
-    const hoursAgo = Math.round(minutesAgo / 60)
-    if (hoursAgo < 24) {
-        return rtf.format(-hoursAgo, 'hour')
+    const diffHours = Math.round(diffMinutes / 60)
+    if (diffHours < 24) {
+        return t('feed.timeAgo.hours', { count: diffHours })
     }
 
-    const daysAgo = Math.round(hoursAgo / 24)
-    return rtf.format(-daysAgo, 'day')
+    const diffDays = Math.round(diffHours / 24)
+    return t('feed.timeAgo.days', { count: diffDays })
 }
