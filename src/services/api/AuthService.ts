@@ -41,4 +41,20 @@ export class AuthService {
     async logout(): Promise<void> {
         await this.client.post<void>('/auth/logout')
     }
+
+    // Development-only shortcut that logs in the seeded dev user without the
+    // Google OAuth flow. Like `refresh`, it's a public endpoint that establishes
+    // a session, so it uses a bare Axios call to bypass the client interceptors.
+    // The backend route only exists when it runs with ENVIRONMENT=development
+    // (404 otherwise), and the client gates the button behind DEV_LOGIN_ENABLED.
+    async devLogin(): Promise<AuthTokens> {
+        const response = await axios.post<AuthResponse>(
+            `${API_URL}/users/dev-login`,
+        )
+        return {
+            accessToken: response.data.access_token,
+            refreshToken: response.data.refresh_token,
+            expiresIn: response.data.expires_in,
+        }
+    }
 }

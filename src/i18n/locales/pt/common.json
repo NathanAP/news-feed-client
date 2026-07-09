@@ -2,6 +2,8 @@
     "app": { "name": "news-feed-client" },
     "auth": {
         "signInWithGoogle": "Entrar com o Google",
+        "signInAsDev": "Entrar como usuário dev",
+        "devLoginFailed": "Falha no login dev. A API está em modo de desenvolvimento?",
         "signingIn": "Entrando…",
         "loginFailed": "Falha no login",
         "backToLogin": "Voltar ao login"
@@ -21,6 +23,7 @@
         "loadError": "Não foi possível carregar este feed.",
         "moreOptions": "Mais opções",
         "markAsRead": "Marcar como lido",
+        "unreadCount": "{{count}} não lidas",
         "timeAgo": {
             "minutes": "há {{count}} min",
             "hours": "há {{count}} h",

@@ -41,6 +41,7 @@ export function ArticleDetailPage() {
         marked.current = true
         void articlesService.markAsRead(id).then(() => {
             void queryClient.invalidateQueries({ queryKey: ['feedArticles'] })
+            void queryClient.invalidateQueries({ queryKey: ['unreadCounts'] })
         })
     }, [id, queryClient])
 

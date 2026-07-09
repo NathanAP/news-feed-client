@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.6.0.0
+0.7.0.0
 
 ## Versão 0.1.0.0
 
@@ -80,20 +80,50 @@ Comunicação com a API — trocar o placeholder por dados reais.
     - `public/logo.png` (512, dourado, transparente) e `public/favicon.ico` (16/32/48/64); favicon religado no `index.html`; `favicon.svg` padrão do Vite removido.
     - `components/Logo.tsx` (SVG inline com `currentColor`) no header, no lugar do ícone genérico, com cor por tema via `theme.applyStyles`.
 
+> O bloco original da 0.7 juntava 4 features (indicador de não-lido, CRUD de feeds, CRUD de
+> preferências, dev-login) numa versão só — grande demais para "uma versão por vez" e, pior,
+> duas delas estreiam toda a camada de formulários (`react-hook-form` + `zod`). Fatiado em 4 minors
+> na sessão de planejamento da 0.7: 0.7 = itens leves (dev-login + indicador); 0.8 = CRUD de feeds;
+> 0.9 = CRUD de preferências; testes/Taskfile descem para 0.10/0.11.
+
 ## Versão 0.7.0.0
 
-- [ ] Indicador de não lido por aba de feed
-    - Utilize a rota `GET base_url/v1/feeds/check-for-new-articles` para descobrir quantas notícias não estão lidas em um feed
-    - Acredito que vamos precisar fazer um timer pra chamar essa rota
-    - Mais tarde transformaremos essa rota em SSE ou websocket pra chegar em tempo real
-- [ ] CRUD de feeds completo
-- [ ] CRUD do usuário e preferências (inclusive, renomeie para "preferências" ao invés de "configurações" no menu)
-- [ ] Colocar botão para logar com o usuário dev
+- [x] Colocar botão para logar com o usuário dev
+    - Gated por `VITE_DEV_LOGIN_ENABLED` (default off) para nunca aparecer em produção; chama
+      `POST /users/dev-login` (rota que o backend só monta em `ENVIRONMENT=development`).
+- [x] Indicador de não lido por aba de feed
+    - `GET /v1/feeds/check-for-new-articles` (objeto plano `{ feedId: unreadCount }`), consumido por
+      `useUnreadCounts` com `refetchInterval` do TanStack Query (polling idiomático, sem timer manual;
+      pausa com a aba oculta). Badge por aba no `FeedTabs`; marcar como lido invalida `['unreadCounts']`
+      para o badge cair na hora.
+    - Mais tarde transformaremos essa rota em SSE ou websocket pra chegar em tempo real.
 
 ## Versão 0.8.0.0
 
-- [ ] Definir testes
+- [ ] CRUD de feeds completo
+    - Estreia a camada de formulários: instalar/configurar `react-hook-form` + `zod`.
+    - Ligar o botão "+" do `FeedTabs`; criar/editar/excluir feed; input de keywords (5..20) e
+      limite de 5 feeds ativos (backend responde 409). Enriquecer o tipo `Feed` (hoje `{id,name}`)
+      com `keywords`/`status`.
 
 ## Versão 0.9.0.0
+
+- [ ] CRUD do usuário e preferências (renomeie "Configurações" → "Preferências" no menu)
+    - `PUT /users/me/preferences` devolve um `access_token` novo (prefs vivem no JWT) — o
+      `SessionProvider` precisa expor uma troca leve de token.
+    - Decisão pendente (tomada na sessão de planejamento): reconciliar `theme`/`language` do backend
+      com o toggle/switcher client-side atual só nesta versão (por ora seguem client-side).
+
+## Versão 0.10.0.0
+
+- [ ] Revisão
+
+## Versão 0.11.0.0
+
+- [ ] Definir testes
+- [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
+    - Exemplos: título e corpo da notícia na listagem e selecionador de feed
+
+## Versão 0.12.0.0
 
 - [ ] Definir Taskfile

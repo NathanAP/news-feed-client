@@ -2,6 +2,8 @@
     "app": { "name": "news-feed-client" },
     "auth": {
         "signInWithGoogle": "Sign in with Google",
+        "signInAsDev": "Sign in as dev user",
+        "devLoginFailed": "Dev login failed. Is the API running in development mode?",
         "signingIn": "Signing you in…",
         "loginFailed": "Login failed",
         "backToLogin": "Back to login"
@@ -21,6 +23,7 @@
         "loadError": "Could not load this feed.",
         "moreOptions": "More options",
         "markAsRead": "Mark as read",
+        "unreadCount": "{{count}} unread",
         "timeAgo": {
             "minutes": "{{count}} min ago",
             "hours": "{{count}}h ago",

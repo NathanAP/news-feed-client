@@ -63,6 +63,9 @@ export function NewsCard({
             void queryClient.invalidateQueries({
                 queryKey: ['feedArticles', feedId],
             })
+            // Refresh the per-tab unread badges immediately, without waiting for
+            // the next poll.
+            void queryClient.invalidateQueries({ queryKey: ['unreadCounts'] })
         },
     })
 
