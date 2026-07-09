@@ -75,13 +75,12 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.6.0.0
 
-Indicador de "não lido" nas abas de feed (a bolinha ao lado do nome). Adiada da 0.5.0.0: sem
-endpoint de contagem em lote, mostrar isso em toda aba exigiria até 5 requisições leves extras
-(uma por feed) no carregamento — decidir a melhor abordagem quando chegarmos aqui.
-
 - [ ] Indicador de não lido por aba de feed
-- [ ] CRUD de feeds
-- [ ] CRUD do usuário e preferências (inclusive, renomeie)
+    - Utilize a rota `GET base_url/v1/feeds/check-for-new-articles` para descobrir quantas notícias não estão lidas em um feed
+    - Acredito que vamos precisar fazer um timer pra chamar essa rota
+    - Mais tarde transformaremos essa rota em SSE ou websocket pra chegar em tempo real
+- [ ] CRUD de feeds completo
+- [ ] CRUD do usuário e preferências (inclusive, renomeie para "preferências" ao invés de "configurações" no menu)
 - [ ] Colocar botão para logar com o usuário dev
 
 ## Versão 0.7.0.0
