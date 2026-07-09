@@ -75,6 +75,10 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.6.0.0
 
+- [x] Adicionar logo e ícones iniciais
+
+## Versão 0.7.0.0
+
 - [ ] Indicador de não lido por aba de feed
     - Utilize a rota `GET base_url/v1/feeds/check-for-new-articles` para descobrir quantas notícias não estão lidas em um feed
     - Acredito que vamos precisar fazer um timer pra chamar essa rota
@@ -83,10 +87,10 @@ Comunicação com a API — trocar o placeholder por dados reais.
 - [ ] CRUD do usuário e preferências (inclusive, renomeie para "preferências" ao invés de "configurações" no menu)
 - [ ] Colocar botão para logar com o usuário dev
 
-## Versão 0.7.0.0
+## Versão 0.8.0.0
 
 - [ ] Definir testes
 
-## Versão 0.8.0.0
+## Versão 0.9.0.0
 
 - [ ] Definir Taskfile

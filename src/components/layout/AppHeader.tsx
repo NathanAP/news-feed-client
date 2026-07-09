@@ -2,8 +2,8 @@ import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
 import { useTranslation } from 'react-i18next'
+import { Logo } from '../Logo'
 import { FeedTabs } from './FeedTabs'
 import { ThemeToggle } from './ThemeToggle'
 import { UserMenu } from './UserMenu'
@@ -32,7 +32,15 @@ export function AppHeader() {
                         minWidth: 0,
                     }}
                 >
-                    <ArticleOutlinedIcon />
+                    <Box
+                        sx={(theme) => ({
+                            display: 'flex',
+                            color: '#141414',
+                            ...theme.applyStyles('dark', { color: '#c8a04a' }),
+                        })}
+                    >
+                        <Logo size={30} />
+                    </Box>
                     <Typography
                         variant="subtitle1"
                         noWrap
