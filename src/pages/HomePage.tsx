@@ -1,16 +1,22 @@
-import { Navigate } from 'react-router-dom'
+import { useState } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
 import { useFeeds } from '../hooks/useFeeds'
+import { FeedFormDialog } from '../components/feeds/FeedFormDialog'
 import { feedPath } from '../routes/paths'
 
-// Redirects to the user's first feed once feeds load; shows an empty state
-// when they have none yet (creating a feed is a future version).
+// Redirects to the user's first feed once feeds load; shows an empty state with
+// a create action when they have none yet.
 export function HomePage() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
     const { data: feeds, isPending, isError } = useFeeds()
+    const [createOpen, setCreateOpen] = useState(false)
 
     if (isPending) {
         return (
@@ -41,6 +47,20 @@ export function HomePage() {
             <Typography variant="body2" color="text.secondary">
                 {t('feed.empty.body')}
             </Typography>
+            <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                sx={{ mt: 3 }}
+                onClick={() => setCreateOpen(true)}
+            >
+                {t('feed.create')}
+            </Button>
+            <FeedFormDialog
+                open={createOpen}
+                mode="create"
+                onClose={() => setCreateOpen(false)}
+                onCreated={(feed) => navigate(feedPath(feed.id))}
+            />
         </Box>
     )
 }

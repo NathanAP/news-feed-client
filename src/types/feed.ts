@@ -1,6 +1,13 @@
 export interface Feed {
     id: string
     name: string
+    keywords: string[]
+}
+
+// Payload for creating/updating a feed (POST /feeds/create, PUT /feeds/:id).
+export interface FeedInput {
+    name: string
+    keywords: string[]
 }
 
 // Response of GET /feeds/check-for-new-articles: a flat map keyed by feed id

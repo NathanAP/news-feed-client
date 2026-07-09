@@ -50,6 +50,11 @@ export class ApiClient {
         return response.data
     }
 
+    async delete<T>(url: string): Promise<T> {
+        const response = await this.instance.delete<T>(url)
+        return response.data
+    }
+
     private setupInterceptors(): void {
         this.instance.interceptors.request.use((config) => {
             const token = this.handlers?.getAccessToken() ?? null

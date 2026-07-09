@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.7.1.0
+0.8.0.0
 
 ## Versão 0.1.0.0
 
@@ -110,12 +110,18 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.8.0.0
 
-- [ ] Liberar o modo host do Vite para poder ser acessado via IP local
-- [ ] CRUD de feeds completo
-    - Estreia a camada de formulários: instalar/configurar `react-hook-form` + `zod`.
-    - Ligar o botão "+" do `FeedTabs`; criar/editar/excluir feed; input de keywords (5..20) e
-      limite de 5 feeds ativos (backend responde 409). Enriquecer o tipo `Feed` (hoje `{id,name}`)
-      com `keywords`/`status`.
+- [x] Liberar o modo host do Vite para poder ser acessado via IP local
+    - `server: { host: true }` no `vite.config.ts`. Depende do backend liberar a origem LAN em
+      `CORS_ALLOWED_ORIGINS` e o callback em `OAUTH_ALLOWED_REDIRECT_URIS` (o dev-login não depende
+      do callback).
+- [x] CRUD de feeds completo
+    - Estreou a camada de formulários: `react-hook-form` + `zod` + `@hookform/resolvers`.
+    - Componentes: `KeywordsInput` (chips 5..20, normaliza trim/lowercase/dedupe, contador),
+      `FeedFormDialog` (criar/editar, validação Zod), `ConfirmDialog` (exclusão permanente).
+    - `FeedTabs`: "+" cria (desabilitado no limite de 5, com tooltip); menu "⋮" por aba edita/exclui.
+      Estado vazio da `HomePage` também cria. Enriqueceu o tipo `Feed` com `keywords`.
+    - Serviço/hooks: `FeedsService.create/update/remove` (+ `ApiClient.delete`),
+      `useCreateFeed`/`useUpdateFeed`/`useDeleteFeed` (invalidam `['feeds']` e `['unreadCounts']`).
 
 ## Versão 0.9.0.0
 
@@ -124,6 +130,10 @@ Comunicação com a API — trocar o placeholder por dados reais.
       `SessionProvider` precisa expor uma troca leve de token.
     - Decisão pendente (tomada na sessão de planejamento): reconciliar `theme`/`language` do backend
       com o toggle/switcher client-side atual só nesta versão (por ora seguem client-side).
+
+## Versão 0.10.0.0
+
+- [ ] Permitir reorganizar abas de feeds
 
 ## Versão 0.10.0.0
 

@@ -1,5 +1,10 @@
 {
     "app": { "name": "news-feed-client" },
+    "common": {
+        "cancel": "Cancelar",
+        "confirm": "Confirmar",
+        "save": "Salvar"
+    },
     "auth": {
         "signInWithGoogle": "Entrar com o Google",
         "signInAsDev": "Entrar como usuário dev",
@@ -24,6 +29,14 @@
         "moreOptions": "Mais opções",
         "markAsRead": "Marcar como lido",
         "unreadCount": "{{count}} não lidas",
+        "manage": "Gerenciar feed {{name}}",
+        "edit": "Editar feed",
+        "delete": "Excluir feed",
+        "limitReached": "Você pode ter no máximo {{max}} feeds.",
+        "deleteConfirm": {
+            "title": "Excluir feed?",
+            "body": "\"{{name}}\" será excluído permanentemente. Isso não pode ser desfeito."
+        },
         "timeAgo": {
             "minutes": "há {{count}} min",
             "hours": "há {{count}} h",
@@ -32,6 +45,23 @@
         "empty": {
             "title": "Você ainda não tem feeds",
             "body": "Crie um feed para começar a ver suas notícias personalizadas."
+        }
+    },
+    "feedForm": {
+        "createTitle": "Novo feed",
+        "editTitle": "Editar feed",
+        "createSubmit": "Criar",
+        "nameLabel": "Nome",
+        "keywordsLabel": "Palavras-chave",
+        "keywordsPlaceholder": "Digite e pressione Enter",
+        "keywordsCounter": "{{count}}/{{max}} palavras-chave",
+        "errors": {
+            "nameRequired": "Informe um nome para o feed.",
+            "nameTooLong": "O nome é muito longo.",
+            "keywordsMin": "Adicione pelo menos {{min}} palavras-chave.",
+            "keywordsMax": "Use no máximo {{max}} palavras-chave.",
+            "limit": "Você atingiu o número máximo de feeds.",
+            "generic": "Algo deu errado. Tente novamente."
         }
     },
     "article": {

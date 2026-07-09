@@ -1,5 +1,10 @@
 {
     "app": { "name": "news-feed-client" },
+    "common": {
+        "cancel": "Cancel",
+        "confirm": "Confirm",
+        "save": "Save"
+    },
     "auth": {
         "signInWithGoogle": "Sign in with Google",
         "signInAsDev": "Sign in as dev user",
@@ -24,6 +29,14 @@
         "moreOptions": "More options",
         "markAsRead": "Mark as read",
         "unreadCount": "{{count}} unread",
+        "manage": "Manage feed {{name}}",
+        "edit": "Edit feed",
+        "delete": "Delete feed",
+        "limitReached": "You can have at most {{max}} feeds.",
+        "deleteConfirm": {
+            "title": "Delete feed?",
+            "body": "\"{{name}}\" will be permanently deleted. This cannot be undone."
+        },
         "timeAgo": {
             "minutes": "{{count}} min ago",
             "hours": "{{count}}h ago",
@@ -32,6 +45,23 @@
         "empty": {
             "title": "You don't have any feeds yet",
             "body": "Create a feed to start seeing your personalized news."
+        }
+    },
+    "feedForm": {
+        "createTitle": "New feed",
+        "editTitle": "Edit feed",
+        "createSubmit": "Create",
+        "nameLabel": "Name",
+        "keywordsLabel": "Keywords",
+        "keywordsPlaceholder": "Type and press Enter",
+        "keywordsCounter": "{{count}}/{{max}} keywords",
+        "errors": {
+            "nameRequired": "Enter a name for the feed.",
+            "nameTooLong": "The name is too long.",
+            "keywordsMin": "Add at least {{min}} keywords.",
+            "keywordsMax": "Use at most {{max}} keywords.",
+            "limit": "You've reached the maximum number of feeds.",
+            "generic": "Something went wrong. Please try again."
         }
     },
     "article": {

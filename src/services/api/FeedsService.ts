@@ -1,5 +1,10 @@
 import type { ApiClient } from './ApiClient'
-import type { Feed, FeedResponse, UnreadCountsResponse } from '../../types/feed'
+import type {
+    Feed,
+    FeedInput,
+    FeedResponse,
+    UnreadCountsResponse,
+} from '../../types/feed'
 import type { PaginatedResponse } from '../../types/pagination'
 
 export class FeedsService {
@@ -25,7 +30,24 @@ export class FeedsService {
         )
     }
 
+    async create(input: FeedInput): Promise<Feed> {
+        const data = await this.client.post<FeedResponse>(
+            '/feeds/create',
+            input,
+        )
+        return this.toFeed(data)
+    }
+
+    async update(id: string, input: FeedInput): Promise<Feed> {
+        const data = await this.client.put<FeedResponse>(`/feeds/${id}`, input)
+        return this.toFeed(data)
+    }
+
+    async remove(id: string): Promise<void> {
+        await this.client.delete<void>(`/feeds/${id}`)
+    }
+
     private toFeed(data: FeedResponse): Feed {
-        return { id: data.id, name: data.name }
+        return { id: data.id, name: data.name, keywords: data.keywords }
     }
 }
