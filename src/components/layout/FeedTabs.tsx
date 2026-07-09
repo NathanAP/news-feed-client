@@ -53,9 +53,19 @@ export function FeedTabs() {
                                             display: 'inline-flex',
                                             alignItems: 'center',
                                             gap: 0.75,
+                                            maxWidth: 200,
                                         }}
                                     >
-                                        {feed.name}
+                                        <Box
+                                            component="span"
+                                            sx={{
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            {feed.name}
+                                        </Box>
                                         {unread > 0 && (
                                             <Box
                                                 component="span"

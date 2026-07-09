@@ -86,7 +86,10 @@ export function ArticleDetailPage() {
                 <ArrowBackIcon />
             </IconButton>
 
-            <Typography variant="h5" sx={{ fontWeight: 500 }}>
+            <Typography
+                variant="h5"
+                sx={{ fontWeight: 500, overflowWrap: 'anywhere' }}
+            >
                 {article.title}
             </Typography>
             <Typography
@@ -102,7 +105,15 @@ export function ArticleDetailPage() {
             <Box
                 sx={{
                     lineHeight: 1.7,
-                    '& img': { maxWidth: '100%' },
+                    // Long unbroken tokens (URLs) in the article HTML must wrap
+                    // instead of pushing the page into horizontal scroll.
+                    overflowWrap: 'anywhere',
+                    '& img': { maxWidth: '100%', height: 'auto' },
+                    '& pre, & code': {
+                        whiteSpace: 'pre-wrap',
+                        overflowWrap: 'anywhere',
+                    },
+                    '& pre': { overflowX: 'auto' },
                 }}
                 dangerouslySetInnerHTML={{ __html: sanitizedContent }}
             />

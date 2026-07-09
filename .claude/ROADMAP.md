@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.7.0.0
+0.7.1.0
 
 ## Versão 0.1.0.0
 
@@ -98,8 +98,19 @@ Comunicação com a API — trocar o placeholder por dados reais.
       para o badge cair na hora.
     - Mais tarde transformaremos essa rota em SSE ou websocket pra chegar em tempo real.
 
+## Versão 0.7.1.0
+
+- [x] Bugfix: transbordo com textos muito longos.
+    - Título/corpo com token longo sem espaços (ex.: URL) causavam recorte no card e, na tela de
+      detalhe (`h5` sem guarda), **scroll horizontal da página inteira**. Corrigido com
+      `overflowWrap: anywhere` no clamp do `NewsCard`, no título e no corpo HTML da
+      `ArticleDetailPage` (+ `pre/code` com `pre-wrap`), e `noWrap`/ellipsis no nome da fonte.
+    - Nome de feed muito longo agora trunca com reticências no `FeedTabs` (`maxWidth` + ellipsis),
+      evitando abas absurdamente largas.
+
 ## Versão 0.8.0.0
 
+- [ ] Liberar o modo host do Vite para poder ser acessado via IP local
 - [ ] CRUD de feeds completo
     - Estreia a camada de formulários: instalar/configurar `react-hook-form` + `zod`.
     - Ligar o botão "+" do `FeedTabs`; criar/editar/excluir feed; input de keywords (5..20) e

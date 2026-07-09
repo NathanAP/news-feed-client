@@ -24,11 +24,14 @@ import { articlesService } from '../../services/api'
 import { articleDetailPath } from '../../routes/paths'
 
 // Clamp to two lines — titles and bodies never exceed two lines.
+// `overflowWrap: anywhere` lets long unbroken tokens (e.g. URLs) break and clamp
+// with an ellipsis instead of being cut mid-character.
 const clamp2 = {
     display: '-webkit-box',
     WebkitLineClamp: 2,
     WebkitBoxOrient: 'vertical',
     overflow: 'hidden',
+    overflowWrap: 'anywhere',
 } as const
 
 function getDateFnsLocale(language: string): Locale {
@@ -93,7 +96,7 @@ export function NewsCard({
                     )}
                     <Typography
                         variant="subtitle1"
-                        sx={{ ...clamp2, fontWeight: 500 }}
+                        sx={{ ...clamp2, fontWeight: 500, minWidth: 0 }}
                     >
                         {article.title}
                     </Typography>
@@ -116,11 +119,15 @@ export function NewsCard({
                         color: 'text.secondary',
                     }}
                 >
-                    <AccessTimeIcon sx={{ fontSize: 15 }} />
-                    <Typography variant="caption">
+                    <AccessTimeIcon sx={{ fontSize: 15, flex: 'none' }} />
+                    <Typography variant="caption" noWrap sx={{ flex: 'none' }}>
                         {createdAtLabel} · {timeAgo}
                     </Typography>
-                    <Typography variant="caption" sx={{ ml: 'auto' }}>
+                    <Typography
+                        variant="caption"
+                        noWrap
+                        sx={{ ml: 'auto', pl: 1, minWidth: 0 }}
+                    >
                         {article.source?.name ?? ''}
                     </Typography>
                 </Box>

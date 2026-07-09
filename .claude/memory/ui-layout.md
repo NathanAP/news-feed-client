@@ -24,3 +24,12 @@ Implementado na `0.4.0.0`. Fonte: `versions/20260707190000_0.4.0.0.md`.
 - Cuidado com dados de placeholder pré-formatados como texto: `timeAgo` estava hardcoded em PT e
   não reagia ao switcher de idioma (bug da `0.4.1.0`). Fix: guardar o dado bruto (`minutesAgo`) e
   formatar na renderização com `Intl.RelativeTimeFormat(i18n.language)` — ver `utils/relativeTime.ts`.
+- Transbordo de texto longo (bugfix `0.7.1.0`): `line-clamp` limita linhas mas **não** quebra
+  palavras — um token longo sem espaços (URL) precisa de `overflowWrap: 'anywhere'`. Onde aplicar:
+  `clamp2` do `NewsCard`, título `h5` e Box de conteúdo HTML da `ArticleDetailPage` (+ `pre/code`
+  com `pre-wrap`; senão a tela de detalhe ganha scroll horizontal de página). Nome de feed no
+  `FeedTabs` trunca com `maxWidth` + `text-overflow: ellipsis`; nome de fonte no card usa `noWrap`.
+- Verificação de transbordo: injete uma palavra longa sem espaços via devtools e cheque
+  `documentElement.scrollWidth > clientWidth` — mas confirme `clientWidth !== 0` antes (o preview do
+  harness às vezes colapsa o viewport e falseia a medição). A origem precisa ser a liberada no CORS
+  (hoje `localhost:5173`).
