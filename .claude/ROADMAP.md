@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.5.0.0
+0.6.0.0
 
 ## Versão 0.1.0.0
 
@@ -76,6 +76,9 @@ Comunicação com a API — trocar o placeholder por dados reais.
 ## Versão 0.6.0.0
 
 - [x] Adicionar logo e ícones iniciais
+    - Relógio recriado como SVG vetorial (`public/logo.svg`), theme-aware via `currentColor` + `prefers-color-scheme` (dourado no dark, preto no light) — um único arquivo serve os dois modos.
+    - `public/logo.png` (512, dourado, transparente) e `public/favicon.ico` (16/32/48/64); favicon religado no `index.html`; `favicon.svg` padrão do Vite removido.
+    - `components/Logo.tsx` (SVG inline com `currentColor`) no header, no lugar do ícone genérico, com cor por tema via `theme.applyStyles`.
 
 ## Versão 0.7.0.0
 
