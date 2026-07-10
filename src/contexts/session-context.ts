@@ -11,6 +11,9 @@ export interface SessionContextValue {
     isUnderMaintenance: boolean
     login: (tokens: AuthTokens) => void
     logout: () => void
+    // Swaps only the in-memory access_token (e.g. after PUT /users/me/preferences
+    // re-issues it), without touching the refresh_token or session status.
+    updateAccessToken: (token: string) => void
 }
 
 export const SessionContext = createContext<SessionContextValue | null>(null)

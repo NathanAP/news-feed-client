@@ -3,7 +3,8 @@
     "common": {
         "cancel": "Cancelar",
         "confirm": "Confirmar",
-        "save": "Salvar"
+        "save": "Salvar",
+        "close": "Fechar"
     },
     "auth": {
         "signInWithGoogle": "Entrar com o Google",
@@ -16,9 +17,36 @@
     "menu": {
         "open": "Abrir menu do usuário",
         "profile": "Perfil",
-        "settings": "Configurações",
+        "preferences": "Preferências",
         "language": "Idioma",
         "signOut": "Sair"
+    },
+    "profile": {
+        "title": "Perfil",
+        "memberSince": "Membro desde {{date}}"
+    },
+    "preferences": {
+        "title": "Preferências",
+        "themeLabel": "Tema",
+        "themeOptions": { "light": "Claro", "dark": "Escuro" },
+        "languageLabel": "Idioma de tradução",
+        "languageHelp": "Idioma usado ao traduzir notícias.",
+        "languageOptions": {
+            "pt": "Português",
+            "en": "Inglês",
+            "es": "Espanhol",
+            "fr": "Francês",
+            "de": "Alemão",
+            "it": "Italiano"
+        },
+        "aiPersonalityLabel": "Personalidade da IA",
+        "aiPersonalityOptions": {
+            "fun": "Divertida",
+            "mixed": "Mista",
+            "informative": "Informativa"
+        },
+        "translateContentLabel": "Traduzir o conteúdo das notícias",
+        "saveError": "Não foi possível salvar suas preferências. Tente novamente."
     },
     "feed": {
         "create": "Criar feed",

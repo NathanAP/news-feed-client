@@ -8,17 +8,21 @@ import ListItemText from '@mui/material/ListItemText'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined'
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { useTranslation } from 'react-i18next'
 import { useSession } from '../../hooks/useSession'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { ProfileDialog } from '../user/ProfileDialog'
+import { PreferencesDialog } from '../user/PreferencesDialog'
 
 export function UserMenu() {
     const { t, i18n } = useTranslation()
     const { logout } = useSession()
     const { data: user } = useCurrentUser()
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
+    const [profileOpen, setProfileOpen] = useState(false)
+    const [preferencesOpen, setPreferencesOpen] = useState(false)
 
     const close = () => setAnchorEl(null)
 
@@ -53,17 +57,27 @@ export function UserMenu() {
                         {user.name}
                     </Typography>
                 )}
-                <MenuItem onClick={close}>
+                <MenuItem
+                    onClick={() => {
+                        close()
+                        setProfileOpen(true)
+                    }}
+                >
                     <ListItemIcon>
                         <PersonOutlineIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText>{t('menu.profile')}</ListItemText>
                 </MenuItem>
-                <MenuItem onClick={close}>
+                <MenuItem
+                    onClick={() => {
+                        close()
+                        setPreferencesOpen(true)
+                    }}
+                >
                     <ListItemIcon>
-                        <SettingsOutlinedIcon fontSize="small" />
+                        <TuneOutlinedIcon fontSize="small" />
                     </ListItemIcon>
-                    <ListItemText>{t('menu.settings')}</ListItemText>
+                    <ListItemText>{t('menu.preferences')}</ListItemText>
                 </MenuItem>
                 <Divider />
                 <Typography
@@ -106,6 +120,15 @@ export function UserMenu() {
                     </ListItemText>
                 </MenuItem>
             </Menu>
+
+            <ProfileDialog
+                open={profileOpen}
+                onClose={() => setProfileOpen(false)}
+            />
+            <PreferencesDialog
+                open={preferencesOpen}
+                onClose={() => setPreferencesOpen(false)}
+            />
         </>
     )
 }

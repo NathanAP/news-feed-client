@@ -3,7 +3,8 @@
     "common": {
         "cancel": "Cancel",
         "confirm": "Confirm",
-        "save": "Save"
+        "save": "Save",
+        "close": "Close"
     },
     "auth": {
         "signInWithGoogle": "Sign in with Google",
@@ -16,9 +17,36 @@
     "menu": {
         "open": "Open user menu",
         "profile": "Profile",
-        "settings": "Settings",
+        "preferences": "Preferences",
         "language": "Language",
         "signOut": "Sign out"
+    },
+    "profile": {
+        "title": "Profile",
+        "memberSince": "Member since {{date}}"
+    },
+    "preferences": {
+        "title": "Preferences",
+        "themeLabel": "Theme",
+        "themeOptions": { "light": "Light", "dark": "Dark" },
+        "languageLabel": "Translation language",
+        "languageHelp": "Language used when translating articles.",
+        "languageOptions": {
+            "pt": "Portuguese",
+            "en": "English",
+            "es": "Spanish",
+            "fr": "French",
+            "de": "German",
+            "it": "Italian"
+        },
+        "aiPersonalityLabel": "AI personality",
+        "aiPersonalityOptions": {
+            "fun": "Fun",
+            "mixed": "Mixed",
+            "informative": "Informative"
+        },
+        "translateContentLabel": "Translate article content",
+        "saveError": "Could not save your preferences. Please try again."
     },
     "feed": {
         "create": "Create feed",

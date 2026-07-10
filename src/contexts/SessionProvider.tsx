@@ -132,8 +132,16 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             isUnderMaintenance,
             login,
             logout,
+            updateAccessToken: setAccessToken,
         }),
-        [accessToken, status, isUnderMaintenance, login, logout],
+        [
+            accessToken,
+            status,
+            isUnderMaintenance,
+            login,
+            logout,
+            setAccessToken,
+        ],
     )
 
     return (

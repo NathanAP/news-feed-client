@@ -1,5 +1,18 @@
 import type { ApiClient } from './ApiClient'
 import type { User, UserResponse } from '../../types/user'
+import type {
+    UserPreferences,
+    UserPreferencesResponse,
+    UpdatePreferencesResponse,
+} from '../../types/preferences'
+
+// Result of updating preferences: the updated preferences plus the freshly
+// re-issued access token (preferences live in the JWT).
+export interface UpdatePreferencesResult {
+    preferences: UserPreferences
+    accessToken: string
+    expiresIn: number
+}
 
 export class UsersService {
     private readonly client: ApiClient
@@ -16,6 +29,41 @@ export class UsersService {
             name: data.name,
             picture: data.picture ?? null,
             createdAt: data.created_at,
+        }
+    }
+
+    async getPreferences(): Promise<UserPreferences> {
+        const data = await this.client.get<UserPreferencesResponse>(
+            '/users/me/preferences',
+        )
+        return this.toPreferences(data)
+    }
+
+    async updatePreferences(
+        input: UserPreferences,
+    ): Promise<UpdatePreferencesResult> {
+        const data = await this.client.put<UpdatePreferencesResponse>(
+            '/users/me/preferences',
+            {
+                theme: input.theme,
+                language: input.language,
+                translate_content: input.translateContent,
+                ai_personality: input.aiPersonality,
+            },
+        )
+        return {
+            preferences: this.toPreferences(data.preferences),
+            accessToken: data.access_token,
+            expiresIn: data.expires_in,
+        }
+    }
+
+    private toPreferences(data: UserPreferencesResponse): UserPreferences {
+        return {
+            theme: data.theme,
+            language: data.language,
+            translateContent: data.translate_content,
+            aiPersonality: data.ai_personality,
         }
     }
 }

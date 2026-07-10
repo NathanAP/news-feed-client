@@ -61,7 +61,7 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 ## Gerência de estado
 
 - Estado de servidor (feeds, notícias, fontes de notícias, paginação, `is_read`): utiliza-se o TanStack Query por cima do Axios. Responsável por cache, estados de loading/erro, refetch e invalidação (exemplo: invalidar a lista após `PUT /articles/:id/read`).
-- Estado global de cliente: React Context, restrito ao pequeno conjunto de coisas realmente globais como sessão/auth e tema (dark/light).
+- Estado global de cliente: React Context, restrito ao pequeno conjunto de coisas realmente globais como sessão/auth e tema (dark/light). O tema é gerido pelo color scheme do MUI, mas a **preferência de tema do backend é a fonte da verdade**: o toggle persiste via `PUT /users/me/preferences` e o boot aplica o tema salvo (`useThemeSync`).
 - Não usamos Redux/Zustand: com o TanStack Query cuidando do estado de servidor, a superfície de estado global de cliente é pequena o suficiente para o Context.
 - O cache do TanStack Query vive em memória (RAM da aba), não em storage persistente: some no reload e é reconstruído buscando na API. Contrasta com o `refresh_token` no `localStorage`, que persiste e reidrata a sessão no boot. Em desenvolvimento, o React Query Devtools (só em `import.meta.env.DEV`) permite inspecionar esse cache.
 

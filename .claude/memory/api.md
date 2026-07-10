@@ -12,7 +12,9 @@ Todo **erro** responde `{ error: string }` com o status apropriado. Datas em UTC
 
 - **AuthResponse** — `{ access_token, refresh_token, expires_in }` (`refresh_token` = **id** do token; `expires_in` em segundos).
 - **UserResponse** — `{ id, email, name, picture?, created_at }`.
-- **UserPreferencesResponse** — `{ theme, language, translate_content, ai_personality }`.
+- **UserPreferencesResponse** — `{ theme, language, translate_content, ai_personality }`. Enums:
+  `theme` = `light|dark`; `language` = `pt|en|es|fr|de|it` (idioma-alvo de tradução de conteúdo);
+  `translate_content` = bool; `ai_personality` = `fun|mixed|informative` (tom da IA na tradução).
 - **UpdatePreferencesResponse** — `{ access_token, expires_in, preferences: UserPreferencesResponse }`.
 - **SystemResponse** — `{ id, app_status, last_article_discovery_at?, created_at, modified_at? }`.
 - **SourceResponse** — `{ id, status, name, url, url_rss, created_at, modified_at? }`.

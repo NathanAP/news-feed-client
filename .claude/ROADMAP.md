@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.8.0.0
+0.9.0.0
 
 ## Versão 0.1.0.0
 
@@ -128,26 +128,30 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.9.0.0
 
-- [ ] CRUD do usuário e preferências (renomeie "Configurações" → "Preferências" no menu)
-    - `PUT /users/me/preferences` devolve um `access_token` novo (prefs vivem no JWT) — o
-      `SessionProvider` precisa expor uma troca leve de token.
-    - Decisão pendente (tomada na sessão de planejamento): reconciliar `theme`/`language` do backend
-      com o toggle/switcher client-side atual só nesta versão (por ora seguem client-side).
+- [x] Usuário (leitura) e preferências (renomeado "Configurações" → "Preferências" no menu)
+    - Correção de escopo: **não há endpoint de escrita do usuário** (nome/email/picture vêm do
+      Google) — então "CRUD do usuário" virou uma tela de **perfil somente-leitura**; o editável são
+      as preferências. `ProfileDialog` (perfil) e `PreferencesDialog` (form) a partir do menu do avatar.
+    - `PUT /users/me/preferences` devolve `access_token` novo (prefs vivem no JWT) — `SessionContext`
+      ganhou `updateAccessToken` (troca leve), chamado pela mutation.
+    - Reconciliação decidida: **`theme` do backend é a fonte da verdade** — o toggle do header aplica
+      e persiste; no boot, `useThemeSync` aplica o tema salvo. O `language` do backend é o idioma de
+      **tradução de conteúdo** (distinto do switcher PT/EN da UI, que segue client-side).
 
 ## Versão 0.10.0.0
 
 - [ ] Permitir reorganizar abas de feeds
 
-## Versão 0.10.0.0
+## Versão 0.11.0.0
 
 - [ ] Revisão
 
-## Versão 0.11.0.0
+## Versão 0.12.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.12.0.0
+## Versão 0.13.0.0
 
 - [ ] Definir Taskfile
