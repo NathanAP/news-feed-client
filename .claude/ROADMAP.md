@@ -117,9 +117,12 @@ Comunicação com a API — trocar o placeholder por dados reais.
 - [x] CRUD de feeds completo
     - Estreou a camada de formulários: `react-hook-form` + `zod` + `@hookform/resolvers`.
     - Componentes: `KeywordsInput` (chips 5..20, normaliza trim/lowercase/dedupe, contador),
-      `FeedFormDialog` (criar/editar, validação Zod), `ConfirmDialog` (exclusão permanente).
-    - `FeedTabs`: "+" cria (desabilitado no limite de 5, com tooltip); menu "⋮" por aba edita/exclui.
-      Estado vazio da `HomePage` também cria. Enriqueceu o tipo `Feed` com `keywords`.
+      `FeedFormDialog` (criar/editar, validação Zod), `ConfirmDialog` (exclusão permanente),
+      `FeedActionsMenu` (menu "⋮" do feed ativo, no cabeçalho da lista).
+    - `FeedTabs`: "+" cria (desabilitado no limite de 5, com tooltip); as abas ficam limpas.
+      Editar/excluir vivem no `FeedActionsMenu`, no cabeçalho da lista (oposto ao "X novas · Y
+      totais"), então agem sobre o feed aberto. Estado vazio da `HomePage` também cria. Enriqueceu
+      o tipo `Feed` com `keywords`.
     - Serviço/hooks: `FeedsService.create/update/remove` (+ `ApiClient.delete`),
       `useCreateFeed`/`useUpdateFeed`/`useDeleteFeed` (invalidam `['feeds']` e `['unreadCounts']`).
 

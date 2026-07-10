@@ -3,6 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { NewsCard } from './NewsCard'
+import { FeedActionsMenu } from '../feeds/FeedActionsMenu'
 import type { Article } from '../../types/article'
 
 export interface NewsListProps {
@@ -45,13 +46,24 @@ export function NewsList({
 
     return (
         <Box>
-            <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 1.5, px: 0.5 }}
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 1,
+                    mb: 1.5,
+                    pl: 0.5,
+                }}
             >
-                {t('feed.summary', { unread: unreadCount, total: totalCount })}
-            </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {t('feed.summary', {
+                        unread: unreadCount,
+                        total: totalCount,
+                    })}
+                </Typography>
+                <FeedActionsMenu feedId={feedId} />
+            </Box>
             {articles.length === 0 ? (
                 <Typography
                     color="text.secondary"

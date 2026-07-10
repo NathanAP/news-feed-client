@@ -17,8 +17,12 @@ Implementado na `0.8.0.0`. Fonte: `versions/20260709180000_0.8.0.0.md`.
 - Hooks `useCreateFeed/useUpdateFeed/useDeleteFeed` (`hooks/useFeedMutations.ts`) invalidam
   `['feeds']` e `['unreadCounts']`.
 - Componentes em `components/feeds/`: `KeywordsInput` (chips via `Autocomplete` multiple/freeSolo;
-  5..20; `normalizeKeywords` = trim+lowercase+dedupe+cap), `FeedFormDialog` (criar/editar).
-  `components/ConfirmDialog.tsx` para exclusão (permanente, sem reativação).
+  5..20; `normalizeKeywords` = trim+lowercase+dedupe+cap), `FeedFormDialog` (criar/editar),
+  `FeedActionsMenu` (menu "⋮" do feed ativo). `components/ConfirmDialog.tsx` para exclusão
+  (permanente, sem reativação).
+- Onde ficam as ações: **criar** = "+" no `FeedTabs` (abas ficam limpas). **Editar/excluir** =
+  `FeedActionsMenu` no cabeçalho da `NewsList` (oposto ao "X novas · Y totais"), agindo sobre o feed
+  **aberto** — por decisão de UX, para o gatilho ser um `IconButton` normal em vez de aninhado na aba.
 - Constantes de negócio: `MIN_KEYWORDS=5`, `MAX_KEYWORDS=20` (em `components/feeds/keywords.ts`, fora
   do componente por causa da regra `react-refresh/only-export-components`); `MAX_ACTIVE_FEEDS=5` no
   `FeedTabs`.
@@ -27,8 +31,9 @@ Implementado na `0.8.0.0`. Fonte: `versions/20260709180000_0.8.0.0.md`.
 
 - Regra ESLint `react-refresh/only-export-components`: um arquivo de componente não pode exportar
   constantes/funções junto — extrair para um módulo `.ts` separado (ex.: `keywords.ts`).
-- Menu por aba: o `Tab` do MUI já é `<button>`; não aninhar outro `<button>`. O gatilho "⋮" é um
-  `<span role="button" tabIndex=0>` com handlers de teclado e `stopPropagation` (senão troca de aba).
+- Não aninhar `<button>` dentro do `Tab` (que já é `<button>`). Foi o motivo de tirar o menu de
+  gerenciar de dentro da aba e movê-lo para o cabeçalho da lista (`FeedActionsMenu`), onde vira um
+  `IconButton` normal. Evitar recriar gatilhos interativos dentro de `Tab`.
 - Botão desabilitado dentro de `Tooltip` precisa de um `<span>` wrapper para o tooltip funcionar.
 - Ícone de excluir nesta versão do MUI: `@mui/icons-material/DeleteOutlined` (com "d"); `DeleteOutline`
   não existe — mesmo padrão do `PersonOutlined`.
