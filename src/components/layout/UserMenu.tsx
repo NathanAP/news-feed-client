@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next'
 import { useSession } from '../../hooks/useSession'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { ProfileDialog } from '../user/ProfileDialog'
-import { PreferencesDialog } from '../user/PreferencesDialog'
+import { LazyPreferencesDialog } from '../user/LazyPreferencesDialog'
 
 export function UserMenu() {
     const { t, i18n } = useTranslation()
@@ -125,7 +125,7 @@ export function UserMenu() {
                 open={profileOpen}
                 onClose={() => setProfileOpen(false)}
             />
-            <PreferencesDialog
+            <LazyPreferencesDialog
                 open={preferencesOpen}
                 onClose={() => setPreferencesOpen(false)}
             />

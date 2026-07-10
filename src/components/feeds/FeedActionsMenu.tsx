@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useFeeds } from '../../hooks/useFeeds'
 import { useDeleteFeed } from '../../hooks/useFeedMutations'
-import { FeedFormDialog } from './FeedFormDialog'
+import { LazyFeedFormDialog } from './LazyFeedFormDialog'
 import { ConfirmDialog } from '../ConfirmDialog'
 import { feedPath, RoutePath } from '../../routes/paths'
 
@@ -93,7 +93,7 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
                 </MenuItem>
             </Menu>
 
-            <FeedFormDialog
+            <LazyFeedFormDialog
                 open={editOpen}
                 mode="edit"
                 feed={feed}

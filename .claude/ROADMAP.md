@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.9.0.0
+0.10.0.0
 
 ## Versão 0.1.0.0
 
@@ -140,18 +140,26 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.10.0.0
 
-- [ ] Permitir reorganizar abas de feeds
+- [x] Otimização de bundle (code splitting)
+    - Rotas via `React.lazy` (`routes/lazyPages.ts` + `Suspense`/`PageLoader`) e diálogos de
+      formulário (`LazyFeedFormDialog`/`LazyPreferencesDialog`) adiados até abrir. Chunk principal
+      caiu de ~935 kB para ~488 kB (gzip 295→153 kB) e o aviso de chunk do Vite sumiu. Convenção
+      registrada em `rules/performance.md`.
 
 ## Versão 0.11.0.0
 
-- [ ] Revisão
+- [ ] Permitir reorganizar abas de feeds
 
 ## Versão 0.12.0.0
+
+- [ ] Revisão
+
+## Versão 0.13.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.13.0.0
+## Versão 0.14.0.0
 
 - [ ] Definir Taskfile

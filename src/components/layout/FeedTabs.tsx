@@ -9,7 +9,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useFeeds } from '../../hooks/useFeeds'
 import { useUnreadCounts } from '../../hooks/useUnreadCounts'
-import { FeedFormDialog } from '../feeds/FeedFormDialog'
+import { LazyFeedFormDialog } from '../feeds/LazyFeedFormDialog'
 import { feedPath } from '../../routes/paths'
 
 // Counts above this are shown as "9+" so a high number (or browser zoom) never
@@ -128,7 +128,7 @@ export function FeedTabs() {
                 </span>
             </Tooltip>
 
-            <FeedFormDialog
+            <LazyFeedFormDialog
                 open={createOpen}
                 mode="create"
                 onClose={() => setCreateOpen(false)}

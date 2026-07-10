@@ -1,6 +1,13 @@
+import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
+import { PageLoader } from '../components/PageLoader'
 
-// App shell. The real layout (MUI, header, theme toggle) arrives in 0.4.
+// App shell. Suspense here covers the lazy routes that render outside AppLayout
+// (login, OAuth callback, not-found).
 export function RootLayout() {
-    return <Outlet />
+    return (
+        <Suspense fallback={<PageLoader />}>
+            <Outlet />
+        </Suspense>
+    )
 }

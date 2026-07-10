@@ -3,14 +3,18 @@ import { RootLayout } from './RootLayout'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
 import { AppLayout } from '../components/layout/AppLayout'
-import { HomePage } from '../pages/HomePage'
-import { FeedPage } from '../pages/FeedPage'
-import { ArticleDetailPage } from '../pages/ArticleDetailPage'
-import { LoginPage } from '../pages/LoginPage'
-import { AuthCallbackPage } from '../pages/AuthCallbackPage'
-import { NotFoundPage } from '../pages/NotFoundPage'
 import { RoutePath } from './paths'
+import {
+    HomePage,
+    FeedPage,
+    ArticleDetailPage,
+    LoginPage,
+    AuthCallbackPage,
+    NotFoundPage,
+} from './lazyPages'
 
+// Pages are code-split (see lazyPages / rules/performance.md). Structural pieces
+// (layouts, guards) stay eager since they're always needed.
 export const router = createBrowserRouter([
     {
         element: <RootLayout />,

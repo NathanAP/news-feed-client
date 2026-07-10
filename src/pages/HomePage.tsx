@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
 import { useFeeds } from '../hooks/useFeeds'
-import { FeedFormDialog } from '../components/feeds/FeedFormDialog'
+import { LazyFeedFormDialog } from '../components/feeds/LazyFeedFormDialog'
 import { feedPath } from '../routes/paths'
 
 // Redirects to the user's first feed once feeds load; shows an empty state with
@@ -55,7 +55,7 @@ export function HomePage() {
             >
                 {t('feed.create')}
             </Button>
-            <FeedFormDialog
+            <LazyFeedFormDialog
                 open={createOpen}
                 mode="create"
                 onClose={() => setCreateOpen(false)}

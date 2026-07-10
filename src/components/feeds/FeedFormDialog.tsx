@@ -21,7 +21,7 @@ const MAX_NAME_LENGTH = 120
 
 type FeedFormMode = 'create' | 'edit'
 
-interface FeedFormDialogProps {
+export interface FeedFormDialogProps {
     open: boolean
     mode: FeedFormMode
     // The feed being edited (required in edit mode; ignored in create mode).
