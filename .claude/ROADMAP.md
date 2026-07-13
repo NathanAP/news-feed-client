@@ -160,6 +160,18 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.12.0.0
 
+- [ ] Alterar preferências de usuário
+    - O controle de tema não é mais feito por lá, a partir de agora é tudo gerenciado por nós aqui no front
+    - Os campos de tradução mudaram. Agora há um enum que se chama `language_to_translate`
+        - Quando nulo, indica que a pessoa não quer receber traduções
+        - Quando quando valor, indica qual é o idioma que a tradução ocorrerá
+    - Esse campo continua sendo separado do idioma geral do I18n controlado por aqui
+- [ ] Colocar o campo de idioma geral do client pra dentro das preferências de usuário ao invés do menu
+- [ ] Acredito que isso não nos afete, mas agora não é mais necessário passar o idioma a qual queremos fazer a tradução
+    - Quem decide isso agora é a rota através dos dados do `access_token`
+
+## Versão 0.12.0.0
+
 - [ ] Revisão
 
 ## Versão 0.13.0.0
