@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.10.0.0
+0.11.0.0
 
 ## Versão 0.1.0.0
 
@@ -148,7 +148,15 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.11.0.0
 
-- [ ] Permitir reorganizar abas de feeds
+- [x] Permitir reorganizar abas de feeds
+    - Ordem persistida em **localStorage** (por-dispositivo) via um store + `useSyncExternalStore`
+      (`hooks/feedOrderStore.ts` + `useOrderedFeeds`); reconcilia feeds novos (fim) e excluídos.
+      `FeedTabs`/`HomePage` consomem `useOrderedFeeds`.
+    - Diálogo `ReorderFeedsDialog` (arrastar com `@dnd-kit`, carregado _lazy_ via
+      `LazyReorderFeedsDialog`), aberto por "Reorganizar feeds" no menu "⋮" do cabeçalho (após um
+      divisor; desabilitado com < 2 feeds).
+    - Dependência de backend anotada como upgrade futuro: **não há campo de ordem/endpoint** — por
+      isso a ordem não sincroniza entre dispositivos por ora.
 
 ## Versão 0.12.0.0
 

@@ -60,6 +60,7 @@
         "manage": "Manage feed {{name}}",
         "edit": "Edit feed",
         "delete": "Delete feed",
+        "reorder": "Reorder feeds",
         "limitReached": "You can have at most {{max}} feeds.",
         "deleteConfirm": {
             "title": "Delete feed?",
@@ -74,6 +75,11 @@
             "title": "You don't have any feeds yet",
             "body": "Create a feed to start seeing your personalized news."
         }
+    },
+    "reorderFeeds": {
+        "title": "Reorder feeds",
+        "hint": "Drag to reorder your feed tabs.",
+        "dragHandle": "Drag {{name}}"
     },
     "feedForm": {
         "createTitle": "New feed",

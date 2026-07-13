@@ -4,14 +4,17 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
+import SwapVertIcon from '@mui/icons-material/SwapVert'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useFeeds } from '../../hooks/useFeeds'
 import { useDeleteFeed } from '../../hooks/useFeedMutations'
 import { LazyFeedFormDialog } from './LazyFeedFormDialog'
+import { LazyReorderFeedsDialog } from './LazyReorderFeedsDialog'
 import { ConfirmDialog } from '../ConfirmDialog'
 import { feedPath, RoutePath } from '../../routes/paths'
 
@@ -27,6 +30,10 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null)
     const [editOpen, setEditOpen] = useState(false)
     const [confirmOpen, setConfirmOpen] = useState(false)
+    const [reorderOpen, setReorderOpen] = useState(false)
+
+    // Reordering needs at least two feeds to be meaningful.
+    const canReorder = (feeds?.length ?? 0) >= 2
 
     const feed = feeds?.find((item) => item.id === feedId)
     if (feed === undefined) {
@@ -91,6 +98,21 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
                         {t('feed.delete')}
                     </ListItemText>
                 </MenuItem>
+                <Divider />
+                {/* Global action (reorders all feeds), separated from the
+                per-feed actions above. */}
+                <MenuItem
+                    disabled={!canReorder}
+                    onClick={() => {
+                        setReorderOpen(true)
+                        setMenuAnchor(null)
+                    }}
+                >
+                    <ListItemIcon>
+                        <SwapVertIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>{t('feed.reorder')}</ListItemText>
+                </MenuItem>
             </Menu>
 
             <LazyFeedFormDialog
@@ -109,6 +131,11 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
                 loading={deleteFeed.isPending}
                 onConfirm={handleDelete}
                 onClose={() => setConfirmOpen(false)}
+            />
+
+            <LazyReorderFeedsDialog
+                open={reorderOpen}
+                onClose={() => setReorderOpen(false)}
             />
         </>
     )

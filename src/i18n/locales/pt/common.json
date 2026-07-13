@@ -60,6 +60,7 @@
         "manage": "Gerenciar feed {{name}}",
         "edit": "Editar feed",
         "delete": "Excluir feed",
+        "reorder": "Reorganizar feeds",
         "limitReached": "Você pode ter no máximo {{max}} feeds.",
         "deleteConfirm": {
             "title": "Excluir feed?",
@@ -74,6 +75,11 @@
             "title": "Você ainda não tem feeds",
             "body": "Crie um feed para começar a ver suas notícias personalizadas."
         }
+    },
+    "reorderFeeds": {
+        "title": "Reorganizar feeds",
+        "hint": "Arraste para reordenar suas abas de feed.",
+        "dragHandle": "Arrastar {{name}}"
     },
     "feedForm": {
         "createTitle": "Novo feed",

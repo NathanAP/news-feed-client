@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
-import { useFeeds } from '../hooks/useFeeds'
+import { useOrderedFeeds } from '../hooks/useOrderedFeeds'
 import { LazyFeedFormDialog } from '../components/feeds/LazyFeedFormDialog'
 import { feedPath } from '../routes/paths'
 
@@ -15,7 +15,7 @@ import { feedPath } from '../routes/paths'
 export function HomePage() {
     const { t } = useTranslation()
     const navigate = useNavigate()
-    const { data: feeds, isPending, isError } = useFeeds()
+    const { data: feeds, isPending, isError } = useOrderedFeeds()
     const [createOpen, setCreateOpen] = useState(false)
 
     if (isPending) {
@@ -37,7 +37,7 @@ export function HomePage() {
         )
     }
 
-    if (feeds.length > 0) {
+    if (feeds !== undefined && feeds.length > 0) {
         return <Navigate to={feedPath(feeds[0].id)} replace />
     }
 

@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip'
 import AddIcon from '@mui/icons-material/Add'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useFeeds } from '../../hooks/useFeeds'
+import { useOrderedFeeds } from '../../hooks/useOrderedFeeds'
 import { useUnreadCounts } from '../../hooks/useUnreadCounts'
 import { LazyFeedFormDialog } from '../feeds/LazyFeedFormDialog'
 import { feedPath } from '../../routes/paths'
@@ -27,7 +27,7 @@ export function FeedTabs() {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { feedId } = useParams<{ feedId: string }>()
-    const { data: feeds } = useFeeds()
+    const { data: feeds } = useOrderedFeeds()
     // Only poll once the feeds are known (i.e. the session is ready).
     const { data: unreadCounts } = useUnreadCounts(feeds !== undefined)
     const [createOpen, setCreateOpen] = useState(false)
