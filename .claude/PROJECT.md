@@ -85,10 +85,11 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 - A única exceção é o conteúdo da notícia vindo da API é exibido no idioma enviado pela API (não é internacionalizado pelo cliente).
 - Uma rota de tradução de notícias sob demanda existe em `GET /articles/{id}/translate/{language}`.
 
-## Renderização de HTML
+## Renderização de HTML externos ou de terceiros (redes sociais, mídia, entre outros)
 
 - O conteúdo do artigo vem como HTML já sanitizado no backend.
-- Ao renderizar via `dangerouslySetInnerHTML`, aplicamos `DOMPurify` como defesa adicional no cliente.
+- Tratamentos extras (mais sanitização ou tratamento de URLs) por enquanto não vai ser necessário.
+    - Provavelmente o primeiro que vai ser necessário vai ser em relação ao Instagram, mas vamos lidar com isso depois.
 
 ## Guard de manutenção
 
