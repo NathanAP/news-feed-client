@@ -1,5 +1,6 @@
 # Endpoints da API
 
+> Este arquivo está sendo enviado em conjunto com o `api-integration.md` ao client.
 > Resumo para consumo (inclusive por outras instâncias, ex: o client). Base: `/{API_VERSION}`
 > (hoje `/v1`). Auth = `Authorization: Bearer <access_token>`. Datas sempre em UTC.
 > Convenção de "não encontrado": busca em lista vazia → 200 `[]`; busca de item único
@@ -84,7 +85,7 @@ Criação/edição/remoção ainda não são restritas a admin (admin-futuro). A
 - `POST /articles/create` — `{ title, content, url_original, keywords[5..20], source_id, language_original }` →
   201 **ArticleResponse** / 400 (inclui `source_id` ausente/fonte inativa e `language_original` ausente/inválido) / 409 (url_original duplicada) / 500.
   `language_original` é um código do enum de idiomas (`pt|en|es|fr|de|it`) e é obrigatório na criação manual (na CRON é detectado).
-- `GET /articles/:id/translate/:language` — **tradução personalizada** sob demanda (LLM apenas, `TRANSLATION_*`). Traduz título+conteúdo para `:language` (`pt|en|es|fr|de|it`), preservando o HTML e adaptando o tom à `ai_personality` (lida do JWT); re-sanitiza a saída (bluemonday). **Keywords não são traduzidas** (ficam canônicas em inglês). **Read-only** (não grava; client cacheia). Como a leitura da notícia, é **aberta a qualquer usuário autenticado** (a notícia é global; não exige que ela esteja num feed do usuário) e **sem gate de preferência** (desde 0.33; `language_to_translate` é só dica de client). → 200 `{ title, content, language, language_original }` / 400 (idioma inválido, igual ao original, ou `language_original` null) / 404 / 500.
+- `GET /articles/:id/translate` — **tradução personalizada** sob demanda (LLM apenas, `TRANSLATION_*`). O **idioma-alvo vem da preferência `language_to_translate` do usuário** (lida do JWT), **não da URL** (mudança 0.33.1). Traduz título+conteúdo para esse idioma, preservando o HTML e adaptando o tom à `ai_personality` (também do JWT); re-sanitiza a saída (bluemonday). **Keywords não são traduzidas** (ficam canônicas em inglês). **Read-only** (não grava; client cacheia). Aberta a qualquer usuário autenticado (a notícia é global; não exige que ela esteja num feed do usuário). → 200 `{ title, content, language, language_original }` / 400 (`language_to_translate` nulo/sem alvo, alvo == original, ou `language_original` null) / 404 / 500.
 - `PUT /articles/:id/read` — marca como lida nos feeds do usuário. Sem body na resposta → **200**
   (em ≥1 feed, ou já lida) / **204** (não está em nenhum feed do usuário) / 404 (notícia inexistente). Idempotente.
 - `GET /articles/:id` → 200 **ArticleResponse** / 404. **Rota principal de visualização de uma notícia.**
@@ -102,7 +103,7 @@ produção — resposta **404** (a rota não está montada), não 401. São ferr
 do pipeline; **chamam a IA de verdade** (consomem quota), **não persistem** nada e expõem comportamento
 interno — por isso jamais devem ser alcançáveis por um client.
 
-- `POST /articles/treatment` — **dry-run** do tratamento por IA. Body `{ article: { title, content, ... }, keywords_mode? }`. Roda detecção de idioma (lingua-go) + tratamento (LLM) → keywords. Reusa o mesmo `treater` da CRON, então honra `TREATMENT_AI_ACTIVE` (se `false`, o passo LLM é passthrough e só a sanitização roda). → 200 `{ content, keywords, keywords_mode, language_original, treatment_ms, keywords_ms }` / 400 / 500. O `keywords_mode` opcional (`local`|`groq`|`gemini`) troca o backend das keywords só nesta chamada (benchmark sem reiniciar; 400 se o modo não existe).
+- `POST /articles/treatment` — **dry-run** do tratamento. Body `{ article: { title, content, ... }, keywords_mode? }`. Roda detecção de idioma (lingua-go) + **tratamento de URLs** (reescreve links internos, leitura no banco) + **tratamento de embeds** (Instagram → link) + **sanitização do corpo cru** (bluemonday, iframes YouTube/Twitch por allowlist; todos determinísticos — a IA não toca no corpo desde a 0.34) → keywords (única etapa de IA). → 200 `{ content, keywords, keywords_mode, language_original, treatment_ms, keywords_ms }` (`content` é o corpo sanitizado; `treatment_ms` mede a sanitização) / 400 / 500 (falha da IA de keywords). O `keywords_mode` opcional (`local`|`groq`|`gemini`) troca o backend das keywords só nesta chamada (benchmark sem reiniciar; 400 se o modo não existe).
 - `POST /articles/judgement` — **dry-run** do julgamento por IA. Body `{ article: { title, content, keywords }, judgement_mode? }` (notícia já tratada; sem `id`). Camada 1: feeds candidatos por sobreposição de keywords (SQL `json_each`, feeds ativos de qualquer usuário); camada 2: `score` 0–100 da IA por candidato vs `JUDGEMENT_THRESHOLD`. → 200 `{ judgement_mode, threshold, candidate_count, judgements: [{ feed_id, feed_name, score, passed }], judgement_ms }` / 400 / 500. `judgement_mode` opcional (`local`|`groq`|`gemini`) troca o backend só nesta chamada (400 se inexistente).
 
 ## Feeds (`/v1/feeds`) — auth, **recurso por-usuário**
@@ -129,9 +130,10 @@ interno — por isso jamais devem ser alcançáveis por um client.
 
 - CRON interna (`services/cron`, `robfig/cron/v3`) varre as sources ativas em `RSS_FEED_CRON_SCHEDULE`,
   ativa por `RSS_FEED_CRON_ACTIVE`. Lê o RSS de cada source (gofeed), **deduplica por `url_original`**,
-  **trata** as novas (detecta o idioma com lingua-go + LLM limpa o conteúdo + SLM nomeia keywords;
-  com `TREATMENT_AI_ACTIVE=false` o passo da LLM é pulado — o conteúdo original do RSS segue via um
-  passthrough treater, mas a sanitização bluemonday continua rodando, então o whitelist de HTML é sempre aplicado),
+  **trata** as novas (detecta o idioma com lingua-go + **reescreve links internos** (url treatment →
+  `CLIENT_URL/articles/{id}`, 0.35) + **converte embeds via script** (Instagram → link, 0.36) +
+  **sanitiza o corpo cru do RSS** com bluemonday (iframes YouTube/Twitch por allowlist) — todos
+  determinísticos, a IA não toca no corpo desde a 0.34 — + SLM/LLM nomeia keywords),
   **persiste** o `article` (com `language_original`) e por fim **julga** (camada 1 SQL por keywords + camada 2 IA vs
   `JUDGEMENT_THRESHOLD`), gravando as associações aprovadas em `articles_feeds`; ao
   final grava `system.last_article_discovery_at` (informativo). Falha de IA no tratamento → não

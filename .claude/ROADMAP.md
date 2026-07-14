@@ -170,16 +170,16 @@ Comunicação com a API — trocar o placeholder por dados reais.
 - [ ] Acredito que isso não nos afete, mas agora não é mais necessário passar o idioma a qual queremos fazer a tradução
     - Quem decide isso agora é a rota através dos dados do `access_token`
 
-## Versão 0.12.0.0
+## Versão 0.13.0.0
 
 - [ ] Revisão
 
-## Versão 0.13.0.0
+## Versão 0.14.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.14.0.0
+## Versão 0.15.0.0
 
 - [ ] Definir Taskfile

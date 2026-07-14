@@ -87,7 +87,8 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 
 ## Renderização de HTML
 
-- O conteúdo do artigo vem como HTML (já sanitizado no backend). Ao renderizar via `dangerouslySetInnerHTML`, aplicamos `DOMPurify` como defesa adicional no cliente.
+- O conteúdo do artigo vem como HTML já sanitizado no backend.
+- Ao renderizar via `dangerouslySetInnerHTML`, aplicamos `DOMPurify` como defesa adicional no cliente.
 
 ## Guard de manutenção
 
