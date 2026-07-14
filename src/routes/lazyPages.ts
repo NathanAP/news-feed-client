@@ -1,8 +1,8 @@
 import { lazy } from 'react'
 
 // Code-split page components: each becomes its own chunk loaded on demand,
-// keeping the initial bundle small and deferring page-specific deps (e.g.
-// DOMPurify, only used by the article page). See rules/performance.md.
+// keeping the initial bundle small and deferring page-specific deps. See
+// rules/performance.md.
 export const HomePage = lazy(() =>
     import('../pages/HomePage').then((m) => ({ default: m.HomePage })),
 )

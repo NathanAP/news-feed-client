@@ -18,7 +18,6 @@
         "open": "Open user menu",
         "profile": "Profile",
         "preferences": "Preferences",
-        "language": "Language",
         "signOut": "Sign out"
     },
     "profile": {
@@ -27,11 +26,11 @@
     },
     "preferences": {
         "title": "Preferences",
-        "themeLabel": "Theme",
-        "themeOptions": { "light": "Light", "dark": "Dark" },
+        "uiLanguageLabel": "Interface language",
         "languageLabel": "Translation language",
-        "languageHelp": "Language used when translating articles.",
+        "languageHelp": "Language articles are translated to. Disabled = no translation.",
         "languageOptions": {
+            "off": "Disabled",
             "pt": "Portuguese",
             "en": "English",
             "es": "Spanish",
@@ -45,7 +44,6 @@
             "mixed": "Mixed",
             "informative": "Informative"
         },
-        "translateContentLabel": "Translate article content",
         "saveError": "Could not save your preferences. Please try again."
     },
     "feed": {

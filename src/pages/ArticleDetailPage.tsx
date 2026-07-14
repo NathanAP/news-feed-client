@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
-import DOMPurify from 'dompurify'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
@@ -74,7 +73,6 @@ export function ArticleDetailPage() {
         'dd MMM yyyy, HH:mm',
         { locale: getDateFnsLocale(i18n.language) },
     )
-    const sanitizedContent = DOMPurify.sanitize(article.content)
 
     return (
         <Box>
@@ -102,6 +100,9 @@ export function ArticleDetailPage() {
                 {createdAtLabel}
             </Typography>
 
+            {/* The content is HTML already sanitized by the backend (bluemonday,
+            strict allowlist incl. YouTube/Twitch iframes; no class/style/id), so
+            we render it directly. Style by tag/context selectors only. */}
             <Box
                 sx={{
                     lineHeight: 1.7,
@@ -109,13 +110,22 @@ export function ArticleDetailPage() {
                     // instead of pushing the page into horizontal scroll.
                     overflowWrap: 'anywhere',
                     '& img': { maxWidth: '100%', height: 'auto' },
+                    // Video embeds (YouTube/Twitch) come as fixed-size iframes;
+                    // make them fill the column at a 16:9 ratio.
+                    '& iframe': {
+                        width: '100%',
+                        maxWidth: '100%',
+                        aspectRatio: '16 / 9',
+                        height: 'auto',
+                        border: 0,
+                    },
                     '& pre, & code': {
                         whiteSpace: 'pre-wrap',
                         overflowWrap: 'anywhere',
                     },
                     '& pre': { overflowX: 'auto' },
                 }}
-                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+                dangerouslySetInnerHTML={{ __html: article.content }}
             />
         </Box>
     )

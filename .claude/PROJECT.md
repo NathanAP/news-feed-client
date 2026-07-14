@@ -72,7 +72,7 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
     - anexam `Authorization: Bearer <access_token>` nas requisições autenticadas;
     - ao receber 401, tentam `POST /v1/auth/refresh` uma vez e repetem a requisição original;
     - ao receber 503 (guard de manutenção global), acionam a tela de manutenção do app.
-- Um arquivo de serviço por modelo da API (`auth`, `users`, `sources`, `articles`, `feeds`, `system`, `health`), cada um com uma função por endpoint. Tipos/enums espelham `memory/api.md`.
+- Um arquivo de serviço por modelo da API (`auth`, `users`, `sources`, `articles`, `feeds`, `system`, `health`), cada um com uma função por endpoint. Tipos/enums espelham `memory/endpoints.md` e `memory/api-integration.md`.
 - Os hooks de TanStack Query ficam em `raiz/src/hooks/` e consomem esses serviços.
 
 ## Datas
@@ -83,7 +83,7 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 
 - Segue as regras conforme o arquiv `raiz/.claude/rules/conventions.md`.
 - A única exceção é o conteúdo da notícia vindo da API é exibido no idioma enviado pela API (não é internacionalizado pelo cliente).
-- Uma rota de tradução de notícias sob demanda existe em `GET /articles/{id}/translate/{language}`.
+- Uma rota de tradução de notícias sob demanda existe em `GET /articles/{id}/translate` (o idioma-alvo vem da preferência `language_to_translate` do usuário, não da URL).
 
 ## Renderização de HTML externos ou de terceiros (redes sociais, mídia, entre outros)
 

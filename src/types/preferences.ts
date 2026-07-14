@@ -1,14 +1,8 @@
 // Enums mirror the API. Kept as `as const` objects (not TS enums) to stay
 // compatible with the `erasableSyntaxOnly` tsconfig flag.
 
-export const Theme = {
-    Light: 'light',
-    Dark: 'dark',
-} as const
-export type Theme = (typeof Theme)[keyof typeof Theme]
-
 // Target language for on-demand content translation. Distinct from the UI
-// language switcher (PT/EN, client-side).
+// language switcher (PT/EN, client-side). `null` means translation is off.
 export const Language = {
     Pt: 'pt',
     En: 'en',
@@ -27,19 +21,17 @@ export const AiPersonality = {
 } as const
 export type AiPersonality = (typeof AiPersonality)[keyof typeof AiPersonality]
 
-// Domain model (camelCase).
+// Domain model (camelCase). `theme` is no longer a server preference — it lives
+// only on the client (MUI color scheme + localStorage). `languageToTranslate`
+// null = translation disabled (it also merges the old translate_content flag).
 export interface UserPreferences {
-    theme: Theme
-    language: Language
-    translateContent: boolean
+    languageToTranslate: Language | null
     aiPersonality: AiPersonality
 }
 
 // Raw API DTO (snake_case) from GET/PUT /users/me/preferences.
 export interface UserPreferencesResponse {
-    theme: Theme
-    language: Language
-    translate_content: boolean
+    language_to_translate: Language | null
     ai_personality: AiPersonality
 }
 

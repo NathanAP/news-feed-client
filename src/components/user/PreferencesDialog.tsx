@@ -9,8 +9,6 @@ import DialogActions from '@mui/material/DialogActions'
 import TextField from '@mui/material/TextField'
 import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
-import Switch from '@mui/material/Switch'
-import FormControlLabel from '@mui/material/FormControlLabel'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
 import Box from '@mui/material/Box'
@@ -21,18 +19,20 @@ import {
     useUpdatePreferences,
 } from '../../hooks/usePreferences'
 import {
-    Theme,
     Language,
     AiPersonality,
     type UserPreferences,
 } from '../../types/preferences'
 
 const schema = z.object({
-    theme: z.enum(Theme),
-    language: z.enum(Language),
-    translateContent: z.boolean(),
+    languageToTranslate: z.enum(Language).nullable(),
     aiPersonality: z.enum(AiPersonality),
 })
+
+// Sentinel for the "translation off" option (languageToTranslate = null), since
+// MUI Select can't hold a null value. Must be non-empty: MUI Select treats an
+// empty-string value as "no selection" and wouldn't render the option's label.
+const OFF = 'off'
 
 export function PreferencesDialog({
     open,
@@ -41,16 +41,14 @@ export function PreferencesDialog({
     open: boolean
     onClose: () => void
 }) {
-    const { t } = useTranslation()
+    const { t, i18n } = useTranslation()
     const { data: preferences, isPending } = usePreferences()
     const updatePreferences = useUpdatePreferences()
 
     const { control, handleSubmit, reset } = useForm<UserPreferences>({
         resolver: zodResolver(schema),
         defaultValues: {
-            theme: Theme.Dark,
-            language: Language.En,
-            translateContent: false,
+            languageToTranslate: null,
             aiPersonality: AiPersonality.Mixed,
         },
     })
@@ -93,39 +91,46 @@ export function PreferencesDialog({
                                     {t('preferences.saveError')}
                                 </Alert>
                             )}
+                            {/* UI language is a client-only setting (i18next),
+                            applied instantly on change — not part of the backend
+                            preferences form below. */}
+                            <TextField
+                                select
+                                fullWidth
+                                label={t('preferences.uiLanguageLabel')}
+                                value={i18n.resolvedLanguage ?? 'en'}
+                                onChange={(event) =>
+                                    void i18n.changeLanguage(event.target.value)
+                                }
+                            >
+                                <MenuItem value="pt">Português</MenuItem>
+                                <MenuItem value="en">English</MenuItem>
+                            </TextField>
                             <Controller
                                 control={control}
-                                name="theme"
+                                name="languageToTranslate"
                                 render={({ field }) => (
                                     <TextField
-                                        {...field}
-                                        select
-                                        fullWidth
-                                        label={t('preferences.themeLabel')}
-                                    >
-                                        {Object.values(Theme).map((value) => (
-                                            <MenuItem key={value} value={value}>
-                                                {t(
-                                                    `preferences.themeOptions.${value}`,
-                                                )}
-                                            </MenuItem>
-                                        ))}
-                                    </TextField>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="language"
-                                render={({ field }) => (
-                                    <TextField
-                                        {...field}
                                         select
                                         fullWidth
                                         label={t('preferences.languageLabel')}
                                         helperText={t(
                                             'preferences.languageHelp',
                                         )}
+                                        value={field.value ?? OFF}
+                                        onChange={(event) =>
+                                            field.onChange(
+                                                event.target.value === OFF
+                                                    ? null
+                                                    : event.target.value,
+                                            )
+                                        }
                                     >
+                                        <MenuItem value={OFF}>
+                                            {t(
+                                                'preferences.languageOptions.off',
+                                            )}
+                                        </MenuItem>
                                         {Object.values(Language).map(
                                             (value) => (
                                                 <MenuItem
@@ -166,27 +171,6 @@ export function PreferencesDialog({
                                             ),
                                         )}
                                     </TextField>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="translateContent"
-                                render={({ field }) => (
-                                    <FormControlLabel
-                                        control={
-                                            <Switch
-                                                checked={field.value}
-                                                onChange={(event) =>
-                                                    field.onChange(
-                                                        event.target.checked,
-                                                    )
-                                                }
-                                            />
-                                        }
-                                        label={t(
-                                            'preferences.translateContentLabel',
-                                        )}
-                                    />
                                 )}
                             />
                         </Stack>

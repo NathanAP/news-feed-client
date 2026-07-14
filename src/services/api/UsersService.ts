@@ -45,9 +45,7 @@ export class UsersService {
         const data = await this.client.put<UpdatePreferencesResponse>(
             '/users/me/preferences',
             {
-                theme: input.theme,
-                language: input.language,
-                translate_content: input.translateContent,
+                language_to_translate: input.languageToTranslate,
                 ai_personality: input.aiPersonality,
             },
         )
@@ -60,9 +58,7 @@ export class UsersService {
 
     private toPreferences(data: UserPreferencesResponse): UserPreferences {
         return {
-            theme: data.theme,
-            language: data.language,
-            translateContent: data.translate_content,
+            languageToTranslate: data.language_to_translate,
             aiPersonality: data.ai_personality,
         }
     }

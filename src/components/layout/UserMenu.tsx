@@ -17,7 +17,7 @@ import { ProfileDialog } from '../user/ProfileDialog'
 import { LazyPreferencesDialog } from '../user/LazyPreferencesDialog'
 
 export function UserMenu() {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const { logout } = useSession()
     const { data: user } = useCurrentUser()
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
@@ -78,32 +78,6 @@ export function UserMenu() {
                         <TuneOutlinedIcon fontSize="small" />
                     </ListItemIcon>
                     <ListItemText>{t('menu.preferences')}</ListItemText>
-                </MenuItem>
-                <Divider />
-                <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    sx={{ display: 'block', px: 2, py: 0.5 }}
-                >
-                    {t('menu.language')}
-                </Typography>
-                <MenuItem
-                    selected={i18n.resolvedLanguage === 'pt'}
-                    onClick={() => {
-                        void i18n.changeLanguage('pt')
-                        close()
-                    }}
-                >
-                    <ListItemText inset>Português</ListItemText>
-                </MenuItem>
-                <MenuItem
-                    selected={i18n.resolvedLanguage === 'en'}
-                    onClick={() => {
-                        void i18n.changeLanguage('en')
-                        close()
-                    }}
-                >
-                    <ListItemText inset>English</ListItemText>
                 </MenuItem>
                 <Divider />
                 <MenuItem

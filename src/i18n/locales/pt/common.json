@@ -18,7 +18,6 @@
         "open": "Abrir menu do usuário",
         "profile": "Perfil",
         "preferences": "Preferências",
-        "language": "Idioma",
         "signOut": "Sair"
     },
     "profile": {
@@ -27,11 +26,11 @@
     },
     "preferences": {
         "title": "Preferências",
-        "themeLabel": "Tema",
-        "themeOptions": { "light": "Claro", "dark": "Escuro" },
+        "uiLanguageLabel": "Idioma da interface",
         "languageLabel": "Idioma de tradução",
-        "languageHelp": "Idioma usado ao traduzir notícias.",
+        "languageHelp": "Idioma para o qual as notícias são traduzidas. Desativado = sem tradução.",
         "languageOptions": {
+            "off": "Desativado",
             "pt": "Português",
             "en": "Inglês",
             "es": "Espanhol",
@@ -45,7 +44,6 @@
             "mixed": "Mista",
             "informative": "Informativa"
         },
-        "translateContentLabel": "Traduzir o conteúdo das notícias",
         "saveError": "Não foi possível salvar suas preferências. Tente novamente."
     },
     "feed": {

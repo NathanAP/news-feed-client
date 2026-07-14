@@ -8,7 +8,6 @@ import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import { SessionProvider } from './contexts/SessionProvider'
 import { useSession } from './hooks/useSession'
-import { useThemeSync } from './hooks/useThemeSync'
 import { queryClient } from './config/queryClient'
 import { router } from './routes/router'
 import { theme } from './theme/theme'
@@ -32,8 +31,6 @@ function SplashScreen() {
 
 function AppContent() {
     const { isInitializing, isUnderMaintenance } = useSession()
-    // Keep the UI theme in sync with the backend preference (source of truth).
-    useThemeSync()
 
     if (isUnderMaintenance) {
         return <MaintenancePage />

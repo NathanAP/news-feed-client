@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.11.0.0
+0.12.0.0
 
 ## Versão 0.1.0.0
 
@@ -160,15 +160,19 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.12.0.0
 
-- [ ] Alterar preferências de usuário
+- [x] Alterar preferências de usuário
     - O controle de tema não é mais feito por lá, a partir de agora é tudo gerenciado por nós aqui no front
     - Os campos de tradução mudaram. Agora há um enum que se chama `language_to_translate`
         - Quando nulo, indica que a pessoa não quer receber traduções
         - Quando quando valor, indica qual é o idioma que a tradução ocorrerá
     - Esse campo continua sendo separado do idioma geral do I18n controlado por aqui
-- [ ] Colocar o campo de idioma geral do client pra dentro das preferências de usuário ao invés do menu
-- [ ] Acredito que isso não nos afete, mas agora não é mais necessário passar o idioma a qual queremos fazer a tradução
+- [x] Colocar o campo de idioma geral do client pra dentro das preferências de usuário ao invés do menu
+- [x] Acredito que isso não nos afete, mas agora não é mais necessário passar o idioma a qual queremos fazer a tradução
     - Quem decide isso agora é a rota através dos dados do `access_token`
+- [x] Aceitar embeds de YouTube/Twitch (removido o DOMPurify do client; foldado nesta versão)
+    - O conteúdo já vem sanitizado do backend (allowlist com iframes YouTube/Twitch, Instagram→link,
+      sem class/style/id). O client renderiza direto e não re-sanitiza por ora; iframes ganham CSS
+      responsivo (16:9). `dompurify` desinstalado.
 
 ## Versão 0.13.0.0
 

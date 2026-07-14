@@ -83,7 +83,6 @@ Você tem liberdade para acessar qualquer arquivo da pasta `.claude`.
 - `Zod`: validação geral de formulários.
 - `DateFNS + tz`: gerenciador de datas.
 - `Vitest + React Testing Library + Playwright`: gerenciador de testes.
-- `DOMPurify`: sanitização de HTML.
 - `ESLint + Prettier`: padronização de código.
 
 ## Regras da stack

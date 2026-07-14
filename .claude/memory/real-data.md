@@ -16,6 +16,7 @@ pageSize?})` (`GET /feeds/:id/articles?with_sources=true`), `.getById(id)` (`GET
 - **Cabeçalho "X novas · Y totais"**: 2 requisições por feed selecionado (lista completa + uma
   leve `is_read=false&page_size=1` só pra contagem). Indicador por-aba (todas as abas) foi adiado
   pra 0.6.0.0 por custo (N feeds = N requisições extras, sem endpoint de contagem em lote).
-- **HTML da notícia**: sanitizado com DOMPurify antes de `dangerouslySetInnerHTML`. DOMPurify
-  remove `<iframe>` por padrão (embeds tipo Spotify desaparecem) — comportamento esperado, não
-  ajustado.
+- **HTML da notícia**: renderizado direto via `dangerouslySetInnerHTML` (o backend já sanitiza com
+  bluemonday; allowlist inclui iframes YouTube/Twitch, Instagram vira link, sem class/style/id).
+  **DOMPurify foi removido na 0.12** (o client não re-sanitiza por ora). Estilizar por seletor de
+  tag/contexto; iframes têm CSS responsivo (16:9). Ver [[preferences-and-profile]] e a memória de API.
