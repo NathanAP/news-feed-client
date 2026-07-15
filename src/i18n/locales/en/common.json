@@ -1,5 +1,26 @@
 {
-    "app": { "name": "news-feed-client" },
+    "app": {
+        "name": "ChronoFeed",
+        "tagline": "Your news, on your timeline."
+    },
+    "landing": {
+        "description": "ChronoFeed gathers the news that matters to you from across the web and organizes it into personalized feeds — built from the keywords you choose.",
+        "features": {
+            "personalized": {
+                "title": "Feeds you build",
+                "body": "Create feeds from your own keywords and follow exactly the topics you care about."
+            },
+            "adFree": {
+                "title": "Ad-free by design",
+                "body": "A clean, focused read — no ads and no algorithm chasing your attention."
+            },
+            "timeline": {
+                "title": "On your time",
+                "body": "Fresh updates land on your own timeline, so you never miss what's new."
+            }
+        },
+        "signInHint": "Sign in to start building your feed."
+    },
     "common": {
         "cancel": "Cancel",
         "confirm": "Confirm",

@@ -19,6 +19,17 @@ Um feed de notícias hiper personalizado que coleta e filtra notícias baseado n
 - Livre de anúncios.
 - Possui personalizações de layout dinâmicos (dark/light mode, ordenação de feeds, idioma preferido, entre outros).
 
+## Identidade visual
+
+- Nome: **ChronoFeed** (Chrono = tempo; Feed = timeline).
+- Cor de marca: o **dourado** da logo é a cor de acento da identidade — `#c8a04a` no tema escuro e
+  `#8a6a1f` (mais profundo, legível sobre o fundo near-white) no tema claro. É uma **cor de
+  marca/acento** (logo, wordmark, destaques de onboarding), **não** a cor `primary` do app — esta
+  segue azul (`#6b9bff` dark / `#3b6fe0` light).
+- Implementação: vive como token de paleta `brand` em `src/theme/theme.ts` (com `brandGold`
+  exportado para usos decorativos, ex.: o glow do login). Consumir via `brand.main` /
+  `theme.palette.brand.main` — nunca hardcodar o hex.
+
 ## Referências
 
 Aqui estão algumas referências de sites bem sucedidos que servem como base de características que podemos utilizar quando pensamos em nossa aplicação.

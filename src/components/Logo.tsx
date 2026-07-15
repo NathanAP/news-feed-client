@@ -8,7 +8,7 @@ export function Logo({ size = 32 }: { size?: number }) {
             viewBox="0 0 512 512"
             fill="none"
             role="img"
-            aria-label="news-feed-client"
+            aria-label="ChronoFeed"
         >
             <circle
                 cx="256"

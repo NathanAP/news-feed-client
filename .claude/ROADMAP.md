@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.13.0.0
+0.14.0.0
 
 ## Versão 0.1.0.0
 
@@ -189,23 +189,45 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.14.0.0
 
-- [ ] Tela de login bonita, descritiva, explicando o que é a aplicação
-    - Nome do app é ChronoFeed, as cores da logo (aquele dourado) são a base de cores (favor colocar elas no project.md inclusive? acredito que seria legal abrir uma sessão de UX né?)
-- [ ] Explicação de como selecionar boas keywords
-- [ ] Tela de "Sobre nós"
-- [ ] mini tutorial de como funciona o fluxo, provavelmente no menu "Ajuda"
+> Replanejada na sessão de UX da 0.14: a versão original juntava 4 superfícies de UI (login, guia de
+> keywords, "Sobre nós", tutorial/Ajuda) — grande demais para "uma versão por vez". Fatiada uma-por-
+> versão: **0.14** = fundação de marca + login; **0.15** = tutorial de fluxo (Ajuda + modal de 1º
+> acesso); **0.16** = guia de keywords. A tela **"Sobre nós" foi removida do escopo** (sem conteúdo
+> útil por ora). Decisão de cor: o dourado da marca (`#c8a04a` dark / `#8a6a1f` light) é **cor de
+> marca/acento**, não substitui o `primary` (azul).
+
+- [x] Fundação de marca (dourado como token de tema) + tela de login descritiva
+    - Nome do app corrigido para **ChronoFeed** no i18n (`app.name`) — reflete no header e no login.
+    - Dourado extraído para um token de paleta `brand` (`theme.ts`): `main` por esquema (dark
+      `#c8a04a`, light `#8a6a1f` mais profundo p/ contraste no fundo claro) + `brandGold` exportado
+      para usos decorativos. Header deixou de hardcodar o hex (fonte única). Registrado no `PROJECT.md`.
+    - `LoginPage` redesenhada como hero: logo + wordmark dourado, tagline, descrição do app e três
+      destaques (feeds personalizados, sem anúncios, no seu tempo), + card de login (Google/dev).
+      Responsiva (empilha no mobile), theme-aware; cópia nova em PT/EN sob `landing.*` e `app.tagline`.
 
 ## Versão 0.15.0.0
+
+- [ ] Tutorial de fluxo (como a aplicação funciona)
+    - Componente de conteúdo único (stepper 1—2—3) reutilizado em dois invólucros: entrada "Ajuda"
+      no menu do usuário e um modal de boas-vindas no **primeiro acesso** (flag em `localStorage`).
+
+## Versão 0.16.0.0
+
+- [ ] Guia didático de como escolher boas palavras-chave
+    - Bem didático: enfatizar **quantidade + abrangência** (cobrir tudo que a pessoa busca no feed).
+      Surge no fluxo de criar/editar feed e é reaproveitável no tutorial da 0.15.
+
+## Versão 0.17.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.16.0.0
+## Versão 0.18.0.0
 
 - [ ] Definir Taskfile
 
-## Versão 0.17.0.0
+## Versão 0.19.0.0
 
 - [ ] Tentar transformar URLs de Instagram em link integrado
 

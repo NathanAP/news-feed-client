@@ -32,13 +32,7 @@ export function AppHeader() {
                         minWidth: 0,
                     }}
                 >
-                    <Box
-                        sx={(theme) => ({
-                            display: 'flex',
-                            color: '#141414',
-                            ...theme.applyStyles('dark', { color: '#c8a04a' }),
-                        })}
-                    >
+                    <Box sx={{ display: 'flex', color: 'brand.main' }}>
                         <Logo size={30} />
                     </Box>
                     <Typography

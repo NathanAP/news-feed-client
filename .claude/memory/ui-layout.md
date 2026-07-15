@@ -2,6 +2,14 @@
 
 Implementado na `0.4.0.0`. Fonte: `versions/20260707190000_0.4.0.0.md`.
 
+> **0.14.0.0 (marca + login)**: nome do app é **ChronoFeed** (`app.name` no i18n). O dourado da marca
+> virou o token de paleta `brand` em `theme/theme.ts` (dark `#c8a04a`, light `#8a6a1f`; `brandGold`
+> exportado p/ `alpha()` decorativo). Consumir via `brand.main` — não hardcodar. É **acento**, não o
+> `primary` (azul). `LoginPage` é um hero descritivo (logo/wordmark dourado, tagline, 3 destaques,
+> card de login); cópia em `landing.*` + `app.tagline`. Detalhes: `versions/…_0.14.0.0.md`.
+> Gotchas MUI v9: `Stack` não tem `alignItems`/`justifyContent` como props (vão no `sx`); no modo
+> `cssVariables`, `alpha(theme.palette.x)` quebra — usar hex bruto, `*Channel` ou `action.hover`.
+
 - **Material UI**: `ThemeProvider` (`defaultMode="dark"`) + `CssBaseline` em `App.tsx`. Tema em
   `theme/theme.ts` — `cssVariables` + `colorSchemes` (light/dark), **dark-first grafite azulado**
   (`#14161b` fundo, `#1b1e25` paper, primary `#6b9bff`). Toggle via `useColorScheme` (persiste).

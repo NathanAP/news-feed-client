@@ -1,5 +1,26 @@
 {
-    "app": { "name": "news-feed-client" },
+    "app": {
+        "name": "ChronoFeed",
+        "tagline": "Suas notícias, na sua linha do tempo."
+    },
+    "landing": {
+        "description": "O ChronoFeed reúne as notícias que importam para você de toda a web e as organiza tudo em feeds personalizados.",
+        "features": {
+            "personalized": {
+                "title": "Crie seus próprios feeds personalizados",
+                "body": "Utilize palavras-chave para reunir notícias sobre assuntos que te interessam e acompanhe exatamente o que você quer saber."
+            },
+            "adFree": {
+                "title": "Sem anúncios",
+                "body": "Uma leitura limpa, focada inteiramente na informação da notícia."
+            },
+            "timeline": {
+                "title": "No seu tempo",
+                "body": "Atualizações chegam diretamente na sua linha do tempo."
+            }
+        },
+        "signInHint": "Entre para começar a montar seu feed."
+    },
     "common": {
         "cancel": "Cancelar",
         "confirm": "Confirmar",
