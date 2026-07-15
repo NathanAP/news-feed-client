@@ -190,6 +190,7 @@ Comunicação com a API — trocar o placeholder por dados reais.
 ## Versão 0.14.0.0
 
 - [ ] Tela de login bonita, descritiva, explicando o que é a aplicação
+    - Nome do app é ChronoFeed, as cores da logo (aquele dourado) são a base de cores (favor colocar elas no project.md inclusive? acredito que seria legal abrir uma sessão de UX né?)
 - [ ] Explicação de como selecionar boas keywords
 - [ ] Tela de "Sobre nós"
 - [ ] mini tutorial de como funciona o fluxo, provavelmente no menu "Ajuda"

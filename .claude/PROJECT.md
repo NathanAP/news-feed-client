@@ -10,6 +10,9 @@ Um feed de notícias hiper personalizado que coleta e filtra notícias baseado n
 
 ## Características
 
+- Nome do aplicativo é ChronoFeed.
+    - Chrono vem de "tempo".
+    - Feed vem da ideia de timeline, feed de redes sociais, etc.
 - SPA (Single Page Application) em React + Vite, sem SSR.
 - Login exclusivo através do Google.
 - Layout limpo, polido e fluido.
