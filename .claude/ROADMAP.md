@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.12.0.0
+0.13.0.0
 
 ## Versão 0.1.0.0
 
@@ -176,14 +176,42 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.13.0.0
 
-- [ ] Revisão
+- [x] Revisão
+    - Achado 1 (corretude): `ArticleDetailPage` marcava o artigo como lido via ref booleano que
+      nunca resetava; navegação artigo→artigo (mesma instância de rota) deixaria de marcar o novo.
+      Trocado por rastrear o `id` já marcado. Latente hoje (sem links artigo→artigo), blindado p/ 0.14.
+    - Achado 2 (simplificação): efeito de boot do `SessionProvider` reimplementava
+      `refreshAccessToken`; passou a reusá-lo (uma fonte de verdade para o refresh).
+    - Achado 3 (UX): botão "⋮" do `NewsCard` abria menu vazio em notícia lida; agora só aparece
+      enquanto há a ação "Marcar como lido" (não lida).
+    - Achado 4 (docs): headers `0.14.0.0` duplicados no ROADMAP — renumeração em cascata.
+    - Achado 5 (segurança): registrado em "Futuro" (confiança atual nas fontes/sanitização do backend).
 
 ## Versão 0.14.0.0
+
+- [ ] Tela de login bonita, descritiva, explicando o que é a aplicação
+- [ ] Explicação de como selecionar boas keywords
+- [ ] Tela de "Sobre nós"
+- [ ] mini tutorial de como funciona o fluxo, provavelmente no menu "Ajuda"
+
+## Versão 0.15.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.15.0.0
+## Versão 0.16.0.0
 
 - [ ] Definir Taskfile
+
+## Versão 0.17.0.0
+
+- [ ] Tentar transformar URLs de Instagram em link integrado
+
+## Futuro
+
+- [ ] Defesa-em-profundidade na renderização de HTML da notícia (`ArticleDetailPage`)
+    - Hoje o client renderiza `article.content` via `dangerouslySetInnerHTML` confiando 100% na
+      sanitização do backend (bluemonday). Estamos cientes e confiando nas fontes por ora. Se um dia
+      as fontes deixarem de ser 100% confiáveis, reintroduzir sanitização client-side (ex.: DOMPurify
+      com allowlist de iframes YouTube/Twitch) como segunda camada.

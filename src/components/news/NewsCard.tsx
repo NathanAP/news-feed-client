@@ -133,38 +133,48 @@ export function NewsCard({
                 </Box>
             </CardActionArea>
 
-            <IconButton
-                size="small"
-                aria-label={t('feed.moreOptions')}
-                onClick={(event) => {
-                    event.stopPropagation()
-                    setMenuAnchor(event.currentTarget)
-                }}
-                sx={{ position: 'absolute', top: 8, right: 8, zIndex: 1 }}
-            >
-                <MoreVertIcon fontSize="small" />
-            </IconButton>
-            <Menu
-                anchorEl={menuAnchor}
-                open={menuAnchor !== null}
-                onClose={() => setMenuAnchor(null)}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-            >
-                {isUnread && (
-                    <MenuItem
-                        onClick={() => {
-                            setMenuAnchor(null)
-                            markAsReadMutation.mutate()
+            {/* The only menu action is "mark as read", so the ⋮ button is shown
+            only while the article is unread — otherwise it would open an empty
+            menu. When more actions arrive, relax this condition. */}
+            {isUnread && (
+                <>
+                    <IconButton
+                        size="small"
+                        aria-label={t('feed.moreOptions')}
+                        onClick={(event) => {
+                            event.stopPropagation()
+                            setMenuAnchor(event.currentTarget)
+                        }}
+                        sx={{
+                            position: 'absolute',
+                            top: 8,
+                            right: 8,
+                            zIndex: 1,
                         }}
                     >
-                        <ListItemIcon>
-                            <DoneIcon fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText>{t('feed.markAsRead')}</ListItemText>
-                    </MenuItem>
-                )}
-            </Menu>
+                        <MoreVertIcon fontSize="small" />
+                    </IconButton>
+                    <Menu
+                        anchorEl={menuAnchor}
+                        open={menuAnchor !== null}
+                        onClose={() => setMenuAnchor(null)}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    >
+                        <MenuItem
+                            onClick={() => {
+                                setMenuAnchor(null)
+                                markAsReadMutation.mutate()
+                            }}
+                        >
+                            <ListItemIcon>
+                                <DoneIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText>{t('feed.markAsRead')}</ListItemText>
+                        </MenuItem>
+                    </Menu>
+                </>
+            )}
         </Card>
     )
 }

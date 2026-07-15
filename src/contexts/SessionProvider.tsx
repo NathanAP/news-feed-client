@@ -90,8 +90,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
     // Rehydrate the session on boot from the persisted refresh_token. When no
     // token is stored, `status` already starts as 'unauthenticated' (see the
-    // useState initializer). State is only touched after the await, so this does
-    // not set state synchronously within the effect body.
+    // useState initializer). Reuses refreshAccessToken (which itself reads the
+    // token, persists the rotated one, and clears the session on failure) so the
+    // boot path can't drift from the interceptor's refresh path.
     useEffect(() => {
         if (booted.current) {
             return
@@ -104,25 +105,8 @@ export function SessionProvider({ children }: { children: ReactNode }) {
             return
         }
 
-        const refreshToken = localStorage.getItem(REFRESH_TOKEN_STORAGE_KEY)
-        if (refreshToken === null) {
-            return
-        }
-
-        void (async () => {
-            try {
-                const tokens = await authService.refresh(refreshToken)
-                localStorage.setItem(
-                    REFRESH_TOKEN_STORAGE_KEY,
-                    tokens.refreshToken,
-                )
-                setAccessToken(tokens.accessToken)
-                setStatus('authenticated')
-            } catch {
-                clearSession()
-            }
-        })()
-    }, [clearSession, setAccessToken])
+        void refreshAccessToken()
+    }, [refreshAccessToken])
 
     const value = useMemo<SessionContextValue>(
         () => ({

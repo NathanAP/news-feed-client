@@ -31,13 +31,16 @@ export function ArticleDetailPage() {
     // This page is protected (auth required), so marking as read is always
     // attempted. The backend already no-ops (204) when the article isn't in
     // any of the user's feeds — no pre-check needed.
-    const marked = useRef(false)
+    // Tracks the id already marked (not a plain boolean) so navigating straight
+    // from one article to another — which reuses this component instance — still
+    // marks the new one, while StrictMode's double effect stays deduped.
+    const marked = useRef<string | null>(null)
 
     useEffect(() => {
-        if (id === undefined || marked.current) {
+        if (id === undefined || marked.current === id) {
             return
         }
-        marked.current = true
+        marked.current = id
         void articlesService.markAsRead(id).then(() => {
             void queryClient.invalidateQueries({ queryKey: ['feedArticles'] })
             void queryClient.invalidateQueries({ queryKey: ['unreadCounts'] })
