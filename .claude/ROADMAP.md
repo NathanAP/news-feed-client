@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.14.0.0
+0.15.0.0
 
 ## Versão 0.1.0.0
 
@@ -205,11 +205,38 @@ Comunicação com a API — trocar o placeholder por dados reais.
       destaques (feeds personalizados, sem anúncios, no seu tempo), + card de login (Google/dev).
       Responsiva (empilha no mobile), theme-aware; cópia nova em PT/EN sob `landing.*` e `app.tagline`.
 
+## Versão 0.14.1.0
+
+- [x] Revisão da cópia da landing + landing movida para `/`
+    - Cópia da landing reescrita pelo dono em PT (menos "cara de texto de IA": mais seca, sem
+      travessões e sem floreios de marketing); versão EN realinhada ao mesmo registro. Paridade
+      PT/EN mantida (84/84 chaves).
+    - **Rotas**: login/landing agora em `/` e a área autenticada em `/feeds`. Desenho escolhido pelo
+      dono e melhor que a alternativa registrada antes (fazer `/` ser _auth-aware_): aqui `/` é
+      puramente pública e `/feeds` puramente protegida, então os guards já existentes resolvem os
+      três fluxos só trocando de alvo. `/login` deixou de existir (sem usuários reais ainda).
+    - `RoutePath`: `Home`→`Feeds` (`/feeds`), `Login`→`Landing` (`/`). `HomePage` renomeada para
+      `FeedsIndexPage` (evita confusão com `FeedPage` em `/feeds/:feedId`). `/auth/callback` **não**
+      mudou → allowlist `OAUTH_ALLOWED_REDIRECT_URIS` do backend não precisou de ajuste.
+    - Restos de marca corrigidos: `<title>` do `index.html` e `aria-label` do `public/logo.svg`
+      ainda diziam "news-feed-client" → "ChronoFeed".
+    - **Títulos de aba** conforme a convenção nova do `PROJECT.md` (`{tela_atual} - ChronoFeed`):
+      componente `PageTitle` usando o suporte nativo a metadados do React 19 (sem `react-helmet`),
+      com os nomes de setor em i18n (`titles.*`).
+
 ## Versão 0.15.0.0
 
-- [ ] Tutorial de fluxo (como a aplicação funciona)
-    - Componente de conteúdo único (stepper 1—2—3) reutilizado em dois invólucros: entrada "Ajuda"
-      no menu do usuário e um modal de boas-vindas no **primeiro acesso** (flag em `localStorage`).
+- [x] Tutorial de fluxo (como a aplicação funciona)
+    - `TutorialSteps` é o conteúdo único (stepper 1—2—3, horizontal no desktop e vertical no
+      mobile), embrulhado por `TutorialDialog` em duas variantes: **Ajuda** (entrada nova no menu do
+      avatar, título "Como funciona") e **boas-vindas** (automático no primeiro acesso, título
+      "Bem-vindo ao ChronoFeed" + botão "Começar"). Uma descrição do fluxo, dois gatilhos.
+    - Flag `nfc.tutorialSeen` no `localStorage` (`useTutorialSeen`), montado no `AppLayout` para
+      recepcionar onde quer que a pessoa caia na área autenticada. **Por-dispositivo** (o backend não
+      tem campo para isso) — mesma limitação da ordenação de feeds da 0.11.
+    - Carregado via `LazyTutorialDialog` (chunk de 14.9 kB só ao abrir), já que o `AppLayout` é eager.
+    - Números do stepper usam o dourado da marca (identidade prevê o gold em "destaques de
+      onboarding").
 
 ## Versão 0.16.0.0
 

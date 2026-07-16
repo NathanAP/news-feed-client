@@ -9,6 +9,27 @@ Implementado na `0.4.0.0`. Fonte: `versions/20260707190000_0.4.0.0.md`.
 > card de login); cópia em `landing.*` + `app.tagline`. Detalhes: `versions/…_0.14.0.0.md`.
 > Gotchas MUI v9: `Stack` não tem `alignItems`/`justifyContent` como props (vão no `sx`); no modo
 > `cssVariables`, `alpha(theme.palette.x)` quebra — usar hex bruto, `*Channel` ou `action.hover`.
+>
+> **0.14.1.0 (rotas)**: a landing/login vive em **`/`** (`RoutePath.Landing`, pública) e a área
+> autenticada em **`/feeds`** (`RoutePath.Feeds`, protegida) — `/login` não existe mais. `/` é
+> puramente pública e `/feeds` puramente protegida, então `PublicRoute` (autenticado → `Feeds`) e
+> `ProtectedRoute` (anônimo → `Landing`) cobrem tudo sem rota auth-aware. `HomePage` virou
+> **`FeedsIndexPage`** (índice de `/feeds`; redireciona ao 1º feed ou mostra o estado vazio).
+> `/auth/callback` inalterado → allowlist do backend intocada. Títulos de aba via `PageTitle`
+> (React 19 iça um `<title>` renderizado na árvore; sem `react-helmet`), padrão
+> `{tela} - ChronoFeed`.
+>
+> **0.15.0.0 (tutorial)**: `components/tutorial/` — `TutorialSteps` (stepper 1—2—3, conteúdo único;
+> horizontal no desktop, vertical abaixo de `sm`) embrulhado por `TutorialDialog` em duas variantes
+> (`Help`, pelo menu do avatar; `Welcome`, automático no 1º acesso via flag `nfc.tutorialSeen` +
+> `useTutorialSeen`, montado no `AppLayout`). Lazy (`LazyTutorialDialog`) porque o `AppLayout` é eager.
+>
+> **Gotcha `cssVariables` (irmão do `alpha()`)**: `theme.palette.x` devolve o valor **congelado do
+> esquema base (light)**, não a variável — usar assim em `sx` vaza a cor do light para o dark. Props
+> que não são do sistema do `sx` (ex.: `fill`) também não aceitam o caminho `'brand.main'`: usar
+> `var(--mui-palette-brand-main)`. (`theme.vars` seria o ideal, mas é tipado como opcional.)
+> **Método**: para conferir cor por tema, alternar pelo **botão de tema** — forçar
+> `documentElement.className` na mão dá leitura falsa.
 
 - **Material UI**: `ThemeProvider` (`defaultMode="dark"`) + `CssBaseline` em `App.tsx`. Tema em
   `theme/theme.ts` — `cssVariables` + `colorSchemes` (light/dark), **dark-first grafite azulado**

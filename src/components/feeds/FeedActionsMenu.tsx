@@ -52,7 +52,7 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
                 navigate(
                     remaining.length > 0
                         ? feedPath(remaining[0].id)
-                        : RoutePath.Home,
+                        : RoutePath.Feeds,
                 )
             },
         })

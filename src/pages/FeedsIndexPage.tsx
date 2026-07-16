@@ -8,11 +8,12 @@ import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
 import { useOrderedFeeds } from '../hooks/useOrderedFeeds'
 import { LazyFeedFormDialog } from '../components/feeds/LazyFeedFormDialog'
+import { PageTitle } from '../components/PageTitle'
 import { feedPath } from '../routes/paths'
 
-// Redirects to the user's first feed once feeds load; shows an empty state with
-// a create action when they have none yet.
-export function HomePage() {
+// Index of `/feeds`: redirects to the user's first feed once feeds load, and
+// shows an empty state with a create action when they have none yet.
+export function FeedsIndexPage() {
     const { t } = useTranslation()
     const navigate = useNavigate()
     const { data: feeds, isPending, isError } = useOrderedFeeds()
@@ -43,6 +44,7 @@ export function HomePage() {
 
     return (
         <Box sx={{ textAlign: 'center', py: 6 }}>
+            <PageTitle screen={t('titles.feeds')} />
             <Typography variant="h6">{t('feed.empty.title')}</Typography>
             <Typography variant="body2" color="text.secondary">
                 {t('feed.empty.body')}

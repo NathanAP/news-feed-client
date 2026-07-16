@@ -5,7 +5,7 @@ import { PublicRoute } from './PublicRoute'
 import { AppLayout } from '../components/layout/AppLayout'
 import { RoutePath } from './paths'
 import {
-    HomePage,
+    FeedsIndexPage,
     FeedPage,
     ArticleDetailPage,
     LoginPage,
@@ -25,7 +25,10 @@ export const router = createBrowserRouter([
                     {
                         element: <AppLayout />,
                         children: [
-                            { path: RoutePath.Home, element: <HomePage /> },
+                            {
+                                path: RoutePath.Feeds,
+                                element: <FeedsIndexPage />,
+                            },
                             { path: RoutePath.Feed, element: <FeedPage /> },
                             {
                                 path: RoutePath.ArticleDetail,
@@ -37,7 +40,7 @@ export const router = createBrowserRouter([
             },
             {
                 element: <PublicRoute />,
-                children: [{ path: RoutePath.Login, element: <LoginPage /> }],
+                children: [{ path: RoutePath.Landing, element: <LoginPage /> }],
             },
             // The OAuth callback must stay outside the guards so it can process
             // tokens regardless of the current session state.

@@ -21,14 +21,9 @@ Um feed de notícias hiper personalizado que coleta e filtra notícias baseado n
 
 ## Identidade visual
 
-- Nome: **ChronoFeed** (Chrono = tempo; Feed = timeline).
-- Cor de marca: o **dourado** da logo é a cor de acento da identidade — `#c8a04a` no tema escuro e
-  `#8a6a1f` (mais profundo, legível sobre o fundo near-white) no tema claro. É uma **cor de
-  marca/acento** (logo, wordmark, destaques de onboarding), **não** a cor `primary` do app — esta
-  segue azul (`#6b9bff` dark / `#3b6fe0` light).
-- Implementação: vive como token de paleta `brand` em `src/theme/theme.ts` (com `brandGold`
-  exportado para usos decorativos, ex.: o glow do login). Consumir via `brand.main` /
-  `theme.palette.brand.main` — nunca hardcodar o hex.
+- Nome: ChronoFeed (Chrono = tempo; Feed = timeline).
+- Cor de marca: o dourado da logo é a cor de acento da identidade. `#c8a04a` no tema escuro e `#8a6a1f` (mais profundo, legível sobre o fundo near-white) no tema claro. É uma cor de marca/acento (logo, wordmark, destaques de onboarding), não a cor `primary` do app — esta segue azul (`#6b9bff` dark / `#3b6fe0` light).
+- Implementação: vive como token de paleta `brand` em `src/theme/theme.ts` (com `brandGold` exportado para usos decorativos, ex.: o glow do login). Consumir via `brand.main` / `theme.palette.brand.main` — nunca hardcodar o hex.
 
 ## Referências
 
@@ -108,3 +103,10 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 ## Guard de manutenção
 
 - O backend pode entrar em manutenção e responder 503 em toda rota (exceto `GET /v1/health` e `PUT /v1/system/app-status`). O cliente trata isso globalmente (interceptor do Axios) exibindo uma tela de manutenção.
+
+## Abas para navegadores
+
+- A convenção de nomenclatura de abas de navegadores deve ser:
+    - `{tela_atual} - ChronoFeed`, onde `tela_atual` se refere ao atual setor da aplicação. Por exemplo: se for no login, deve ser `Login - ChronoFeed`.
+- Implementação: componente `PageTitle` (`src/components/PageTitle.tsx`), usado por cada página. Apoia-se no suporte nativo a metadados do React 19 (um `<title>` renderizado na árvore é içado para o `<head>`), sem biblioteca tipo `react-helmet`. O `<title>` estático do `index.html` permanece como fallback pré-boot.
+- Os nomes de setor são internacionalizados (`titles.*`), exceto onde já existe chave própria (404, manutenção).

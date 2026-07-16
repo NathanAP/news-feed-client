@@ -17,6 +17,7 @@ import { useSession } from '../hooks/useSession'
 import { DEV_LOGIN_ENABLED } from '../config/env'
 import { brandGold } from '../theme/theme'
 import { Logo } from '../components/Logo'
+import { PageTitle } from '../components/PageTitle'
 
 // The three value props shown on the landing hero. Copy lives in i18n; each
 // entry maps an icon to its `landing.features.<key>` translation subtree.
@@ -49,6 +50,8 @@ export function LoginPage() {
                 bgcolor: 'background.default',
             }}
         >
+            <PageTitle screen={t('titles.login')} />
+
             {/* Decorative brand-gold glow behind the content. */}
             <Box
                 aria-hidden

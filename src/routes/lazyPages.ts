@@ -3,8 +3,10 @@ import { lazy } from 'react'
 // Code-split page components: each becomes its own chunk loaded on demand,
 // keeping the initial bundle small and deferring page-specific deps. See
 // rules/performance.md.
-export const HomePage = lazy(() =>
-    import('../pages/HomePage').then((m) => ({ default: m.HomePage })),
+export const FeedsIndexPage = lazy(() =>
+    import('../pages/FeedsIndexPage').then((m) => ({
+        default: m.FeedsIndexPage,
+    })),
 )
 export const FeedPage = lazy(() =>
     import('../pages/FeedPage').then((m) => ({ default: m.FeedPage })),

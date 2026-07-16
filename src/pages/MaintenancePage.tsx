@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
+import { PageTitle } from '../components/PageTitle'
 
 export function MaintenancePage() {
     const { t } = useTranslation()
@@ -19,6 +20,7 @@ export function MaintenancePage() {
                 bgcolor: 'background.default',
             }}
         >
+            <PageTitle screen={t('maintenance.title')} />
             <Typography variant="h6">{t('maintenance.title')}</Typography>
             <Typography variant="body2" color="text.secondary">
                 {t('maintenance.body')}

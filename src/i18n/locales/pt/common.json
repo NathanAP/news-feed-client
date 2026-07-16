@@ -4,7 +4,7 @@
         "tagline": "Suas notícias, na sua linha do tempo."
     },
     "landing": {
-        "description": "O ChronoFeed reúne as notícias que importam para você de toda a web e as organiza tudo em feeds personalizados.",
+        "description": "O ChronoFeed reúne as notícias que importam para você de toda a web e as organiza em feeds personalizados.",
         "features": {
             "personalized": {
                 "title": "Crie seus próprios feeds personalizados",
@@ -20,6 +20,11 @@
             }
         },
         "signInHint": "Entre para começar a montar seu feed."
+    },
+    "titles": {
+        "login": "Login",
+        "feeds": "Feeds",
+        "article": "Notícia"
     },
     "common": {
         "cancel": "Cancelar",
@@ -39,7 +44,27 @@
         "open": "Abrir menu do usuário",
         "profile": "Perfil",
         "preferences": "Preferências",
+        "help": "Ajuda",
         "signOut": "Sair"
+    },
+    "tutorial": {
+        "title": "Como funciona",
+        "welcomeTitle": "Bem-vindo ao ChronoFeed",
+        "start": "Começar",
+        "steps": {
+            "createFeed": {
+                "title": "Crie um feed",
+                "body": "Escolha palavras-chave que descrevem o assunto que você quer acompanhar."
+            },
+            "gather": {
+                "title": "Reunimos as notícias",
+                "body": "O ChronoFeed busca nas fontes e junta o que combina com suas palavras-chave."
+            },
+            "read": {
+                "title": "Leia no seu tempo",
+                "body": "As novidades aparecem na sua linha do tempo, com indicador do que ainda não foi lido."
+            }
+        }
     },
     "profile": {
         "title": "Perfil",

@@ -9,12 +9,15 @@ import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined'
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { useTranslation } from 'react-i18next'
 import { useSession } from '../../hooks/useSession'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
 import { ProfileDialog } from '../user/ProfileDialog'
 import { LazyPreferencesDialog } from '../user/LazyPreferencesDialog'
+import { LazyTutorialDialog } from '../tutorial/LazyTutorialDialog'
+import { TutorialVariant } from '../tutorial/tutorialVariant'
 
 export function UserMenu() {
     const { t } = useTranslation()
@@ -23,6 +26,7 @@ export function UserMenu() {
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const [profileOpen, setProfileOpen] = useState(false)
     const [preferencesOpen, setPreferencesOpen] = useState(false)
+    const [helpOpen, setHelpOpen] = useState(false)
 
     const close = () => setAnchorEl(null)
 
@@ -79,6 +83,17 @@ export function UserMenu() {
                     </ListItemIcon>
                     <ListItemText>{t('menu.preferences')}</ListItemText>
                 </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        close()
+                        setHelpOpen(true)
+                    }}
+                >
+                    <ListItemIcon>
+                        <HelpOutlineOutlinedIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText>{t('menu.help')}</ListItemText>
+                </MenuItem>
                 <Divider />
                 <MenuItem
                     onClick={() => {
@@ -102,6 +117,11 @@ export function UserMenu() {
             <LazyPreferencesDialog
                 open={preferencesOpen}
                 onClose={() => setPreferencesOpen(false)}
+            />
+            <LazyTutorialDialog
+                open={helpOpen}
+                onClose={() => setHelpOpen(false)}
+                variant={TutorialVariant.Help}
             />
         </>
     )

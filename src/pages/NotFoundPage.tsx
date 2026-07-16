@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
+import { PageTitle } from '../components/PageTitle'
 
 export function NotFoundPage() {
     const { t } = useTranslation()
@@ -19,6 +20,7 @@ export function NotFoundPage() {
                 bgcolor: 'background.default',
             }}
         >
+            <PageTitle screen={t('notFound.title')} />
             <Typography variant="h4" sx={{ fontWeight: 500 }}>
                 404
             </Typography>

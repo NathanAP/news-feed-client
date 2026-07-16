@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="news-feed-client">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ChronoFeed">
     <style>
         :root { color: #c8a04a; }
         @media (prefers-color-scheme: light) { :root { color: #141414; } }

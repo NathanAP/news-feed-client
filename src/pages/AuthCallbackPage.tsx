@@ -5,6 +5,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { useSession } from '../hooks/useSession'
+import { PageTitle } from '../components/PageTitle'
 import { RoutePath } from '../routes/paths'
 import type { AuthTokens } from '../types/auth'
 
@@ -69,23 +70,27 @@ export function AuthCallbackPage() {
 
         login(result.tokens)
         window.history.replaceState(null, '', window.location.pathname)
-        navigate(RoutePath.Home, { replace: true })
+        navigate(RoutePath.Feeds, { replace: true })
     }, [result, login, navigate])
 
     if (result.status === 'error') {
         return (
             <Box sx={centeredSx}>
+                <PageTitle screen={t('titles.login')} />
                 <Typography variant="h6">{t('auth.loginFailed')}</Typography>
                 <Typography variant="body2" color="text.secondary">
                     {result.reason}
                 </Typography>
-                <Button href={RoutePath.Login}>{t('auth.backToLogin')}</Button>
+                <Button href={RoutePath.Landing}>
+                    {t('auth.backToLogin')}
+                </Button>
             </Box>
         )
     }
 
     return (
         <Box sx={centeredSx}>
+            <PageTitle screen={t('titles.login')} />
             <Typography color="text.secondary">
                 {t('auth.signingIn')}
             </Typography>

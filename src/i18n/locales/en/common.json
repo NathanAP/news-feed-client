@@ -4,22 +4,27 @@
         "tagline": "Your news, on your timeline."
     },
     "landing": {
-        "description": "ChronoFeed gathers the news that matters to you from across the web and organizes it into personalized feeds — built from the keywords you choose.",
+        "description": "ChronoFeed brings together the news that matters to you from across the web and organizes it into personalized feeds.",
         "features": {
             "personalized": {
-                "title": "Feeds you build",
-                "body": "Create feeds from your own keywords and follow exactly the topics you care about."
+                "title": "Create your own personalized feeds",
+                "body": "Use keywords to gather news on the subjects that interest you and follow exactly what you want to know."
             },
             "adFree": {
-                "title": "Ad-free by design",
-                "body": "A clean, focused read — no ads and no algorithm chasing your attention."
+                "title": "No ads",
+                "body": "A clean read, focused entirely on the news itself."
             },
             "timeline": {
                 "title": "On your time",
-                "body": "Fresh updates land on your own timeline, so you never miss what's new."
+                "body": "Updates arrive straight to your timeline."
             }
         },
         "signInHint": "Sign in to start building your feed."
+    },
+    "titles": {
+        "login": "Login",
+        "feeds": "Feeds",
+        "article": "Article"
     },
     "common": {
         "cancel": "Cancel",
@@ -39,7 +44,27 @@
         "open": "Open user menu",
         "profile": "Profile",
         "preferences": "Preferences",
+        "help": "Help",
         "signOut": "Sign out"
+    },
+    "tutorial": {
+        "title": "How it works",
+        "welcomeTitle": "Welcome to ChronoFeed",
+        "start": "Get started",
+        "steps": {
+            "createFeed": {
+                "title": "Create a feed",
+                "body": "Choose keywords that describe the subject you want to follow."
+            },
+            "gather": {
+                "title": "We gather the news",
+                "body": "ChronoFeed searches the sources and collects what matches your keywords."
+            },
+            "read": {
+                "title": "Read on your time",
+                "body": "New articles show up on your timeline, with an indicator for what you haven't read."
+            }
+        }
     },
     "profile": {
         "title": "Profile",

@@ -12,6 +12,7 @@ import { pt, enUS } from 'date-fns/locale'
 import type { Locale } from 'date-fns'
 import { useArticle } from '../hooks/useArticle'
 import { useSource } from '../hooks/useSource'
+import { PageTitle } from '../components/PageTitle'
 import { articlesService } from '../services/api'
 import { RoutePath } from '../routes/paths'
 
@@ -48,7 +49,7 @@ export function ArticleDetailPage() {
     }, [id, queryClient])
 
     if (id === undefined) {
-        return <Navigate to={RoutePath.Home} replace />
+        return <Navigate to={RoutePath.Feeds} replace />
     }
 
     if (query.isPending) {
@@ -79,6 +80,7 @@ export function ArticleDetailPage() {
 
     return (
         <Box>
+            <PageTitle screen={t('titles.article')} />
             <IconButton
                 onClick={() => navigate(-1)}
                 aria-label={t('article.back')}
