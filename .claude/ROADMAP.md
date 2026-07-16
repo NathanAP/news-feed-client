@@ -279,15 +279,20 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.17.0.0
 
+- [ ] Tô sentindo falta de uma confirmação tipo "feed salvo com sucesso", "feed atualizado com sucesso", etc. Acredito que seja importante colocar.
+    - Quem sabe nas convenções seria importante colocar numa parte de formulários pra sempre ser programado junto né?
+
+## Versão 0.18.0.0
+
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.18.0.0
+## Versão 0.19.0.0
 
 - [ ] Definir Taskfile
 
-## Versão 0.19.0.0
+## Versão 0.20.0.0
 
 - [ ] Tentar transformar URLs de Instagram em link integrado
 
