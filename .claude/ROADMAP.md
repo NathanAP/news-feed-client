@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.16.0.0
+0.16.1.0
 
 ## Versão 0.1.0.0
 
@@ -266,6 +266,16 @@ Comunicação com a API — trocar o placeholder por dados reais.
 - [ ] **Achado a decidir**: o campo de keywords não dá nenhuma pista de que os termos devem ser em
       **inglês**, e o guia está recolhido por padrão. Um usuário PT tende a digitar "música" e ficar
       com um feed vazio para sempre, sem erro nenhum. Ver seção "Futuro".
+
+## Versão 0.16.1.0
+
+- [x] `vercel.json` com o rewrite de SPA (primeiro deploy na Vercel)
+    - `/(.*)` → `/index.html`. Sem isso, acesso direto/F5 e sobretudo o retorno do OAuth em
+      `/auth/callback` dão **404** — o login não completa. A Vercel checa o filesystem antes dos
+      rewrites, então os assets seguem servidos normalmente.
+    - `PROJECT.md` ganhou a seção **Deploy (Vercel)**, registrando o que custou tempo no primeiro
+      deploy: as **três allowlists** do login (backend↔SPA, Google↔backend, CORS) e por que usar o
+      domínio **estável** e não a URL com hash do deploy.
 
 ## Versão 0.17.0.0
 

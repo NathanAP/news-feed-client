@@ -13,4 +13,11 @@ Resumo de apoio. Fonte canônica: `rules/architecture.md`. Stack: `CLAUDE.md`.
 - **API:** instância única do Axios em `src/services/api/`, um serviço por modelo; enums espelham a API.
 - **Env (frontend):** config pública, prefixo `VITE_`; sem segredos no cliente.
 - **Datas:** UTC → fuso do usuário (date-fns). **i18n:** PT/EN (react-i18next); conteúdo da notícia
-  no idioma da API. **HTML da notícia:** sanitizado com DOMPurify.
+  no idioma da API. **HTML da notícia:** vem **já sanitizado do backend** (bluemonday, com iframes
+  YouTube/Twitch por allowlist) e é renderizado direto — o DOMPurify foi **removido na 0.12.0.0**.
+  Reintroduzi-lo como 2ª camada está registrado em ROADMAP → Futuro.
+- **Deploy:** Vercel, build estático (`dist`). `vercel.json` faz o rewrite `/(.*)` → `/index.html`;
+  sem ele o retorno do OAuth em `/auth/callback` dá 404 e o login não completa (0.16.1.0). Vars
+  `VITE_` são embutidas **no build** (mudou → redeploy). Usar o **domínio estável**, não a URL com
+  hash do deploy — o `redirect_uri` sai de `window.location.origin`. Detalhes e as **três allowlists**
+  do login (backend↔SPA, Google↔backend, CORS) em `PROJECT.md` → "Deploy (Vercel)".

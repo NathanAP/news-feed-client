@@ -114,3 +114,21 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
     - Enquanto o dado não chega, cai no nome do setor (`Feeds`/`Notícia`).
 - Nomes de conteúdo vêm da API e, como toda notícia, não são internacionalizados. Os nomes de setor são (`titles.*`), exceto onde já existe chave própria (404, manutenção).
 - Implementação: componente `PageTitle` (`src/components/PageTitle.tsx`), usado por cada página. Apoia-se no suporte nativo a metadados do React 19 (um `<title>` renderizado na árvore é içado para o `<head>`), sem biblioteca tipo `react-helmet`. O `<title>` estático do `index.html` permanece como fallback pré-boot.
+
+## Deploy (Vercel)
+
+- O build é estático (`npm run build` → `dist`), servido pela Vercel. Preset `Vite`.
+- Rewrite de SPA obrigatório (`vercel.json`): `/(.*)` → `/index.html`. As rotas do client não existem como arquivo; sem isso, acesso direto, F5 e — o mais grave — o retorno do OAuth em `/auth/callback` dão 404. A Vercel checa o filesystem antes dos rewrites, então os assets continuam sendo servidos normalmente.
+- Variáveis (embutidas no bundle em tempo de build, lembrando que ao mudar a variável, tem que refazer o deploy):
+    - `VITE_API_URL`: URL pública da API com o `/v1`. Se faltar, `config/env.ts` lança e o app fica em tela branca — o build passa, o erro só aparece no navegador.
+    - `VITE_DEV_LOGIN_ENABLED`: não definir em produção (o botão de dev-login jamais pode aparecer lá).
+- Use o domínio estável de produção (ex.: `news-feed-client-zeta.vercel.app`), nunca a URL com hash do deploy (`...-xyz-...`), que muda a cada push. O `redirect_uri` do SPA sai de `window.location.origin` (ver `AuthService`), então o domínio pelo qual se navega é o que vai para a allowlist — navegar pela URL com hash reprova na hora.
+- Consequência: deploys de preview não funcionam, pois ganham domínio novo a cada vez e as allowlists são exact-match.
+
+### As três allowlists do login (erram em pontos diferentes)
+
+Confundir as três é o que mais custa tempo. Em ordem do fluxo:
+
+1. Backend valida o callback do SPA — `OAUTH_ALLOWED_REDIRECT_URIS` precisa de `https://<dominio-vercel>/auth/callback`. Erro típico: `{"error": "invalid redirect_uri"}` vindo da própria API.
+2. Google valida o callback do backend — no Google Cloud Console (Credenciais → URIs de redirecionamento autorizados) precisa da URL pública do backend, ex.: `https://<host-da-api>/v1/auth/google/callback`. Erro típico: tela do Google com `Erro 400: redirect_uri_mismatch`. Nada a ver com a Vercel — quebra quando a API muda de endereço (localhost → túnel/produção). O link "detalhes do erro" mostra a URI exata que o Google recebeu.
+3. Backend valida a origem das chamadas — `CORS_ALLOWED_ORIGINS` precisa de `https://<dominio-vercel>`. Erro típico: `Failed to fetch` em toda requisição (parece API fora do ar, mas é CORS).
