@@ -52,22 +52,30 @@ export function ArticleDetailPage() {
         return <Navigate to={RoutePath.Feeds} replace />
     }
 
+    // Until the article resolves there's no headline to name the tab after, so
+    // these two branches fall back to the section name.
     if (query.isPending) {
         return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
-                <CircularProgress size={28} />
-            </Box>
+            <>
+                <PageTitle screen={t('titles.article')} />
+                <Box sx={{ display: 'flex', justifyContent: 'center', py: 6 }}>
+                    <CircularProgress size={28} />
+                </Box>
+            </>
         )
     }
 
     if (query.isError) {
         return (
-            <Typography
-                color="text.secondary"
-                sx={{ py: 4, textAlign: 'center' }}
-            >
-                {t('article.loadError')}
-            </Typography>
+            <>
+                <PageTitle screen={t('titles.article')} />
+                <Typography
+                    color="text.secondary"
+                    sx={{ py: 4, textAlign: 'center' }}
+                >
+                    {t('article.loadError')}
+                </Typography>
+            </>
         )
     }
 
@@ -80,7 +88,9 @@ export function ArticleDetailPage() {
 
     return (
         <Box>
-            <PageTitle screen={t('titles.article')} />
+            {/* The headline names the tab — far more useful than "Article"
+            when several are open. */}
+            <PageTitle screen={article.title} />
             <IconButton
                 onClick={() => navigate(-1)}
                 aria-label={t('article.back')}

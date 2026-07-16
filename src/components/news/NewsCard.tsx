@@ -158,8 +158,14 @@ export function NewsCard({
                         anchorEl={menuAnchor}
                         open={menuAnchor !== null}
                         onClose={() => setMenuAnchor(null)}
-                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
                     >
                         <MenuItem
                             onClick={() => {

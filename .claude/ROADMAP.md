@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.15.0.0
+0.15.1.0
 
 ## Versão 0.1.0.0
 
@@ -237,6 +237,19 @@ Comunicação com a API — trocar o placeholder por dados reais.
     - Carregado via `LazyTutorialDialog` (chunk de 14.9 kB só ao abrir), já que o `AppLayout` é eager.
     - Números do stepper usam o dourado da marca (identidade prevê o gold em "destaques de
       onboarding").
+
+## Versão 0.15.1.0
+
+- [x] Abas nomeadas pelo conteúdo (feed e notícia)
+    - Sugestão levantada na 0.14.1.0 e aceita: com várias abas abertas, o nome do conteúdo
+      identifica a aba melhor que o do setor. `/feeds/:feedId` → nome do feed;
+      `/articles/:id` → título da notícia. Fallback no nome do setor enquanto o dado não chega.
+    - `FeedPage` lê o nome via `useFeeds` (mesma queryKey `['feeds']` que as abas já carregam →
+      cache hit, sem requisição nova). Convenção atualizada no `PROJECT.md`.
+- [x] Limpeza da dívida de formatação (dobrada nesta versão)
+    - `npm run format:check` já falhava no `master` em `NewsCard.tsx` e no `.md` da 0.12.0.0.
+      Ambos reformatados (cosmético, sem mudança de comportamento); o check agora passa no repo
+      inteiro.
 
 ## Versão 0.16.0.0
 

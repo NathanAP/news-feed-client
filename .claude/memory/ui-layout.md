@@ -17,7 +17,9 @@ Implementado na `0.4.0.0`. Fonte: `versions/20260707190000_0.4.0.0.md`.
 > **`FeedsIndexPage`** (índice de `/feeds`; redireciona ao 1º feed ou mostra o estado vazio).
 > `/auth/callback` inalterado → allowlist do backend intocada. Títulos de aba via `PageTitle`
 > (React 19 iça um `<title>` renderizado na árvore; sem `react-helmet`), padrão
-> `{tela} - ChronoFeed`.
+> `{tela} - ChronoFeed`. Desde a **0.15.1.0**, telas com conteúdo nomeável usam o nome do conteúdo
+> (feed → nome; notícia → manchete), com fallback no nome do setor (`titles.*`) enquanto carrega. O
+> `FeedPage` pega o nome via `useFeeds` (queryKey `['feeds']` que as abas já carregam → cache hit).
 >
 > **0.15.0.0 (tutorial)**: `components/tutorial/` — `TutorialSteps` (stepper 1—2—3, conteúdo único;
 > horizontal no desktop, vertical abaixo de `sm`) embrulhado por `TutorialDialog` em duas variantes

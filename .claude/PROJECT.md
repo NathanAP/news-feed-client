@@ -108,5 +108,9 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 
 - A convenção de nomenclatura de abas de navegadores deve ser:
     - `{tela_atual} - ChronoFeed`, onde `tela_atual` se refere ao atual setor da aplicação. Por exemplo: se for no login, deve ser `Login - ChronoFeed`.
+- Quando a tela exibe um conteúdo nomeável, o nome do conteúdo tem preferência sobre o do setor:
+    - `/feeds/:feedId` se torna o nome do feed (`Meu feed - ChronoFeed`).
+    - `/articles/:id` se torna o título da notícia (`O Brasil venceu a Argentina... - ChronoFeed`).
+    - Enquanto o dado não chega, cai no nome do setor (`Feeds`/`Notícia`).
+- Nomes de conteúdo vêm da API e, como toda notícia, não são internacionalizados. Os nomes de setor são (`titles.*`), exceto onde já existe chave própria (404, manutenção).
 - Implementação: componente `PageTitle` (`src/components/PageTitle.tsx`), usado por cada página. Apoia-se no suporte nativo a metadados do React 19 (um `<title>` renderizado na árvore é içado para o `<head>`), sem biblioteca tipo `react-helmet`. O `<title>` estático do `index.html` permanece como fallback pré-boot.
-- Os nomes de setor são internacionalizados (`titles.*`), exceto onde já existe chave própria (404, manutenção).
