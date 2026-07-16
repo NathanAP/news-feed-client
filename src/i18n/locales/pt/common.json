@@ -142,6 +142,31 @@
             "generic": "Algo deu errado. Tente novamente."
         }
     },
+    "keywordsGuide": {
+        "title": "Como escolher boas palavras-chave?",
+        "tips": {
+            "english": {
+                "title": "Escreva em inglês",
+                "body": "As notícias são etiquetadas com termos em inglês, mesmo as escritas em português. Use \"rock\" em vez de \"música\". Nomes próprios, como \"iron maiden\", funcionam do mesmo jeito."
+            },
+            "quantity": {
+                "title": "Use bastante palavras",
+                "body": "Quanto mais palavras-chave, mais assunto o feed alcança. Com poucas, ele fica vazio. Você pode usar de {{min}} a {{max}}."
+            },
+            "notAlone": {
+                "title": "Uma palavra sozinha não basta",
+                "body": "Uma notícia só entra no feed se bater em mais de uma palavra-chave. Junte os termos que costumam aparecer juntos: com \"iron maiden\", inclua também \"metal\", \"rock\" e \"heavy metal\"."
+            },
+            "mix": {
+                "title": "Misture específico e genérico",
+                "body": "\"iron maiden\" traz só o que cita a banda; \"rock\" traz muita coisa. Os dois juntos equilibram o feed entre vazio e lotado."
+            },
+            "fromNow": {
+                "title": "Vale a partir de agora",
+                "body": "O feed enche conforme novas notícias chegam. Criar ou mudar as palavras-chave não traz notícias antigas de volta."
+            }
+        }
+    },
     "article": {
         "loadError": "Não foi possível carregar esta notícia.",
         "back": "Voltar"

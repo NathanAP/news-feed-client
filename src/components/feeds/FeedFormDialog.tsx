@@ -11,10 +11,16 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Alert from '@mui/material/Alert'
 import Stack from '@mui/material/Stack'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useTranslation } from 'react-i18next'
 import { useCreateFeed, useUpdateFeed } from '../../hooks/useFeedMutations'
 import type { Feed, FeedInput } from '../../types/feed'
 import { KeywordsInput } from './KeywordsInput'
+import { KeywordsGuide } from './KeywordsGuide'
 import { MIN_KEYWORDS, MAX_KEYWORDS } from './keywords'
 
 const MAX_NAME_LENGTH = 120
@@ -163,6 +169,28 @@ export function FeedFormDialog({
                                 />
                             )}
                         />
+                        {/* Collapsed by default: the guidance is right where the
+                        keywords are picked, without pushing the form down. */}
+                        <Accordion
+                            disableGutters
+                            elevation={0}
+                            sx={{
+                                bgcolor: 'transparent',
+                                '&::before': { display: 'none' },
+                            }}
+                        >
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                sx={{ px: 0, minHeight: 0 }}
+                            >
+                                <Typography variant="body2">
+                                    {t('keywordsGuide.title')}
+                                </Typography>
+                            </AccordionSummary>
+                            <AccordionDetails sx={{ px: 0, pt: 0 }}>
+                                <KeywordsGuide />
+                            </AccordionDetails>
+                        </Accordion>
                     </Stack>
                 </DialogContent>
                 <DialogActions>

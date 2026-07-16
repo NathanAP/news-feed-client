@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.15.1.0
+0.16.0.0
 
 ## Versão 0.1.0.0
 
@@ -253,9 +253,19 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.16.0.0
 
-- [ ] Guia didático de como escolher boas palavras-chave
-    - Bem didático: enfatizar **quantidade + abrangência** (cobrir tudo que a pessoa busca no feed).
-      Surge no fluxo de criar/editar feed e é reaproveitável no tutorial da 0.15.
+- [x] Guia didático de como escolher boas palavras-chave
+    - `KeywordsGuide` (conteúdo puro, reaproveitável) dentro de um `Accordion` **recolhido** no
+      `FeedFormDialog`, logo abaixo do `KeywordsInput` — a orientação fica onde a escolha acontece,
+      sem empurrar o formulário.
+    - Os 5 conselhos espelham as **regras reais** do julgamento (`memory/api-integration.md`), não
+      conselho genérico: escrever **em inglês** (keywords das notícias são canônicas em inglês e não
+      são traduzidas), usar bastante palavras (mais amplo), **uma só não basta** (overlap 1 =
+      descartado), misturar específico e genérico (casamento exato), e **não é retroativo**.
+    - Sem lazy próprio: o `FeedFormDialog` já é lazy, então o guia entra no chunk dele (36→47 kB, só
+      ao abrir o formulário). Não sobre-fragmentar.
+- [ ] **Achado a decidir**: o campo de keywords não dá nenhuma pista de que os termos devem ser em
+      **inglês**, e o guia está recolhido por padrão. Um usuário PT tende a digitar "música" e ficar
+      com um feed vazio para sempre, sem erro nenhum. Ver seção "Futuro".
 
 ## Versão 0.17.0.0
 
@@ -272,6 +282,18 @@ Comunicação com a API — trocar o placeholder por dados reais.
 - [ ] Tentar transformar URLs de Instagram em link integrado
 
 ## Futuro
+
+- [ ] Keywords em inglês: tornar isso impossível de errar (levantado na 0.16.0.0)
+    - A camada 1 do julgamento casa por keyword **exata**, e as keywords das notícias são **canônicas
+      em inglês** e **não são traduzidas**. Logo, uma keyword em português simplesmente nunca casa —
+      o feed fica vazio **para sempre**, sem erro, sem aviso. Como não é retroativo, a pessoa nem
+      recupera o que perdeu ao corrigir.
+    - Hoje o único aviso é o guia da 0.16, que está **recolhido** por padrão. Ideias, da mais barata
+      à mais cara: (a) dizer "em inglês" no label/placeholder do campo; (b) autocomplete com termos
+      populares reais vindos da API (a própria `memory/api-integration.md` sugere isso) — resolve de
+      vez, porque a pessoa escolhe em vez de digitar; (c) o backend aceitar keywords em qualquer
+      idioma e canonizar para inglês na escrita.
+    - (b)/(c) dependem de backend. Vale conversar antes de escolher.
 
 - [ ] Defesa-em-profundidade na renderização de HTML da notícia (`ArticleDetailPage`)
     - Hoje o client renderiza `article.content` via `dangerouslySetInnerHTML` confiando 100% na

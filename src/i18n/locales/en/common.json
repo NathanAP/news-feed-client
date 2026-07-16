@@ -142,6 +142,31 @@
             "generic": "Something went wrong. Please try again."
         }
     },
+    "keywordsGuide": {
+        "title": "How do I pick good keywords?",
+        "tips": {
+            "english": {
+                "title": "Write them in English",
+                "body": "Articles are tagged with English terms, even the ones written in other languages. Keep your keywords in English. Proper names, like \"iron maiden\", work either way."
+            },
+            "quantity": {
+                "title": "Use plenty of keywords",
+                "body": "The more keywords, the more ground your feed covers. With too few it stays empty. You can use {{min}} to {{max}}."
+            },
+            "notAlone": {
+                "title": "One keyword isn't enough",
+                "body": "An article only joins the feed if it matches more than one keyword. Add the terms that usually show up together: with \"iron maiden\", also include \"metal\", \"rock\" and \"heavy metal\"."
+            },
+            "mix": {
+                "title": "Mix specific and generic",
+                "body": "\"iron maiden\" only brings what mentions the band; \"rock\" brings a lot. Together they keep the feed between empty and flooded."
+            },
+            "fromNow": {
+                "title": "It counts from now on",
+                "body": "The feed fills up as new articles arrive. Creating or changing keywords doesn't bring old articles back."
+            }
+        }
+    },
     "article": {
         "loadError": "Could not load this article.",
         "back": "Back"

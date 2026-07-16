@@ -23,6 +23,13 @@ Implementado na `0.8.0.0`. Fonte: `versions/20260709180000_0.8.0.0.md`.
 - Onde ficam as ações: **criar** = "+" no `FeedTabs` (abas ficam limpas). **Editar/excluir** =
   `FeedActionsMenu` no cabeçalho da `NewsList` (oposto ao "X novas · Y totais"), agindo sobre o feed
   **aberto** — por decisão de UX, para o gatilho ser um `IconButton` normal em vez de aninhado na aba.
+- **0.16.0.0**: `KeywordsGuide` (conteúdo puro, 5 conselhos) num `Accordion` recolhido no
+  `FeedFormDialog`, abaixo do `KeywordsInput`. Os conselhos espelham as regras reais do julgamento
+  (ver `api-integration.md` §2): keywords das notícias são **canônicas em inglês** e não traduzidas
+  (keyword em PT nunca casa); overlap 1 = descartado; casamento **exato**; mais keywords = mais
+  amplo; **não é retroativo**. Sem lazy próprio — o `FeedFormDialog` já é lazy. **Achado aberto**
+  (ROADMAP → Futuro): nada no campo avisa que os termos devem ser em inglês e o guia vem recolhido,
+  então dá para condenar um feed a ficar vazio para sempre sem nenhum erro.
 - Constantes de negócio: `MIN_KEYWORDS=5`, `MAX_KEYWORDS=20` (em `components/feeds/keywords.ts`, fora
   do componente por causa da regra `react-refresh/only-export-components`); `MAX_ACTIVE_FEEDS=5` no
   `FeedTabs`.
