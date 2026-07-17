@@ -52,8 +52,9 @@ Todo **erro** responde `{ error: string }` com o status apropriado. Datas em UTC
 - `POST /auth/refresh` — **sem auth**. Body `{ refresh_token }`. → 200 **AuthResponse** (renova o
   `access_token` e estende o `refresh_token`) / 400 (body ausente) / 401 (inválido/expirado).
 - `POST /auth/logout` — **auth**. Soft-remove do refresh token atual. → 204 (sem body) / 500.
-- `DELETE /auth/invalidate` — **aberta** (admin-futuro). Body `{ refresh_token }`. Derruba uma sessão.
-  → 204 (sem body) / 400 (`refresh_token` ausente) / 500.
+- `DELETE /auth/invalidate` — **aberta** (admin-futuro). Body `{ refresh_token_id }`. Derruba uma sessão.
+  → 204 (sem body) / 400 (`refresh_token_id` ausente) / 500.
+  (o valor é o mesmo que o `refresh_token` do login: o token **é** o id da linha, um UUID v7)
 - `DELETE /auth/invalidate-all` — **aberta** (admin-futuro). Query `user_id`. Derruba todas as sessões
   do usuário. → 204 (sem body) / 400 (`user_id` ausente) / 500.
 
@@ -73,7 +74,8 @@ Todo **erro** responde `{ error: string }` com o status apropriado. Datas em UTC
 - `GET /sources/rss-discovery?url=` — descobre feeds RSS da URL → 200 `{ feeds: [string] }` (lista pode ser vazia) / 400.
 - `GET /sources/:id/article-discovery` — **dry-run** da descoberta de notícias de 1 source (espelha a CRON: parsing RSS + dedup por `url_original`). Não grava nada. Query opcional `last_article_discovery_at` (RFC3339 UTC) adiciona limite inferior por data. → 200 `{ articles: [{ title, content, url_original, published_at?, source_id }] }` (pode ser vazia) / 400 (data inválida) / 404 (source inexistente). Aberta (admin-futuro).
 - `GET /sources/:id` → 200 **SourceResponse** / 404.
-- `GET /sources?url=` — filtro por substring na url → 200 **envelope paginado de SourceResponse** (ver "Paginação").
+- `GET /sources?url=&name=` — filtros por substring (case-insensitive) na url e/ou no nome; os dois se
+  combinam com AND → 200 **envelope paginado de SourceResponse** (ver "Paginação").
 - `PUT /sources/:id` — `{ name (≤120), url, url_rss }` → 200 **SourceResponse** / 400 / 404 / 409.
 - `DELETE /sources/:id` — soft delete → 204 (sem body) / 404. Cascata: soft-remove das `articles` da fonte.
 
@@ -115,6 +117,15 @@ interno — por isso jamais devem ser alcançáveis por um client.
   não listagem; o usuário tem no máx. 5 feeds). Contagem feita **em SQL** (`CountUnreadArticlesByFeedForUser`:
   junta feed+artigo ativos, conta `is_read=0`, agrupa por feed). Resposta é um **objeto plano** `{ "<feed_id>": <int>, ... }`
   só com feeds que têm ≥1 não lida; nenhuma → `{}`. → 200 / 500. Futuro: candidata a virar SSE/WebSocket.
+- `GET /feeds/keyword-suggestions?keywords=&limit=` — sugere keywords para montar feed, do acervo
+  **global** de artigos (usa `articleCtrl`, não `feedCtrl`; rota estática antes de `/:id`). **Não
+  paginada** (indicador ranqueado; `limit` padrão 10, máx 50). `keywords` = já escolhidas (CSV,
+  normalizadas, máx 20 → 400). Duas estratégias, ecoadas na resposta: `related` (co-ocorrência com as
+  escolhidas, via `keywords ?|` no índice GIN `idx_articles_keywords`) e `popular` (mais frequentes
+  numa janela `KEYWORD_SUGGESTIONS_WINDOW_DAYS`, padrão 30d, `-1` desliga). Fallback: related vazio →
+  popular; nunca fica sem sugestão. Nunca sugere de volta uma keyword já escolhida. Ranking por
+  contagem crua (empurrar genéricos é o objetivo). Resposta `{ strategy, suggestions: [{ keyword,
+count }] }` (array, nunca null). → 200 / 400 (>20 keywords) / 401.
 - `GET /feeds/:id` → 200 **FeedResponse** / 404 (inexistente ou de outro usuário).
 - `GET /feeds/:id/articles` — as notícias que caíram no feed (do dono), cada uma **ArticleResponse** com
   `is_read` sempre definido (a notícia está no feed). Filtros opcionais: `is_read` (`true`|`false`), janela
@@ -150,7 +161,18 @@ interno — por isso jamais devem ser alcançáveis por um client.
   Query: `?page=` (mín/padrão 1) e `?page_size=` (mín 1, máx 100, padrão 20). Resposta:
   `{ docs: [...], pagination: { actual_page, total_pages, actual_count, total_count, has_next_page,
 has_previous_page } }`. Página fora do range → `docs` vazio (sem erro), `actual_page` fica no valor
-  pedido. Helper global em `services/pagination` (paginação em memória sobre a lista já filtrada).
+  pedido.
+- **Filtragem e paginação acontecem em SQL** (desde a 0.38). Cada listagem é um par de queries: a
+  página (filtros + `LIMIT/OFFSET`) e um `Count*` irmão com os **mesmos filtros**, que alimenta o
+  `total_count`. Ao mexer numa das duas, mexa na outra. Filtro opcional = `sqlc.narg` (`NULL` = não
+  aplicado); substring = `strpos(lower(a), lower(b)) > 0` (não `ILIKE`, para `%`/`_` do usuário não
+  virarem curinga). Helper global em `services/pagination`: `ParseParams` → `Params.Limit/Offset` →
+  `BuildResponse(docs, totalCount, params)`.
+- **Ordenação**: `created_at DESC, id DESC` em todas as listagens. O desempate por `id` (UUIDv7) não é
+  cosmético: notícias do mesmo lote da CRON empatam no `created_at` e sem ordenação total o
+  `LIMIT/OFFSET` repete/pula linha entre páginas.
+- Consumidores **batch** (CRON, `cmd/seed`) não usam essas rotas nem o `List` dos controllers: usam
+  `ListAll*` (sem `LIMIT`), porque precisam do conjunto inteiro. Handler HTTP sempre pagina.
 
 ## Notas
 
