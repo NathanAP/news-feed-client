@@ -281,6 +281,7 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 - [ ] Tô sentindo falta de uma confirmação tipo "feed salvo com sucesso", "feed atualizado com sucesso", etc. Acredito que seja importante colocar.
     - Quem sabe nas convenções seria importante colocar numa parte de formulários pra sempre ser programado junto né?
+- [ ] Trazer as palavras-chave recomendadas a partir da nova rota (ver `endpoints.md`)
 
 ## Versão 0.18.0.0
 
