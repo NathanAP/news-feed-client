@@ -57,6 +57,7 @@ Camadas separadas (o "store" reativo e a "persistência" são coisas distintas):
 
 - `access_token`: vive apenas em memória, num React Context de sessão e nunca é persistido.
 - `refresh_token`: persistido no `localStorage`, para a sessão sobreviver a recarregamentos ("continuar logado").
+- Qualquer dado relacionado a JWT não pode ser decodificado. Esse trabalho sempre será exclusividade do backend da aplicação.
 - Ao iniciar a aplicação o Context lê o `refresh_token` do `localStorage` e chama `POST /v1/auth/refresh` para reidratar a sessão (obter um `access_token` novo). Sem `refresh_token` válido a aplicação fica em estado de deslogado.
 
 ### Fluxo de login:
