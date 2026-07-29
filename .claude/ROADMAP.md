@@ -329,7 +329,7 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
 
 ## Versão 0.19.0.0
 
-- [ ] Será que possível fazer um contorno ao redor de toda a tela pra indicar que estamos no modo administrador? Parece bobo mas acho que esse modo tá muito pouco visível se está ativo ou não apenas pelo botão...
+- [ ] Será que possível fazer um contorno ao redor de toda a tela pra indicar que estamos no modo administrador? Parece bobo mas acho que esse modo tá muito pouco visível se está ativo ou não apenas pelo botão.
 - [ ] CRUD de fontes de notícias (admin)
     - Criar/editar/excluir a partir do menu "..." junto da listagem de fontes (`/sources`).
     - Formulário `{ name (≤120), url, url_rss }`; apoio de `GET /sources/rss-discovery?url=`.
