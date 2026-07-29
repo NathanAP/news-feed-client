@@ -295,22 +295,22 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
       atingir 20 keywords ou quando não há sugestão. Ataca de lado o problema das keywords em inglês
       (item (b) da seção "Futuro"): a pessoa escolhe termos reais em vez de digitar em PT.
 
-## Versão 0.19.0.0
+## Versão 0.18.0.0
 
 - [ ] Criar regras para usuários administradores
     - Deixei detalhes no PROJECT.md.
 
-## Versão 0.18.0.0
+## Versão 0.19.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.19.0.0
+## Versão 0.20.0.0
 
 - [ ] Definir Taskfile
 
-## Versão 0.20.0.0
+## Versão 0.21.0.0
 
 - [ ] Tentar transformar URLs de Instagram em link integrado
 
