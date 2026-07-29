@@ -288,12 +288,17 @@ Comunicação com a API — trocar o placeholder por dados reais.
       registra a regra "toda mutation de escrita bem-sucedida dá feedback visível".
 - [x] Trazer as palavras-chave recomendadas a partir da nova rota (ver `endpoints.md`)
     - `GET /feeds/keyword-suggestions?keywords=&limit=` → `{ strategy, suggestions: [{ keyword,
-      count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (debounce de 400 ms
+count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (debounce de 400 ms
       via `useDebouncedValue`; re-consulta conforme as keywords mudam — `popular` sem nada escolhido,
       `related` depois). `KeywordSuggestions` mostra chips clicáveis abaixo do `KeywordsInput` no
       `FeedFormDialog`; clicar adiciona a keyword (normalizada). Chip com `count` no tooltip; some ao
       atingir 20 keywords ou quando não há sugestão. Ataca de lado o problema das keywords em inglês
       (item (b) da seção "Futuro"): a pessoa escolhe termos reais em vez de digitar em PT.
+
+## Versão 0.19.0.0
+
+- [ ] Criar regras para usuários administradores
+    - Deixei detalhes no PROJECT.md.
 
 ## Versão 0.18.0.0
 

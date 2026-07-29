@@ -140,3 +140,19 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
 1. Backend valida o callback do SPA — `OAUTH_ALLOWED_REDIRECT_URIS` precisa de `https://<dominio-vercel>/auth/callback`. Erro típico: `{"error": "invalid redirect_uri"}` vindo da própria API.
 2. Google valida o callback do backend — no Google Cloud Console (Credenciais → URIs de redirecionamento autorizados) precisa da URL pública do backend, ex.: `https://<host-da-api>/v1/auth/google/callback`. Erro típico: tela do Google com `Erro 400: redirect_uri_mismatch`. Nada a ver com a Vercel — quebra quando a API muda de endereço (localhost → túnel/produção). O link "detalhes do erro" mostra a URI exata que o Google recebeu.
 3. Backend valida a origem das chamadas — `CORS_ALLOWED_ORIGINS` precisa de `https://<dominio-vercel>`. Erro típico: `Failed to fetch` em toda requisição (parece API fora do ar, mas é CORS).
+
+## Administradores
+
+- Os administradores são usuários identificados através de uma flag.
+- A gerência sobre as requisições envolvendo administradores são todas feitas pelo backend, ou seja, os envios de requisições não sofrem mudanças se um usuário é administrador ou não.
+- Os administradores tem acesso à um botão que permite alternar entre visualização da aplicação como usuários comuns e administradores.
+    - O botão deve ficar ao lado do toggle de tema (light/dark).
+    - Caso a mudança ocorra e a página seja exclusiva para administradores, eles devem ser jogados para a página de URL inválida (not found).
+    - Usuários comuns que tentam acessar páginas exclusivas para administradores devem ser jogados para a página de URL inválida (not found).
+- Os administradores tem alguns acessos exclusivos à algumas funcionalidades extras, mas nem todas pertencem diretamente ao client. As que estão relacionadas ao client são:
+    - Criação de notícias (`POST base_url/v1/articles/create`).
+    - Edição de notícias (`DELETE base_url/v1/articles/{id}`).
+    - Remoção de notícias (`PUT base_url/v1/articles/{id}`).
+    - Criação de fonte de notícias (`POST base_url/v1/sources/create`).
+    - Edição de fonte de notícias (`PUT base_url/v1/sources/{id}`).
+    - Remoção de fonte de notícias (`DELETE base_url/v1/sources/{id}`).
