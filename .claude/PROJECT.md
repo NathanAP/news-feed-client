@@ -152,8 +152,16 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
     - Usuários comuns que tentam acessar páginas exclusivas para administradores devem ser jogados para a página de URL inválida (not found).
 - Os administradores tem alguns acessos exclusivos à algumas funcionalidades extras, mas nem todas pertencem diretamente ao client. As que estão relacionadas ao client são:
     - Criação de notícias (`POST base_url/v1/articles/create`).
+        - Acesso para a tela através do menu "..." do feed.
     - Edição de notícias (`DELETE base_url/v1/articles/{id}`).
+        - Acesso para a tela através do menu '...' dentro da própria notícia.
     - Remoção de notícias (`PUT base_url/v1/articles/{id}`).
+        - Acesso para a tela através do menu '...' dentro da própria notícia.
+    - Listagem de fonte de notícias (`GET base_url/v1/sources/`)
+        - Acesso através do menu principal do usuário.
     - Criação de fonte de notícias (`POST base_url/v1/sources/create`).
+        - Acesso através do menu "..." junto da listagem de fonte de notícias.
     - Edição de fonte de notícias (`PUT base_url/v1/sources/{id}`).
+        - Acesso através do menu "..." junto da listagem de fonte de notícias.
     - Remoção de fonte de notícias (`DELETE base_url/v1/sources/{id}`).
+        - Acesso através do menu "..." junto da listagem de fonte de notícias.
