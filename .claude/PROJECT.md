@@ -150,6 +150,7 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
     - O botão deve ficar ao lado do toggle de tema (light/dark).
     - Caso a mudança ocorra e a página seja exclusiva para administradores, eles devem ser jogados para a página de URL inválida (not found).
     - Usuários comuns que tentam acessar páginas exclusivas para administradores devem ser jogados para a página de URL inválida (not found).
+    - Ao entrar na aplicação, o usuário administrador a enxerga como um usuário comum por padrão.
 - Os administradores tem alguns acessos exclusivos à algumas funcionalidades extras, mas nem todas pertencem diretamente ao client. As que estão relacionadas ao client são:
     - Criação de notícias (`POST base_url/v1/articles/create`).
         - Acesso para a tela através do menu "..." do feed.
