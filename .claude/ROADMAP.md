@@ -354,6 +354,8 @@ language_original }`: reusa o `KeywordsInput`, precisa de seletor de fonte e de 
 
 ## Versão 0.22.0.0
 
+- [ ] Fix do chunk size
+    - Temos que resolver isso de uma forma que não se torne um problema depois...
 - [ ] Definir Taskfile
 
 ## Versão 0.23.0.0
