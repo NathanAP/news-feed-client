@@ -78,6 +78,7 @@ Você tem liberdade para acessar qualquer arquivo da pasta `.claude`.
 - `React hook form`: gerenciador de formulários.
 - `React-i18next + i18next`: internacionalização.
 - `Material UI`: framework de UI base.
+- `Notistack`: notificações/toasts (snackbars de sucesso).
 - `Axios`: envio de requisições.
 - `Tanstack Query`: gerenciador de queries do servidor.
 - `Zod`: validação geral de formulários.

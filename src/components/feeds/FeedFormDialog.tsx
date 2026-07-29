@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { isAxiosError } from 'axios'
@@ -21,7 +21,8 @@ import { useCreateFeed, useUpdateFeed } from '../../hooks/useFeedMutations'
 import type { Feed, FeedInput } from '../../types/feed'
 import { KeywordsInput } from './KeywordsInput'
 import { KeywordsGuide } from './KeywordsGuide'
-import { MIN_KEYWORDS, MAX_KEYWORDS } from './keywords'
+import { KeywordSuggestions } from './KeywordSuggestions'
+import { MIN_KEYWORDS, MAX_KEYWORDS, normalizeKeywords } from './keywords'
 
 const MAX_NAME_LENGTH = 120
 
@@ -80,11 +81,28 @@ export function FeedFormDialog({
         handleSubmit,
         control,
         reset,
+        setValue,
         formState: { errors },
     } = useForm<FeedInput>({
         resolver: zodResolver(schema),
         defaultValues: { name: '', keywords: [] },
     })
+
+    // Current keywords, watched so the suggestions can react to every pick.
+    const keywords = useWatch({ control, name: 'keywords' })
+
+    // Add a suggested keyword to the list (normalized/deduped), validating so
+    // the min-keywords error clears as soon as the count is satisfied.
+    const handleAddSuggestion = (keyword: string) => {
+        setValue(
+            'keywords',
+            normalizeKeywords([...(keywords ?? []), keyword]),
+            {
+                shouldValidate: true,
+                shouldDirty: true,
+            },
+        )
+    }
 
     // Reset the form whenever the dialog opens (prefilling in edit mode).
     useEffect(() => {
@@ -168,6 +186,12 @@ export function FeedFormDialog({
                                     helperText={fieldState.error?.message}
                                 />
                             )}
+                        />
+                        <KeywordSuggestions
+                            selected={keywords ?? []}
+                            open={open}
+                            disabled={isPending}
+                            onAdd={handleAddSuggestion}
                         />
                         {/* Collapsed by default: the guidance is right where the
                         keywords are picked, without pushing the form down. */}

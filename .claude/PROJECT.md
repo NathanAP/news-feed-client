@@ -74,6 +74,14 @@ Lembrete: a URL de callback do SPA precisa estar cadastrada na allowlist.
 - Não usamos Redux/Zustand: com o TanStack Query cuidando do estado de servidor, a superfície de estado global de cliente é pequena o suficiente para o Context.
 - O cache do TanStack Query vive em memória (RAM da aba), não em storage persistente: some no reload e é reconstruído buscando na API. Contrasta com o `refresh_token` no `localStorage`, que persiste e reidrata a sessão no boot. Em desenvolvimento, o React Query Devtools (só em `import.meta.env.DEV`) permite inspecionar esse cache.
 
+## Feedback de ações (notificações)
+
+- Toda ação de escrita bem-sucedida do usuário (criar/editar/excluir feed, salvar preferências) dá um
+  **toast de sucesso** via **notistack** (`SnackbarProvider` no `App.tsx`). O toast é disparado de
+  dentro do hook de mutation, não da tela, para valer em todos os gatilhos e nunca ser esquecido. A
+  regra vive em `rules/conventions.md` (seção "Convenções de formulários"). Erros ainda podem ser
+  mostrados inline no formulário quando o contexto ajuda.
+
 ## Comunicação com a API
 
 - Toda requisição passa por uma instância única do Axios em `raiz/src/services/api/`.

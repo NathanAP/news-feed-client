@@ -33,6 +33,23 @@ Aqui estão todas as convenções de componentização da aplicação.
     - Por exemplo, em labels de textos trazidos da API e registrados pelo usuário, garanta que o layout não quebre caso o usuário insira um texto muito grande.
     - Você tem liberdade em decidir como tratar esses casos, seja adicionando "...", "ver mais" ou qualquer outro tipo de solução que não quebre o layout, incluindo limitações via CSS.
 
+# Convenções de formulários
+
+Aqui estão as convenções para formulários e ações de escrita (mutations).
+
+- **Feedback de sucesso obrigatório.** Toda mutation de escrita bem-sucedida que o usuário dispara
+  (criar, editar, excluir, salvar) deve dar um feedback visível de confirmação — um toast/snackbar
+  de sucesso. O objetivo é o usuário nunca ficar sem saber se a ação funcionou.
+- **Onde disparar.** O feedback de sucesso é disparado de dentro do hook de mutation (no `onSuccess`
+  do TanStack Query), não da tela. Assim vale para todos os gatilhos daquela ação de uma vez
+  (ex.: excluir um feed dá o mesmo toast venha do menu ou de onde for) e não dá para esquecer de
+  programar em um caminho novo.
+- **Notificação.** A camada de toast é o **notistack** (`SnackbarProvider` montado no `App.tsx`,
+  dentro do `ThemeProvider`). Use `useSnackbar().enqueueSnackbar(t('...'), { variant: 'success' })`.
+  Erros continuam podendo ser mostrados inline no próprio formulário (ex.: `Alert` no diálogo) quando
+  fizer sentido manter o contexto — as duas coisas não se excluem.
+- **Texto sempre internacionalizado**, como todo o resto (ver convenções de i18n).
+
 # Convenções de internacionalização
 
 Aqui estão todas as convenções de internacionalização.

@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.16.1.0
+0.17.0.0
 
 ## Versão 0.1.0.0
 
@@ -279,9 +279,21 @@ Comunicação com a API — trocar o placeholder por dados reais.
 
 ## Versão 0.17.0.0
 
-- [ ] Tô sentindo falta de uma confirmação tipo "feed salvo com sucesso", "feed atualizado com sucesso", etc. Acredito que seja importante colocar.
+- [x] Tô sentindo falta de uma confirmação tipo "feed salvo com sucesso", "feed atualizado com sucesso", etc. Acredito que seja importante colocar.
     - Quem sabe nas convenções seria importante colocar numa parte de formulários pra sempre ser programado junto né?
-- [ ] Trazer as palavras-chave recomendadas a partir da nova rota (ver `endpoints.md`)
+    - Estreou a camada de notificação com **notistack** (`SnackbarProvider` no `App.tsx`; toast de
+      sucesso disparado de dentro dos hooks de mutation, não das telas, para valer para todos os
+      gatilhos de uma vez). Cobre criar/editar/excluir feed (`useFeedMutations`) e salvar
+      preferências (`usePreferences`). Nova seção "Convenções de formulários" em `conventions.md`
+      registra a regra "toda mutation de escrita bem-sucedida dá feedback visível".
+- [x] Trazer as palavras-chave recomendadas a partir da nova rota (ver `endpoints.md`)
+    - `GET /feeds/keyword-suggestions?keywords=&limit=` → `{ strategy, suggestions: [{ keyword,
+      count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (debounce de 400 ms
+      via `useDebouncedValue`; re-consulta conforme as keywords mudam — `popular` sem nada escolhido,
+      `related` depois). `KeywordSuggestions` mostra chips clicáveis abaixo do `KeywordsInput` no
+      `FeedFormDialog`; clicar adiciona a keyword (normalizada). Chip com `count` no tooltip; some ao
+      atingir 20 keywords ou quando não há sugestão. Ataca de lado o problema das keywords em inglês
+      (item (b) da seção "Futuro"): a pessoa escolhe termos reais em vez de digitar em PT.
 
 ## Versão 0.18.0.0
 
@@ -310,6 +322,11 @@ Comunicação com a API — trocar o placeholder por dados reais.
       vez, porque a pessoa escolhe em vez de digitar; (c) o backend aceitar keywords em qualquer
       idioma e canonizar para inglês na escrita.
     - (b)/(c) dependem de backend. Vale conversar antes de escolher.
+    - **Atualização (0.17.0.0):** o item (b) foi entregue — `KeywordSuggestions` traz chips de
+      termos reais da API (`related`/`popular`) no `FeedFormDialog`, então a pessoa escolhe em vez de
+      digitar em PT. Mitiga bastante, mas não fecha o buraco: quem ignora os chips e digita "música"
+      à mão ainda cria um feed vazio sem aviso. Fechar de vez ainda pede (a) dizer "em inglês" no
+      label/placeholder ou (c) o backend canonizar na escrita.
 
 - [ ] Defesa-em-profundidade na renderização de HTML da notícia (`ArticleDetailPage`)
     - Hoje o client renderiza `article.content` via `dangerouslySetInnerHTML` confiando 100% na

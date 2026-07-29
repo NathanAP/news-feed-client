@@ -3,6 +3,7 @@ import type {
     Feed,
     FeedInput,
     FeedResponse,
+    KeywordSuggestions,
     UnreadCountsResponse,
 } from '../../types/feed'
 import type { PaginatedResponse } from '../../types/pagination'
@@ -27,6 +28,27 @@ export class FeedsService {
     async checkForNewArticles(): Promise<UnreadCountsResponse> {
         return this.client.get<UnreadCountsResponse>(
             '/feeds/check-for-new-articles',
+        )
+    }
+
+    // Keyword suggestions for the feed-building screen. Pass the keywords the
+    // user already picked (they steer the `related` strategy and are never
+    // suggested back); with none, the backend falls back to `popular`. The
+    // response is never paginated (a small ranked indicator, limit ≤ 50).
+    async keywordSuggestions(
+        keywords: string[],
+        limit?: number,
+    ): Promise<KeywordSuggestions> {
+        const params = new URLSearchParams()
+        if (keywords.length > 0) {
+            params.set('keywords', keywords.join(','))
+        }
+        if (limit !== undefined) {
+            params.set('limit', String(limit))
+        }
+        const query = params.toString()
+        return this.client.get<KeywordSuggestions>(
+            `/feeds/keyword-suggestions${query ? `?${query}` : ''}`,
         )
     }
 

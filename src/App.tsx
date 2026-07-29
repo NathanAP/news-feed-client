@@ -6,6 +6,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
+import { SnackbarProvider } from 'notistack'
 import { SessionProvider } from './contexts/SessionProvider'
 import { useSession } from './hooks/useSession'
 import { queryClient } from './config/queryClient'
@@ -47,14 +48,20 @@ function App() {
     return (
         <ThemeProvider theme={theme} defaultMode="dark">
             <CssBaseline />
-            <QueryClientProvider client={queryClient}>
-                <SessionProvider>
-                    <AppContent />
-                </SessionProvider>
-                {import.meta.env.DEV && (
-                    <ReactQueryDevtools initialIsOpen={false} />
-                )}
-            </QueryClientProvider>
+            <SnackbarProvider
+                maxSnack={3}
+                autoHideDuration={4000}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+            >
+                <QueryClientProvider client={queryClient}>
+                    <SessionProvider>
+                        <AppContent />
+                    </SessionProvider>
+                    {import.meta.env.DEV && (
+                        <ReactQueryDevtools initialIsOpen={false} />
+                    )}
+                </QueryClientProvider>
+            </SnackbarProvider>
         </ThemeProvider>
     )
 }

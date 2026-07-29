@@ -90,7 +90,8 @@
             "mixed": "Mixed",
             "informative": "Informative"
         },
-        "saveError": "Could not save your preferences. Please try again."
+        "saveError": "Could not save your preferences. Please try again.",
+        "saveSuccess": "Preferences saved."
     },
     "feed": {
         "create": "Create feed",
@@ -101,6 +102,11 @@
         "moreOptions": "More options",
         "markAsRead": "Mark as read",
         "unreadCount": "{{count}} unread",
+        "toast": {
+            "created": "Feed created.",
+            "updated": "Feed updated.",
+            "deleted": "Feed deleted."
+        },
         "manage": "Manage feed {{name}}",
         "edit": "Edit feed",
         "delete": "Delete feed",
@@ -140,6 +146,12 @@
             "keywordsMax": "Use at most {{max}} keywords.",
             "limit": "You've reached the maximum number of feeds.",
             "generic": "Something went wrong. Please try again."
+        },
+        "suggestions": {
+            "related": "Related to your keywords",
+            "popular": "Popular right now",
+            "articleCount": "{{count}} article",
+            "articleCount_other": "{{count}} articles"
         }
     },
     "keywordsGuide": {
