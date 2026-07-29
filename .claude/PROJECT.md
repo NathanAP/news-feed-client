@@ -154,10 +154,10 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
 - Os administradores tem alguns acessos exclusivos à algumas funcionalidades extras, mas nem todas pertencem diretamente ao client. As que estão relacionadas ao client são:
     - Criação de notícias (`POST base_url/v1/articles/create`).
         - Acesso para a tela através do menu "..." do feed.
-    - Edição de notícias (`DELETE base_url/v1/articles/{id}`).
-        - Acesso para a tela através do menu '...' dentro da própria notícia.
-    - Remoção de notícias (`PUT base_url/v1/articles/{id}`).
-        - Acesso para a tela através do menu '...' dentro da própria notícia.
+    - Edição de notícias (`PUT base_url/v1/articles/{id}`).
+        - Acesso para a tela através do menu '...' no card da listagem.
+    - Remoção de notícias (`DELETE base_url/v1/articles/{id}`).
+        - Acesso para a tela através do menu '...' no card da listagem.
     - Listagem de fonte de notícias (`GET base_url/v1/sources/`)
         - Acesso através do menu principal do usuário.
     - Criação de fonte de notícias (`POST base_url/v1/sources/create`).
