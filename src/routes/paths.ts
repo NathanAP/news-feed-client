@@ -11,6 +11,8 @@ export const RoutePath = {
     Feeds: '/feeds',
     Feed: '/feeds/:feedId',
     ArticleDetail: '/articles/:id',
+    // Administrator-only (see AdminRoute): anyone else gets the not-found page.
+    Sources: '/sources',
     AuthCallback: '/auth/callback',
 } as const
 

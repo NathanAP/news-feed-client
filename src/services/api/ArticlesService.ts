@@ -1,4 +1,5 @@
 import type { ApiClient } from './ApiClient'
+import { toSource } from './SourcesService'
 import type { Article, ArticleResponse } from '../../types/article'
 import type { PaginatedResponse } from '../../types/pagination'
 
@@ -62,14 +63,7 @@ export class ArticlesService {
             content: data.content,
             createdAt: data.created_at,
             sourceId: data.source_id,
-            source:
-                data.source !== undefined
-                    ? {
-                          id: data.source.id,
-                          name: data.source.name,
-                          url: data.source.url,
-                      }
-                    : null,
+            source: data.source !== undefined ? toSource(data.source) : null,
             isRead: data.is_read ?? null,
         }
     }

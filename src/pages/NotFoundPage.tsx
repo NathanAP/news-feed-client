@@ -3,13 +3,15 @@ import Typography from '@mui/material/Typography'
 import { useTranslation } from 'react-i18next'
 import { PageTitle } from '../components/PageTitle'
 
-export function NotFoundPage() {
+// `embedded` renders it inside an existing layout (the admin guard uses it, so
+// a blocked page still shows the app chrome) instead of owning the viewport.
+export function NotFoundPage({ embedded = false }: { embedded?: boolean }) {
     const { t } = useTranslation()
 
     return (
         <Box
             sx={{
-                minHeight: '100dvh',
+                minHeight: embedded ? '50dvh' : '100dvh',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',

@@ -10,10 +10,14 @@ import Typography from '@mui/material/Typography'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined'
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined'
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined'
+import RssFeedOutlinedIcon from '@mui/icons-material/RssFeedOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useSession } from '../../hooks/useSession'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { useAdminView } from '../../hooks/useAdminView'
+import { RoutePath } from '../../routes/paths'
 import { ProfileDialog } from '../user/ProfileDialog'
 import { LazyPreferencesDialog } from '../user/LazyPreferencesDialog'
 import { LazyTutorialDialog } from '../tutorial/LazyTutorialDialog'
@@ -21,8 +25,10 @@ import { TutorialVariant } from '../tutorial/tutorialVariant'
 
 export function UserMenu() {
     const { t } = useTranslation()
+    const navigate = useNavigate()
     const { logout } = useSession()
     const { data: user } = useCurrentUser()
+    const { isAdminView } = useAdminView()
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null)
     const [profileOpen, setProfileOpen] = useState(false)
     const [preferencesOpen, setPreferencesOpen] = useState(false)
@@ -94,6 +100,24 @@ export function UserMenu() {
                     </ListItemIcon>
                     <ListItemText>{t('menu.help')}</ListItemText>
                 </MenuItem>
+                {/* Administrator-only entries, kept in their own section. An
+                array (not a fragment) so MUI can still walk the menu items for
+                keyboard navigation. */}
+                {isAdminView && [
+                    <Divider key="admin-divider" />,
+                    <MenuItem
+                        key="admin-sources"
+                        onClick={() => {
+                            close()
+                            void navigate(RoutePath.Sources)
+                        }}
+                    >
+                        <ListItemIcon>
+                            <RssFeedOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>{t('menu.sources')}</ListItemText>
+                    </MenuItem>,
+                ]}
                 <Divider />
                 <MenuItem
                     onClick={() => {

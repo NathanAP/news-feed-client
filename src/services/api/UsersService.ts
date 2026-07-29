@@ -29,6 +29,7 @@ export class UsersService {
             name: data.name,
             picture: data.picture ?? null,
             createdAt: data.created_at,
+            admin: data.admin,
         }
     }
 

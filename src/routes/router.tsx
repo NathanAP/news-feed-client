@@ -2,12 +2,14 @@ import { createBrowserRouter } from 'react-router-dom'
 import { RootLayout } from './RootLayout'
 import { ProtectedRoute } from './ProtectedRoute'
 import { PublicRoute } from './PublicRoute'
+import { AdminRoute } from './AdminRoute'
 import { AppLayout } from '../components/layout/AppLayout'
 import { RoutePath } from './paths'
 import {
     FeedsIndexPage,
     FeedPage,
     ArticleDetailPage,
+    SourcesPage,
     LoginPage,
     AuthCallbackPage,
     NotFoundPage,
@@ -33,6 +35,18 @@ export const router = createBrowserRouter([
                             {
                                 path: RoutePath.ArticleDetail,
                                 element: <ArticleDetailPage />,
+                            },
+                            // Administrator-only pages sit under the same
+                            // AppLayout (one instance, so navigating in and out
+                            // doesn't remount the header) behind AdminRoute.
+                            {
+                                element: <AdminRoute />,
+                                children: [
+                                    {
+                                        path: RoutePath.Sources,
+                                        element: <SourcesPage />,
+                                    },
+                                ],
                             },
                         ],
                     },

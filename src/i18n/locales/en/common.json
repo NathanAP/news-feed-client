@@ -24,7 +24,8 @@
     "titles": {
         "login": "Login",
         "feeds": "Feeds",
-        "article": "Article"
+        "article": "Article",
+        "sources": "Sources"
     },
     "common": {
         "cancel": "Cancel",
@@ -45,7 +46,22 @@
         "profile": "Profile",
         "preferences": "Preferences",
         "help": "Help",
+        "sources": "Sources",
         "signOut": "Sign out"
+    },
+    "admin": {
+        "viewToggle": {
+            "toAdmin": "View as an administrator",
+            "toUser": "View as a regular user"
+        },
+        "sources": {
+            "title": "News sources",
+            "summary": "{{count}} source",
+            "summary_other": "{{count}} sources",
+            "rss": "RSS: {{url}}",
+            "empty": "No sources registered yet.",
+            "loadError": "Could not load the sources."
+        }
     },
     "tutorial": {
         "title": "How it works",

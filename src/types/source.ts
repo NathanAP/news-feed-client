@@ -2,6 +2,8 @@ export interface Source {
     id: string
     name: string
     url: string
+    urlRss: string
+    createdAt: string
 }
 
 export interface SourceResponse {

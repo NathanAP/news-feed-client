@@ -166,3 +166,10 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
         - Acesso através do menu "..." junto da listagem de fonte de notícias.
     - Remoção de fonte de notícias (`DELETE base_url/v1/sources/{id}`).
         - Acesso através do menu "..." junto da listagem de fonte de notícias.
+
+### Detalhes de implementação
+
+- A flag vem do `admin` do `GET /users/me` (`useCurrentUser`, já em cache) e é apenas dica de UI: a API reconfere a flag no banco a cada requisição de administrador, então confiar nela no client não libera nada — a rota responde `403` do mesmo jeito. Ela decide apenas o que renderizar.
+- O modo de visualização vive em `hooks/adminViewStore.ts` (store + `useSyncExternalStore` + `localStorage`, mesmo padrão da ordenação de feeds), exposto por `useAdminView`. É per-device e puramente visual: a API não tem noção desse modo e nenhuma requisição muda por causa dele.
+- O guard é o `routes/AdminRoute.tsx`. Ele renderiza o `NotFoundPage` no lugar em vez de redirecionar, então a URL é preservada e o resultado é indistinguível de qualquer endereço inválido. Enquanto o `GET /users/me` não resolve ele mostra o loader. Sem isso um administrador que recarrega a página veria um 404 piscar.
+- `403` não é `401`: O interceptor do Axios só reage a `401` (renova o token) e `503` (manutenção); `403` sobe para quem chamou. Isso é intencional: deslogar em `403` expulsaria um usuário cuja sessão está perfeitamente válida.

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Logo } from '../Logo'
 import { FeedTabs } from './FeedTabs'
 import { ThemeToggle } from './ThemeToggle'
+import { AdminViewToggle } from './AdminViewToggle'
 import { UserMenu } from './UserMenu'
 
 export function AppHeader() {
@@ -57,6 +58,7 @@ export function AppHeader() {
                     }}
                 >
                     <ThemeToggle />
+                    <AdminViewToggle />
                     <UserMenu />
                 </Box>
             </Toolbar>

@@ -24,7 +24,8 @@
     "titles": {
         "login": "Login",
         "feeds": "Feeds",
-        "article": "Notícia"
+        "article": "Notícia",
+        "sources": "Fontes"
     },
     "common": {
         "cancel": "Cancelar",
@@ -45,7 +46,22 @@
         "profile": "Perfil",
         "preferences": "Preferências",
         "help": "Ajuda",
+        "sources": "Fontes",
         "signOut": "Sair"
+    },
+    "admin": {
+        "viewToggle": {
+            "toAdmin": "Ver como administrador",
+            "toUser": "Ver como usuário comum"
+        },
+        "sources": {
+            "title": "Fontes de notícias",
+            "summary": "{{count}} fonte",
+            "summary_other": "{{count}} fontes",
+            "rss": "RSS: {{url}}",
+            "empty": "Nenhuma fonte cadastrada ainda.",
+            "loadError": "Não foi possível carregar as fontes."
+        }
     },
     "tutorial": {
         "title": "Como funciona",

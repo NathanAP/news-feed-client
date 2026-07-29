@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.17.0.0
+0.18.0.0
 
 ## Versão 0.1.0.0
 
@@ -295,22 +295,68 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
       atingir 20 keywords ou quando não há sugestão. Ataca de lado o problema das keywords em inglês
       (item (b) da seção "Futuro"): a pessoa escolhe termos reais em vez de digitar em PT.
 
+> O bloco original da 0.18 juntava a **infraestrutura** de administrador (flag, botão de alternar
+> visão, guard de rota) com **seis funcionalidades** — CRUD completo de notícias e de fontes. Isso é
+> maior que a 0.8 (CRUD de feeds) inteira, e ainda estreia a paginação no client, que não existia.
+> Fatiado na sessão de planejamento da 0.18: **0.18** = infraestrutura + listagem de fontes (somente
+> leitura, a menor tela que fecha o circuito e torna o guard verificável); **0.19** = CRUD de fontes;
+> **0.20** = CRUD de notícias. Testes/Taskfile/Instagram descem um degrau cada.
+
 ## Versão 0.18.0.0
 
-- [ ] Criar regras para usuários administradores
-    - Deixei detalhes no PROJECT.md.
+- [x] Criar regras para usuários administradores
+    - Flag `admin` do `GET /users/me` no tipo `User` — **dica de UI apenas**: quem autoriza é a API,
+      que reconfere a flag no banco a cada requisição de administrador. O client só decide o que
+      renderizar.
+    - Modo de visualização em `hooks/adminViewStore.ts` (store + `useSyncExternalStore` +
+      `localStorage`, no padrão da ordenação de feeds da 0.11), consumido por `useAdminView`. Começa
+      sempre em "usuário comum"; a flag do backend sempre vence o valor guardado.
+    - `AdminViewToggle` ao lado do `ThemeToggle` no header, visível só para administradores; ícone
+      indica a visão de destino (como o toggle de tema) e fica tingido de `primary` na visão admin.
+    - `AdminRoute` renderiza o `NotFoundPage` **no lugar** (sem redirecionar, preservando a URL) para
+      usuário comum e para admin na visão de usuário. Como o modo é lido de forma reativa, alternar
+      a visão estando numa página guardada cai em not-found sozinho.
+    - Listagem de fontes (`/sources`, entrada "Fontes" no menu do usuário só na visão admin):
+      `SourcesService.list` + `useSources` (`keepPreviousData` para não piscar ao paginar), tela
+      lazy. **Estreia a paginação no client** — `Pagination` do MUI direto, sem wrapper próprio até
+      haver uma segunda listagem que justifique a abstração.
+- [ ] Aviso de bundle voltou (medido, não é regressão de bytes): o chunk `index` foi de 478 kB para
+      524 kB porque o Rolldown **fundiu** o chunk compartilhado `Menu` (37 kB) + `useRovingTabIndex`
+      (4,8 kB) dentro dele ao rechunkar. O payload eager somado era ~521 kB antes e ~524 kB agora
+      (+~2 kB, o custo real desta versão), mas o aviso de 500 kB por chunk voltou. Resolver de
+      verdade pede uma estratégia de chunk de vendor (MUI), que merece versão própria — não
+      `chunkSizeWarningLimit`, que só esconde (ver `rules/performance.md`).
 
 ## Versão 0.19.0.0
+
+- [ ] Será que possível fazer um contorno ao redor de toda a tela pra indicar que estamos no modo administrador? Parece bobo mas acho que esse modo tá muito pouco visível se está ativo ou não apenas pelo botão...
+- [ ] CRUD de fontes de notícias (admin)
+    - Criar/editar/excluir a partir do menu "..." junto da listagem de fontes (`/sources`).
+    - Formulário `{ name (≤120), url, url_rss }`; apoio de `GET /sources/rss-discovery?url=`.
+    - Exclusão precisa avisar que **cascateia soft-delete nas notícias da fonte**; tratar 409 (url
+      duplicada entre fontes ativas) e 403.
+
+## Versão 0.20.0.0
+
+- [ ] CRUD de notícias (admin)
+    - Criação pela tela acessada no menu "..." do feed; edição/remoção pelo menu "..." do card na
+      listagem — hoje esse menu **só aparece em notícia não lida** (decisão da 0.13), o que muda para
+      administradores.
+    - Formulário `{ title, content (HTML cru), url_original, keywords[5..20], source_id,
+language_original }`: reusa o `KeywordsInput`, precisa de seletor de fonte e de um conjunto
+      tipado para `language_original` (`pt|en|es|fr|de|it`). Sem `source_id` na edição (imutável).
+
+## Versão 0.21.0.0
 
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
 
-## Versão 0.20.0.0
+## Versão 0.22.0.0
 
 - [ ] Definir Taskfile
 
-## Versão 0.21.0.0
+## Versão 0.23.0.0
 
 - [ ] Tentar transformar URLs de Instagram em link integrado
 
@@ -332,6 +378,21 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
       digitar em PT. Mitiga bastante, mas não fecha o buraco: quem ignora os chips e digita "música"
       à mão ainda cria um feed vazio sem aviso. Fechar de vez ainda pede (a) dizer "em inglês" no
       label/placeholder ou (c) o backend canonizar na escrita.
+
+- [ ] Estratégia de chunk de vendor (levantado na 0.18.0.0)
+    - O payload eager do app já beira 520 kB e é quase todo MUI. Enquanto o Rolldown o distribui em
+      chunks compartilhados o aviso some, mas basta ele rechunkar para o `index` estourar 500 kB de
+      novo. Um agrupamento explícito de vendor (`build.rolldownOptions.output.advancedChunks`) torna
+      o resultado estável e mensurável. Nunca `chunkSizeWarningLimit` (esconde o problema).
+
+- [ ] Religar a aplicação pelo client (levantado na 0.18.0.0)
+    - Administradores atravessam a manutenção (o backend não os bloqueia), mas o client **não tem
+      como religar a aplicação**: `PUT /system/app-status` é admin e isenta do guard, e não há UI
+      para ela. Hoje religar exige chamar a rota fora do client. O `PROJECT.md` não lista essa rota
+      entre as funcionalidades de client — decidir se entra.
+    - Junto disso: `isUnderMaintenance` no `SessionProvider` **nunca volta para false** depois do
+      primeiro 503. Quem estava com a tela de manutenção aberta precisa recarregar mesmo depois de a
+      aplicação voltar.
 
 - [ ] Defesa-em-profundidade na renderização de HTML da notícia (`ArticleDetailPage`)
     - Hoje o client renderiza `article.content` via `dangerouslySetInnerHTML` confiando 100% na
