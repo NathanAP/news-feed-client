@@ -428,6 +428,8 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
 - [ ] Definir testes
 - [ ] Garantir que textos vindos da API e que podem se tornar excessivamente grandes cabem nos elementos corretamente
     - Exemplos: título e corpo da notícia na listagem e selecionador de feed
+- [ ] Colocar um aviso ao usuário no login dele quando ele estava há mais de duas semanas inativo, os feeds dele pararam de ser atualizados e agora voltarão ao normal
+    - Se não vamos processar dados de um usuário que não esteve ali por muito tempo...
 
 ## Versão 0.22.0.0
 
@@ -440,6 +442,10 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
 ## Versão 0.23.0.0
 
 - [ ] Tentar transformar URLs de Instagram em link integrado
+
+## Versão 0.24.0.0
+
+- [ ] Preparaçao para produção/staging
 
 ## Futuro
 
