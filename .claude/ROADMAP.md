@@ -434,6 +434,8 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
 - [ ] Fix do chunk size
     - Temos que resolver isso de uma forma que não se torne um problema depois...
 - [ ] Definir Taskfile
+    - Vamos fazer como é feito no backend, vou deixar o arquivo Taskfile.example.yaml para você entender o padrão de lá.
+- [ ] Subir a aplicação em Docker
 
 ## Versão 0.23.0.0
 
