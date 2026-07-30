@@ -154,6 +154,7 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
 - Os administradores tem alguns acessos exclusivos à algumas funcionalidades extras, mas nem todas pertencem diretamente ao client. As que estão relacionadas ao client são:
     - Criação de notícias (`POST base_url/v1/articles/create`).
         - Acesso para a tela através do menu "..." do feed.
+        - A criação de notícias não passa pelo julgamento automaticamente. A ideia desse endpoint na verdade é abrir a futura possibilidade de notícias patrocinadas. Por enquanto ela existe apenas por padronização geral mesmo.
     - Edição de notícias (`PUT base_url/v1/articles/{id}`).
         - Acesso para a tela através do menu '...' no card da listagem.
     - Remoção de notícias (`DELETE base_url/v1/articles/{id}`).
