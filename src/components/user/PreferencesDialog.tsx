@@ -71,7 +71,7 @@ export function PreferencesDialog({
             fullWidth
             maxWidth="xs"
         >
-            <form onSubmit={onSubmit} noValidate>
+            <form onSubmit={onSubmit} noValidate autoComplete="off">
                 <DialogTitle>{t('preferences.title')}</DialogTitle>
                 <DialogContent>
                     {isPending ? (

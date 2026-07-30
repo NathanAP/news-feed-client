@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import CircularProgress from '@mui/material/CircularProgress'
 import Divider from '@mui/material/Divider'
 import Link from '@mui/material/Link'
@@ -7,8 +8,11 @@ import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import Pagination from '@mui/material/Pagination'
 import Paper from '@mui/material/Paper'
+import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import AddIcon from '@mui/icons-material/Add'
 import { useTranslation } from 'react-i18next'
+import { SourceActionsMenu } from './SourceActionsMenu'
 import type { Source } from '../../types/source'
 
 export interface SourcesListProps {
@@ -19,10 +23,13 @@ export interface SourcesListProps {
     isPending: boolean
     isError: boolean
     onPageChange: (page: number) => void
+    onCreate: () => void
+    onDeleted: () => void
 }
 
-// Read-only listing of the news sources. Names and URLs come from the API and
-// can be long, so every line clamps to one row with an ellipsis.
+// Listing of the news sources. Names and URLs come from the API and can be
+// long, so every line clamps to one row with an ellipsis. Creating is a header
+// action (it belongs to no row); editing and deleting hang off each row's menu.
 export function SourcesList({
     sources,
     totalCount,
@@ -31,6 +38,8 @@ export function SourcesList({
     isPending,
     isError,
     onPageChange,
+    onCreate,
+    onDeleted,
 }: SourcesListProps) {
     const { t } = useTranslation()
 
@@ -55,24 +64,45 @@ export function SourcesList({
 
     if (sources.length === 0) {
         return (
-            <Typography
-                color="text.secondary"
-                sx={{ py: 4, textAlign: 'center' }}
-            >
-                {t('admin.sources.empty')}
-            </Typography>
+            <Stack spacing={2} sx={{ py: 4, alignItems: 'center' }}>
+                <Typography color="text.secondary">
+                    {t('admin.sources.empty')}
+                </Typography>
+                <Button
+                    onClick={onCreate}
+                    variant="contained"
+                    startIcon={<AddIcon />}
+                >
+                    {t('admin.sources.create')}
+                </Button>
+            </Stack>
         )
     }
 
     return (
         <Box>
-            <Typography
-                variant="body2"
-                color="text.secondary"
-                sx={{ mb: 1.5, pl: 0.5 }}
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: 1,
+                    mb: 1.5,
+                    pl: 0.5,
+                }}
             >
-                {t('admin.sources.summary', { count: totalCount })}
-            </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {t('admin.sources.summary', { count: totalCount })}
+                </Typography>
+                <Button
+                    onClick={onCreate}
+                    size="small"
+                    startIcon={<AddIcon />}
+                    sx={{ flexShrink: 0 }}
+                >
+                    {t('admin.sources.create')}
+                </Button>
+            </Box>
 
             <Paper variant="outlined">
                 <List disablePadding>
@@ -80,39 +110,45 @@ export function SourcesList({
                         <Fragment key={source.id}>
                             {index > 0 && <Divider component="li" />}
                             <ListItem
-                                sx={{
-                                    display: 'block',
-                                    py: 1.5,
-                                    minWidth: 0,
-                                }}
+                                sx={{ py: 1.5, gap: 1 }}
+                                secondaryAction={
+                                    <SourceActionsMenu
+                                        source={source}
+                                        onDeleted={onDeleted}
+                                    />
+                                }
                             >
-                                <Typography variant="subtitle2" noWrap>
-                                    {source.name}
-                                </Typography>
-                                <Link
-                                    href={source.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    variant="body2"
-                                    sx={{
-                                        display: 'block',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis',
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    {source.url}
-                                </Link>
-                                <Typography
-                                    variant="caption"
-                                    color="text.secondary"
-                                    noWrap
-                                    sx={{ display: 'block' }}
-                                >
-                                    {t('admin.sources.rss', {
-                                        url: source.urlRss,
-                                    })}
-                                </Typography>
+                                {/* minWidth: 0 lets the ellipsis kick in
+                                instead of the text pushing the row wider. */}
+                                <Box sx={{ minWidth: 0, flex: 1 }}>
+                                    <Typography variant="subtitle2" noWrap>
+                                        {source.name}
+                                    </Typography>
+                                    <Link
+                                        href={source.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        variant="body2"
+                                        sx={{
+                                            display: 'block',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        {source.url}
+                                    </Link>
+                                    <Typography
+                                        variant="caption"
+                                        color="text.secondary"
+                                        noWrap
+                                        sx={{ display: 'block' }}
+                                    >
+                                        {t('admin.sources.rss', {
+                                            url: source.urlRss,
+                                        })}
+                                    </Typography>
+                                </Box>
                             </ListItem>
                         </Fragment>
                     ))}

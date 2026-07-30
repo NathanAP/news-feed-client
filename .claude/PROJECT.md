@@ -162,6 +162,9 @@ Confundir as três é o que mais custa tempo. Em ordem do fluxo:
         - Acesso através do menu principal do usuário.
     - Criação de fonte de notícias (`POST base_url/v1/sources/create`).
         - Acesso através do menu "..." junto da listagem de fonte de notícias.
+    - Descoberta de feeds RSS de um site (`GET base_url/v1/sources/rss-discovery?url=`).
+        - Apoio do formulário de fonte: preenche o campo de RSS a partir da URL do site.
+        - Não é uma rota exclusiva para administradores, porém é o único local na qual ela é utilizada.
     - Edição de fonte de notícias (`PUT base_url/v1/sources/{id}`).
         - Acesso através do menu "..." junto da listagem de fonte de notícias.
     - Remoção de fonte de notícias (`DELETE base_url/v1/sources/{id}`).

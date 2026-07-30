@@ -37,18 +37,12 @@ Aqui estão todas as convenções de componentização da aplicação.
 
 Aqui estão as convenções para formulários e ações de escrita (mutations).
 
-- **Feedback de sucesso obrigatório.** Toda mutation de escrita bem-sucedida que o usuário dispara
-  (criar, editar, excluir, salvar) deve dar um feedback visível de confirmação — um toast/snackbar
-  de sucesso. O objetivo é o usuário nunca ficar sem saber se a ação funcionou.
-- **Onde disparar.** O feedback de sucesso é disparado de dentro do hook de mutation (no `onSuccess`
-  do TanStack Query), não da tela. Assim vale para todos os gatilhos daquela ação de uma vez
-  (ex.: excluir um feed dá o mesmo toast venha do menu ou de onde for) e não dá para esquecer de
-  programar em um caminho novo.
-- **Notificação.** A camada de toast é o **notistack** (`SnackbarProvider` montado no `App.tsx`,
-  dentro do `ThemeProvider`). Use `useSnackbar().enqueueSnackbar(t('...'), { variant: 'success' })`.
-  Erros continuam podendo ser mostrados inline no próprio formulário (ex.: `Alert` no diálogo) quando
-  fizer sentido manter o contexto — as duas coisas não se excluem.
-- **Texto sempre internacionalizado**, como todo o resto (ver convenções de i18n).
+- Feedback de sucesso obrigatório: Toda mutation de escrita bem-sucedida que o usuário dispara (criar, editar, excluir, salvar) deve dar um feedback visível de confirmação como um toast/snackbar de sucesso. O objetivo é o usuário nunca ficar sem saber se a ação funcionou.
+    - O feedback de sucesso é disparado de dentro do hook de mutation (no `onSuccess` do TanStack Query), não da tela. Assim vale para todos os gatilhos daquela ação de uma vez (ex.: excluir um feed dá o mesmo toast venha do menu ou de onde for) e não dá para esquecer de programar em um caminho novo.
+- A camada de toast é o `notistack` (`SnackbarProvider` montado no `App.tsx`, dentro do `ThemeProvider`). Use `useSnackbar().enqueueSnackbar(t('...'), { variant: 'success' })`. Erros continuam podendo ser mostrados inline no próprio formulário (ex.: `Alert` no diálogo) quando fizer sentido manter o contexto — as duas coisas não se excluem.
+- Texto sempre internacionalizado, como todo o resto (ver convenções de i18n).
+- Sugestões de campo de texto automáticos do navegador não devem ser mostrados por padrão, ou seja, por padrão, o atributo `autocomplete` deve ser tratado como `off`.
+    - Excessões dessa regra serão apontadas aqui mesmo.
 
 # Convenções de internacionalização
 

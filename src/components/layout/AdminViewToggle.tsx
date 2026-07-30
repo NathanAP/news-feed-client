@@ -32,8 +32,11 @@ export function AdminViewToggle() {
                 aria-label={label}
                 size="small"
                 // Tinted while the administrator view is on, so the mode is
-                // readable at a glance and not only through the icon.
-                color={isAdminView ? 'primary' : 'inherit'}
+                // readable at a glance and not only through the icon. Same token
+                // as the viewport frame — indicator and switch speak one
+                // language. Via `sx` because `color` only takes the built-in
+                // palette slots without extra type augmentation.
+                sx={{ color: isAdminView ? 'admin.main' : 'inherit' }}
             >
                 {isAdminView ? (
                     <PersonOutlineIcon fontSize="small" />

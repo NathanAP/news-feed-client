@@ -60,7 +60,40 @@
             "summary_other": "{{count}} fontes",
             "rss": "RSS: {{url}}",
             "empty": "Nenhuma fonte cadastrada ainda.",
-            "loadError": "Não foi possível carregar as fontes."
+            "loadError": "Não foi possível carregar as fontes.",
+            "create": "Nova fonte",
+            "manage": "Gerenciar fonte {{name}}",
+            "edit": "Editar fonte",
+            "delete": "Excluir fonte",
+            "deleteConfirm": {
+                "title": "Excluir fonte?",
+                "body": "\"{{name}}\" será excluída, junto com todas as notícias já coletadas dela. Não é possível desfazer."
+            },
+            "toast": {
+                "created": "Fonte criada.",
+                "updated": "Fonte atualizada.",
+                "deleted": "Fonte excluída."
+            }
+        }
+    },
+    "sourceForm": {
+        "createTitle": "Nova fonte",
+        "editTitle": "Editar fonte",
+        "createSubmit": "Criar",
+        "nameLabel": "Nome",
+        "urlLabel": "URL do site",
+        "urlRssLabel": "URL do feed RSS",
+        "discover": "Buscar feed RSS",
+        "discoveryPick": "Feeds encontrados — escolha um:",
+        "discoveryEmpty": "Nenhum feed RSS encontrado nesse endereço.",
+        "discoveryError": "Não foi possível buscar os feeds RSS.",
+        "errors": {
+            "nameRequired": "Informe um nome para a fonte.",
+            "nameTooLong": "O nome é muito longo.",
+            "urlInvalid": "Informe um endereço válido, incluindo https://",
+            "urlRssInvalid": "Informe um endereço de RSS válido, incluindo https://",
+            "duplicate": "Outra fonte já usa esse endereço.",
+            "generic": "Algo deu errado. Tente novamente."
         }
     },
     "tutorial": {

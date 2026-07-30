@@ -152,7 +152,7 @@ export function FeedFormDialog({
             fullWidth
             maxWidth="xs"
         >
-            <form onSubmit={onSubmit} noValidate>
+            <form onSubmit={onSubmit} noValidate autoComplete="off">
                 <DialogTitle>
                     {mode === 'edit'
                         ? t('feedForm.editTitle')

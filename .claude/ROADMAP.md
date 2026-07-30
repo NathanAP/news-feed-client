@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.18.0.0
+0.19.3.0
 
 ## Versão 0.1.0.0
 
@@ -320,21 +320,81 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
       `SourcesService.list` + `useSources` (`keepPreviousData` para não piscar ao paginar), tela
       lazy. **Estreia a paginação no client** — `Pagination` do MUI direto, sem wrapper próprio até
       haver uma segunda listagem que justifique a abstração.
-- [ ] Aviso de bundle voltou (medido, não é regressão de bytes): o chunk `index` foi de 478 kB para
-      524 kB porque o Rolldown **fundiu** o chunk compartilhado `Menu` (37 kB) + `useRovingTabIndex`
-      (4,8 kB) dentro dele ao rechunkar. O payload eager somado era ~521 kB antes e ~524 kB agora
-      (+~2 kB, o custo real desta versão), mas o aviso de 500 kB por chunk voltou. Resolver de
-      verdade pede uma estratégia de chunk de vendor (MUI), que merece versão própria — não
-      `chunkSizeWarningLimit`, que só esconde (ver `rules/performance.md`).
 
 ## Versão 0.19.0.0
 
-- [ ] Será que possível fazer um contorno ao redor de toda a tela pra indicar que estamos no modo administrador? Parece bobo mas acho que esse modo tá muito pouco visível se está ativo ou não apenas pelo botão.
-- [ ] CRUD de fontes de notícias (admin)
+- [x] Será que possível fazer um contorno ao redor de toda a tela pra indicar que estamos no modo administrador? Parece bobo mas acho que esse modo tá muito pouco visível se está ativo ou não apenas pelo botão.
+    - Não é bobo: o modo muda quais ações destrutivas ficam ao alcance, então o estado merece ficar
+      visível o tempo todo — não só quando o header está à vista. `AdminViewOutline` no `AppLayout`:
+      moldura `fixed` de 2px em `primary.main` (mesma cor do botão ligado), `pointer-events: none`
+      para nunca interceptar clique e `zIndex` da camada de tooltip para continuar visível com um
+      diálogo aberto. `aria-hidden`: quem usa leitor de tela já recebe o estado pelo rótulo do botão.
+- [x] CRUD de fontes de notícias (admin)
     - Criar/editar/excluir a partir do menu "..." junto da listagem de fontes (`/sources`).
     - Formulário `{ name (≤120), url, url_rss }`; apoio de `GET /sources/rss-discovery?url=`.
     - Exclusão precisa avisar que **cascateia soft-delete nas notícias da fonte**; tratar 409 (url
       duplicada entre fontes ativas) e 403.
+    - Decisão de UI: o `PROJECT.md` ancorava as três ações num "..." só, mas um menu único no
+      cabeçalho não sabe qual fonte editar. Ficou **"⋮" por linha** (editar/excluir) + botão "Nova
+      fonte" no cabeçalho e no estado vazio — mesma divisão que os feeds já usam ("+" cria, "⋮" age
+      sobre um item).
+    - `SourceFormDialog` lazy (chunk de 6,5 kB só ao abrir), Zod via react-hook-form. **`z.url()`**,
+      não `z.string().url()`, que está marcado como deprecated no Zod 4.
+    - Descoberta de RSS como `useMutation` (ação imperativa de botão, não estado sincronizado): um
+      resultado preenche o campo direto, vários viram lista de escolha, nenhum mostra aviso.
+    - Invalidação além de `['sources']`: editar muda o nome exibido no rodapé dos cards e excluir
+      apaga as notícias da fonte, então as duas mexem em `['feedArticles']` (prefixo que já cobre a
+      contagem de não-lidas por feed) e a exclusão também em `['unreadCounts']`.
+    - Excluir a última linha de uma página > 1 deixaria a listagem vazia (a API responde `docs: []`,
+      sem erro) — a página volta uma casa.
+
+## Versão 0.19.1.0
+
+- [x] Bugfix: o rótulo do campo de RSS caía por cima do texto ao perder o foco
+    - Acontecia só quando o campo era preenchido pelo botão "Buscar feed RSS". O `setValue` do
+      react-hook-form escreve direto no nó do DOM e **não dispara evento de mudança do React**, então
+      o `InputBase` do MUI — que só descobre que tem conteúdo por um evento real ou na montagem —
+      continuava achando o campo vazio e mantinha o rótulo embaixo. Com foco o rótulo sobe de
+      qualquer jeito, por isso o defeito só aparecia depois do blur.
+    - Corrigido tornando o campo **controlado** (`Controller`), para o MUI receber o valor por
+      propriedade. Preferido a forçar `shrink`, que trataria o sintoma. Os outros dois campos seguem
+      com `register`: só são escritos pelo `reset`, que acontece na montagem, quando o MUI ainda faz
+      sua verificação inicial.
+    - Regra que fica: **campo escrito por `setValue` tem que ser controlado.** É por isso que o
+      `KeywordsInput` do formulário de feeds nunca teve o problema — já usava `Controller`.
+
+## Versão 0.19.2.0
+
+- [x] Desligar o autofill do navegador em todos os campos
+    - O autofill do Chrome pintava o campo de azul e, pior, oferecia dado de perfil onde não cabe:
+      no print do dono ele preencheu o **nome de uma fonte** com o nome da pessoa. Fonte é registro
+      **global**, então isso vira dado errado que todo usuário vê.
+    - `MuiTextField.defaultProps.autoComplete = 'off'` no `theme.ts` + `autoComplete="off"` em cada
+      `<form>`. No tema, e não campo a campo, para todo `TextField` novo já nascer desligado — o
+      formulário de notícia da 0.20 herda de graça.
+    - **Sem CSS**: escolha do dono, atacar a causa em vez de mascarar o fundo azul (que só sairia com
+      o truque do `box-shadow: inset` em `:-webkit-autofill`).
+    - Limite conhecido: o Chrome nem sempre obedece `autocomplete="off"` em campos que ele classifica
+      como dado de perfil. Se voltar a insistir, o próximo passo é tornar o atributo `name` menos
+      parecido com dado de perfil (`name="name"` é o que dispara a heurística) — não foi necessário
+      até aqui.
+
+## Versão 0.19.3.0
+
+- [x] Bugfix visual: a moldura azul do modo administrador não funcionava no tema claro
+    - Causa: o indicador pegava emprestado o `primary`, que é afinado para **botão e link**. No
+      claro isso punha `#3b6fe0` sobre `#f6f7f9` — a linha mais saturada da tela inteira, na borda,
+      lendo como anel de foco do navegador. No escuro funcionava porque lá o azul é _mais claro_ que
+      o fundo, virando acento em vez de moldura.
+    - Corrigido com um **token próprio** de paleta, `admin`, um valor por esquema — mesma lógica do
+      dourado da marca (mais claro que o fundo no escuro, mais profundo que ele no claro). Violeta
+      (`#a78bfa` escuro / `#5b21b6` claro), escolhido pelo dono: não conflita com o azul do `primary`
+      nem com o dourado do `brand`, então nada no app compete com o indicador.
+    - O botão do toggle passou a usar o mesmo token (era `color="primary"`): indicador e interruptor
+      falam a mesma língua. Aplicado via `sx` porque a prop `color` do `IconButton` só aceita os
+      slots nativos da paleta sem augmentation extra de tipo.
+    - Lição que fica: `primary` é cor de controle. Superfície grande — moldura, faixa, fundo de
+      modo — pede token próprio, senão herda um tom calibrado para outra função.
 
 ## Versão 0.20.0.0
 

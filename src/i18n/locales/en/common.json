@@ -60,7 +60,40 @@
             "summary_other": "{{count}} sources",
             "rss": "RSS: {{url}}",
             "empty": "No sources registered yet.",
-            "loadError": "Could not load the sources."
+            "loadError": "Could not load the sources.",
+            "create": "New source",
+            "manage": "Manage source {{name}}",
+            "edit": "Edit source",
+            "delete": "Delete source",
+            "deleteConfirm": {
+                "title": "Delete source?",
+                "body": "\"{{name}}\" will be deleted, along with every article already collected from it. This cannot be undone."
+            },
+            "toast": {
+                "created": "Source created.",
+                "updated": "Source updated.",
+                "deleted": "Source deleted."
+            }
+        }
+    },
+    "sourceForm": {
+        "createTitle": "New source",
+        "editTitle": "Edit source",
+        "createSubmit": "Create",
+        "nameLabel": "Name",
+        "urlLabel": "Site URL",
+        "urlRssLabel": "RSS feed URL",
+        "discover": "Find RSS feed",
+        "discoveryPick": "Feeds found — pick one:",
+        "discoveryEmpty": "No RSS feed found at that address.",
+        "discoveryError": "Could not search for RSS feeds.",
+        "errors": {
+            "nameRequired": "Enter a name for the source.",
+            "nameTooLong": "The name is too long.",
+            "urlInvalid": "Enter a valid address, including https://",
+            "urlRssInvalid": "Enter a valid RSS address, including https://",
+            "duplicate": "Another source already uses this address.",
+            "generic": "Something went wrong. Please try again."
         }
     },
     "tutorial": {

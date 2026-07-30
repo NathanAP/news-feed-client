@@ -42,13 +42,40 @@ Não existe "área de admin" separada — cada ação fica ancorada onde o objet
   (que hoje só aparece em notícia **não lida**, decisão da 0.13 — vai precisar mudar p/ admin).
 - Listagem de fontes → menu do usuário (feito). Criar/editar/remover fonte → menu "..." da listagem.
 
+## Sinalização do modo (0.19)
+
+- `AdminViewOutline` no `AppLayout`: moldura `fixed` de 2px em `primary.main` ao redor da viewport
+  enquanto a visão admin está ligada. `pointer-events: none` e `zIndex` de tooltip (fica visível com
+  diálogo aberto). `aria-hidden` — o estado já é anunciado pelo rótulo do botão.
+
 ## Estado atual e o que falta
 
-- Feito na 0.18: flag, toggle (ao lado do `ThemeToggle`), guard, e `/sources` **somente leitura**
-  (`SourcesService.list` + `useSources` com `keepPreviousData`, tela lazy).
-- **Estreia da paginação no client**: `Pagination` do MUI direto no `SourcesList`, sem wrapper — só
-  há uma listagem paginada até agora. Extrair quando houver a segunda (0.20).
-- 0.19 = CRUD de fontes; 0.20 = CRUD de notícias. Ver `ROADMAP.md`.
+- Feito na 0.18: flag, toggle (ao lado do `ThemeToggle`), guard, e `/sources` somente leitura.
+- Feito na 0.19: **CRUD de fontes** + contorno do modo. `SourceFormDialog` (lazy) com Zod,
+  `SourceActionsMenu` ("⋮" por linha), "Nova fonte" no cabeçalho e no estado vazio, descoberta de
+  RSS, `ConfirmDialog` com aviso de cascata.
+- **Paginação**: `Pagination` do MUI direto no `SourcesList`, sem wrapper — só há uma listagem
+  paginada até agora. Extrair quando houver a segunda (0.20).
+- 0.20 = CRUD de notícias. Ver `ROADMAP.md`.
+
+## Gotchas do CRUD de fontes (0.19)
+
+- **Invalidar só `['sources']` não basta.** Editar muda o nome exibido no rodapé dos cards e excluir
+  cascateia soft-delete nas notícias → as duas invalidam `['feedArticles']`; excluir também
+  `['unreadCounts']`. O prefixo `['feedArticles']` já cobre `['feedArticles', feedId, 'unreadCount']`.
+- **`z.url()`, não `z.string().url()`** — o segundo está `@deprecated` no Zod 4.
+- **Campo escrito por `setValue` tem que ser controlado (`Controller`).** O `setValue` escreve direto
+  no nó do DOM sem disparar evento de mudança do React, então um `TextField` não controlado do MUI
+  segue achando que está vazio e **derruba o rótulo por cima do texto** ao perder o foco (bug da
+  0.19.1.0, no campo de RSS preenchido pela descoberta). Campos escritos só pelo `reset` podem
+  continuar com `register` — o `reset` roda na montagem, quando o MUI ainda faz sua verificação
+  inicial. O `KeywordsInput` nunca sofreu disso porque já era `Controller`.
+- Descoberta de RSS é `useMutation` (ação de botão), não query desabilitada com `refetch`.
+- `GET /sources/rss-discovery` **não é admin-only** (qualquer autenticado); só o `article-discovery` é.
+- Excluir a última linha de uma página > 1 deixa a listagem vazia (API responde `docs: []`, sem
+  erro) → a `SourcesPage` volta uma página via callback `onDeleted`.
+- O `Alert` de erro da mutation não é limpo ao editar os campos (mesmo comportamento do
+  `FeedFormDialog` desde a 0.8) — limpeza candidata para tratar os dois juntos.
 
 ## Gotchas
 

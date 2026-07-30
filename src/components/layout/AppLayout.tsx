@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { Outlet } from 'react-router-dom'
 import { AppHeader } from './AppHeader'
+import { AdminViewOutline } from './AdminViewOutline'
 import { PageLoader } from '../PageLoader'
 import { LazyTutorialDialog } from '../tutorial/LazyTutorialDialog'
 import { TutorialVariant } from '../tutorial/tutorialVariant'
@@ -29,6 +30,7 @@ export function AppLayout() {
                 onClose={markSeen}
                 variant={TutorialVariant.Welcome}
             />
+            <AdminViewOutline />
         </Box>
     )
 }

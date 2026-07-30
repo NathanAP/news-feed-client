@@ -64,3 +64,19 @@ Implementado na `0.4.0.0`. Fonte: `versions/20260707190000_0.4.0.0.md`.
   `documentElement.scrollWidth > clientWidth` — mas confirme `clientWidth !== 0` antes (o preview do
   harness às vezes colapsa o viewport e falseia a medição). A origem precisa ser a liberada no CORS
   (hoje `localhost:5173`).
+- **Sem autofill do navegador em campo nenhum** (`0.19.2.0`): `MuiTextField.defaultProps.autoComplete
+= 'off'` no `theme.ts` + `autoComplete="off"` em cada `<form>`. Ficou no tema, e não campo a campo,
+  para todo `TextField` novo já nascer desligado. Motivo: nenhum campo nosso guarda dado pessoal
+  (nomeiam feeds e fontes) e **fonte é registro global** — um autofill distraído grava o nome de uma
+  pessoa em algo que todo usuário vê. Nada de CSS: o fundo azul do autofill do Chrome só sai com o
+  truque do `box-shadow: inset` em `:-webkit-autofill`, e a decisão foi atacar a causa. Se o Chrome
+  ainda insistir em algum campo, o próximo passo (não tomado) é tornar o atributo `name` menos
+  parecido com dado de perfil — `name="name"` é o que dispara a heurística dele.
+- **`primary` é cor de controle** (`0.19.3.0`): superfície grande e permanente — moldura, faixa,
+  fundo de modo — pede **token próprio** na paleta, um valor por esquema. A moldura do modo admin
+  nasceu com `primary.main` e no claro virou `#3b6fe0` sobre `#f6f7f9`: a linha mais saturada da
+  tela, lendo como anel de foco do navegador. No escuro passava porque lá o `primary` é mais claro
+  que o fundo. Hoje existe o token `admin` (`adminViolet`: `#a78bfa` escuro / `#5b21b6` claro),
+  seguindo a mesma lógica do `brandGold`. Consumir por `admin.main`, nunca o hex.
+- Prop `color` de `IconButton`/etc. só aceita os slots nativos da paleta; para token custom use
+  `sx={{ color: 'admin.main' }}` em vez de augmentar o tipo do componente por um uso só.
