@@ -125,13 +125,7 @@
         "languageLabel": "Translation language",
         "languageHelp": "Language articles are translated to. Disabled = no translation.",
         "languageOptions": {
-            "off": "Disabled",
-            "pt": "Portuguese",
-            "en": "English",
-            "es": "Spanish",
-            "fr": "French",
-            "de": "German",
-            "it": "Italian"
+            "off": "Disabled"
         },
         "aiPersonalityLabel": "AI personality",
         "aiPersonalityOptions": {
@@ -230,7 +224,19 @@
     },
     "article": {
         "loadError": "Could not load this article.",
-        "back": "Back"
+        "back": "Back",
+        "create": "New article",
+        "edit": "Edit article",
+        "delete": "Delete article",
+        "deleteConfirm": {
+            "title": "Delete article?",
+            "body": "\"{{title}}\" will be permanently deleted for every user. This cannot be undone."
+        },
+        "toast": {
+            "created": "Article created.",
+            "updated": "Article updated.",
+            "deleted": "Article deleted."
+        }
     },
     "maintenance": {
         "title": "Under maintenance",
@@ -239,5 +245,37 @@
     "notFound": {
         "title": "Page not found",
         "body": "The page you're looking for doesn't exist."
+    },
+    "languages": {
+        "pt": "Portuguese",
+        "en": "English",
+        "es": "Spanish",
+        "fr": "French",
+        "de": "German",
+        "it": "Italian"
+    },
+    "articleForm": {
+        "createTitle": "New article",
+        "editTitle": "Edit article",
+        "createSubmit": "Create",
+        "noJudgementNotice": "A hand-made article does not go through the matching pipeline, so it will not show up in anyone's feed. It stays reachable by its own address.",
+        "titleLabel": "Title",
+        "sourceLabel": "Source",
+        "sourceEmpty": "No source found.",
+        "languageLabel": "Original language",
+        "urlLabel": "Original URL",
+        "contentLabel": "Content",
+        "contentHelp": "Raw HTML. The backend sanitizes it before storing.",
+        "errors": {
+            "titleRequired": "Enter a title.",
+            "sourceRequired": "Pick a source.",
+            "languageRequired": "Pick the original language.",
+            "urlInvalid": "Enter a valid URL.",
+            "keywordsMin": "Add at least {{min}} keywords.",
+            "keywordsMax": "Use at most {{max}} keywords.",
+            "contentRequired": "Enter the content.",
+            "duplicate": "Another article already uses that address.",
+            "generic": "Something went wrong. Please try again."
+        }
     }
 }

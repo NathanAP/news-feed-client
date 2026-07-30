@@ -39,7 +39,7 @@ Spec do dono: seção "Administradores" do `PROJECT.md`.
 Não existe "área de admin" separada — cada ação fica ancorada onde o objeto já vive:
 
 - Criar notícia → menu "..." do feed. Editar/remover notícia → menu "..." do **card da listagem**
-  (que hoje só aparece em notícia **não lida**, decisão da 0.13 — vai precisar mudar p/ admin).
+  (feito na 0.20; a condição do menu virou `isUnread || isAdminView`).
 - Listagem de fontes → menu do usuário (feito). Criar/editar/remover fonte → menu "..." da listagem.
 
 ## Sinalização do modo (0.19)
@@ -54,9 +54,31 @@ Não existe "área de admin" separada — cada ação fica ancorada onde o objet
 - Feito na 0.19: **CRUD de fontes** + contorno do modo. `SourceFormDialog` (lazy) com Zod,
   `SourceActionsMenu` ("⋮" por linha), "Nova fonte" no cabeçalho e no estado vazio, descoberta de
   RSS, `ConfirmDialog` com aviso de cascata.
-- **Paginação**: `Pagination` do MUI direto no `SourcesList`, sem wrapper — só há uma listagem
-  paginada até agora. Extrair quando houver a segunda (0.20).
-- 0.20 = CRUD de notícias. Ver `ROADMAP.md`.
+- Feito na 0.20: **CRUD de notícias**. `ArticleFormPage` (`/articles/new` e `/articles/:id/edit`,
+  lazy, atrás do `AdminRoute`), `SourcePicker` com busca no servidor, editar/excluir no "⋮" do card.
+- **Paginação**: `Pagination` do MUI direto no `SourcesList`, sem wrapper — segue havendo uma só
+  listagem paginada (a de notícias da 0.20 não existe; o form não lista). Extrair se aparecer a segunda.
+- O conjunto de admin do client está **completo** conforme o `PROJECT.md`. Ver `ROADMAP.md` para o
+  que sobra (testes, Taskfile, chunk de vendor).
+
+## Gotchas do CRUD de notícias (0.20)
+
+- **Criar notícia não passa pelo julgamento** (decisão de produto, no `PROJECT.md`): a rota existe
+  por padronização e para futuras **notícias patrocinadas**. Logo a notícia não entra em feed nenhum
+  — a tela avisa isso, e o `useCreateArticle` **não invalida nada** de propósito.
+- `source_id` é **imutável**: só existe na criação (`CreateArticleInput`), some na edição.
+- O menu "⋮" do card era `isUnread` (0.13); virou `isUnread || isAdminView`. O espírito continua: só
+  aparece quando tem o que oferecer.
+- **Largura por rota**: quem precisa de container largo pede pelo `handle` do React Router
+  (`routes/routeHandle.ts` + `useMatches` no `AppLayout`), não por sniff de pathname — e sem criar
+  uma segunda árvore de `AppLayout`, que remontaria o header.
+- **Tipagem do zodResolver**: o _input_ do schema tem que bater com o tipo do formulário. Campo de
+  select que começa vazio pede `z.union([z.literal(''), z.enum(X)])` + `refine` com type predicate;
+  um `z.string()` simples gera `string` e quebra a atribuição do resolver.
+- `Language` mora em `types/language.ts` (dois consumidores) e os nomes dos idiomas em `languages.*`.
+- **Devtools do React Query cobrem o canto inferior** em janela pequena e engolem cliques em botão
+  de formulário. Se um clique "não faz nada" na verificação, cheque `document.elementFromPoint` antes
+  de suspeitar do código.
 
 ## Gotchas do CRUD de fontes (0.19)
 
@@ -85,5 +107,6 @@ Não existe "área de admin" separada — cada ação fica ancorada onde o objet
   MUI perde a navegação por teclado.
 - Admin **atravessa a manutenção** no backend, mas o client não tem UI para `PUT /system/app-status`
   — não dá para religar a aplicação por aqui (registrado em "Futuro" no `ROADMAP.md`).
-- O usuário **dev não é administrador** no banco (`admin: false`). Para verificar a UI de admin,
-  forçar a flag no `UsersService` temporariamente e reverter.
+- O usuário **dev já é administrador** no banco desde 30/07/2026 (o dono promoveu). Não é mais
+  preciso forçar a flag no `UsersService` para verificar a UI de admin — se um dia voltar a `false`,
+  esse era o truque (forçar e reverter).

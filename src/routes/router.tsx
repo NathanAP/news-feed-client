@@ -9,11 +9,13 @@ import {
     FeedsIndexPage,
     FeedPage,
     ArticleDetailPage,
+    ArticleFormPage,
     SourcesPage,
     LoginPage,
     AuthCallbackPage,
     NotFoundPage,
 } from './lazyPages'
+import { WIDE_LAYOUT } from './routeHandle'
 
 // Pages are code-split (see lazyPages / rules/performance.md). Structural pieces
 // (layouts, guards) stay eager since they're always needed.
@@ -45,6 +47,19 @@ export const router = createBrowserRouter([
                                     {
                                         path: RoutePath.Sources,
                                         element: <SourcesPage />,
+                                    },
+                                    // The article form asks for the wide
+                                    // container (raw HTML body); AppLayout
+                                    // reads the flag through useMatches.
+                                    {
+                                        path: RoutePath.ArticleNew,
+                                        element: <ArticleFormPage />,
+                                        handle: WIDE_LAYOUT,
+                                    },
+                                    {
+                                        path: RoutePath.ArticleEdit,
+                                        element: <ArticleFormPage />,
+                                        handle: WIDE_LAYOUT,
                                     },
                                 ],
                             },

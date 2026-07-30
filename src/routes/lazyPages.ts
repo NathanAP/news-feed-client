@@ -16,6 +16,11 @@ export const ArticleDetailPage = lazy(() =>
         default: m.ArticleDetailPage,
     })),
 )
+export const ArticleFormPage = lazy(() =>
+    import('../pages/admin/ArticleFormPage').then((m) => ({
+        default: m.ArticleFormPage,
+    })),
+)
 export const SourcesPage = lazy(() =>
     import('../pages/admin/SourcesPage').then((m) => ({
         default: m.SourcesPage,

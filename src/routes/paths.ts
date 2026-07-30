@@ -12,6 +12,10 @@ export const RoutePath = {
     Feed: '/feeds/:feedId',
     ArticleDetail: '/articles/:id',
     // Administrator-only (see AdminRoute): anyone else gets the not-found page.
+    // `/articles/new` doesn't clash with `/articles/:id`: React Router ranks a
+    // static segment above a dynamic one.
+    ArticleNew: '/articles/new',
+    ArticleEdit: '/articles/:id/edit',
     Sources: '/sources',
     AuthCallback: '/auth/callback',
 } as const
@@ -24,4 +28,8 @@ export function feedPath(feedId: string): string {
 
 export function articleDetailPath(articleId: string): string {
     return `/articles/${articleId}`
+}
+
+export function articleEditPath(articleId: string): string {
+    return `/articles/${articleId}/edit`
 }

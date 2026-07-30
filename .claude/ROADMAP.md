@@ -6,7 +6,7 @@ Os níveis de tabulação indicam detalhes do assunto.
 
 # Atual versão
 
-0.19.3.0
+0.20.0.0
 
 ## Versão 0.1.0.0
 
@@ -398,13 +398,30 @@ count }] }`. `FeedsService.keywordSuggestions` + `useKeywordSuggestions` (deboun
 
 ## Versão 0.20.0.0
 
-- [ ] CRUD de notícias (admin)
+- [x] CRUD de notícias (admin)
     - Criação pela tela acessada no menu "..." do feed; edição/remoção pelo menu "..." do card na
-      listagem — hoje esse menu **só aparece em notícia não lida** (decisão da 0.13), o que muda para
-      administradores.
-    - Formulário `{ title, content (HTML cru), url_original, keywords[5..20], source_id,
-language_original }`: reusa o `KeywordsInput`, precisa de seletor de fonte e de um conjunto
-      tipado para `language_original` (`pt|en|es|fr|de|it`). Sem `source_id` na edição (imutável).
+      listagem. Esse menu **só aparecia em notícia não lida** (decisão da 0.13, para não abrir menu
+      vazio); agora aparece também quando há ações de admin — a condição virou
+      `isUnread || isAdminView`, mantendo o espírito da regra original.
+    - **Telas, não diálogos** (`/articles/new` e `/articles/:id/edit`): o corpo é HTML cru e não cabe
+      num diálogo. `/articles/new` não conflita com `/articles/:id` — o React Router ranqueia
+      segmento estático acima de dinâmico.
+    - **Largura por rota**: o `AppLayout` é `Container maxWidth="sm"` (coluna de leitura), apertado
+      para um corpo de HTML. Em vez de a casca adivinhar pelo pathname, a rota **pede** a largura via
+      `handle` do React Router (`routes/routeHandle.ts`), lido com `useMatches`. Uma instância só de
+      `AppLayout`, sem remontar header.
+    - **Aviso de que não há julgamento** na tela de criação: o `PROJECT.md` diz que a criação manual
+      não passa pelo julgamento, então a notícia não cai em feed nenhum. Dizer isso na tela evita o
+      admin criar e ficar procurando onde apareceu.
+    - `Language` saiu de `types/preferences.ts` para `types/language.ts` (dois recursos usam:
+      preferência de tradução e idioma original da notícia), e os nomes dos idiomas saíram de
+      `preferences.languageOptions.*` para um bloco `languages.*` compartilhado.
+    - **Seletor de fonte** com busca no servidor (`GET /sources?name=`) via `Autocomplete` — a
+      listagem é paginada, então um dropdown simples esconderia tudo além da primeira página. De
+      quebra entrega o filtro de busca adiado na 0.19.
+    - Invalidação por operação: criar **não invalida nada** (não entra em feed nenhum, nada em cache
+      pode contê-la); editar mexe em `['feedArticles']` + `['article', id]`; excluir mexe em
+      `['feedArticles']` + `['unreadCounts']`.
 
 ## Versão 0.21.0.0
 

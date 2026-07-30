@@ -125,13 +125,7 @@
         "languageLabel": "Idioma de tradução",
         "languageHelp": "Idioma para o qual as notícias são traduzidas. Desativado = sem tradução.",
         "languageOptions": {
-            "off": "Desativado",
-            "pt": "Português",
-            "en": "Inglês",
-            "es": "Espanhol",
-            "fr": "Francês",
-            "de": "Alemão",
-            "it": "Italiano"
+            "off": "Desativado"
         },
         "aiPersonalityLabel": "Personalidade da IA",
         "aiPersonalityOptions": {
@@ -230,7 +224,19 @@
     },
     "article": {
         "loadError": "Não foi possível carregar esta notícia.",
-        "back": "Voltar"
+        "back": "Voltar",
+        "create": "Nova notícia",
+        "edit": "Editar notícia",
+        "delete": "Excluir notícia",
+        "deleteConfirm": {
+            "title": "Excluir notícia?",
+            "body": "\"{{title}}\" será excluída permanentemente para todos os usuários. Não é possível desfazer."
+        },
+        "toast": {
+            "created": "Notícia criada.",
+            "updated": "Notícia atualizada.",
+            "deleted": "Notícia excluída."
+        }
     },
     "maintenance": {
         "title": "Em manutenção",
@@ -239,5 +245,37 @@
     "notFound": {
         "title": "Página não encontrada",
         "body": "A página que você procura não existe."
+    },
+    "languages": {
+        "pt": "Português",
+        "en": "Inglês",
+        "es": "Espanhol",
+        "fr": "Francês",
+        "de": "Alemão",
+        "it": "Italiano"
+    },
+    "articleForm": {
+        "createTitle": "Nova notícia",
+        "editTitle": "Editar notícia",
+        "createSubmit": "Criar",
+        "noJudgementNotice": "Uma notícia criada à mão não passa pelo julgamento, então ela não vai aparecer no feed de ninguém. Ela fica acessível pelo endereço dela.",
+        "titleLabel": "Título",
+        "sourceLabel": "Fonte",
+        "sourceEmpty": "Nenhuma fonte encontrada.",
+        "languageLabel": "Idioma original",
+        "urlLabel": "URL original",
+        "contentLabel": "Conteúdo",
+        "contentHelp": "HTML cru. O backend sanitiza antes de guardar.",
+        "errors": {
+            "titleRequired": "Informe um título.",
+            "sourceRequired": "Escolha uma fonte.",
+            "languageRequired": "Escolha o idioma original.",
+            "urlInvalid": "Informe uma URL válida.",
+            "keywordsMin": "Adicione ao menos {{min}} palavras-chave.",
+            "keywordsMax": "Use no máximo {{max}} palavras-chave.",
+            "contentRequired": "Informe o conteúdo.",
+            "duplicate": "Outra notícia já usa esse endereço.",
+            "generic": "Algo deu errado. Tente novamente."
+        }
     }
 }

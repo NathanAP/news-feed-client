@@ -10,9 +10,12 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
+import Divider from '@mui/material/Divider'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import DoneIcon from '@mui/icons-material/Done'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import { useTranslation } from 'react-i18next'
 import { format } from 'date-fns'
 import { pt, enUS } from 'date-fns/locale'
@@ -21,7 +24,10 @@ import type { Article } from '../../types/article'
 import { formatRelativeTime } from '../../utils/relativeTime'
 import { stripHtml } from '../../utils/stripHtml'
 import { articlesService } from '../../services/api'
-import { articleDetailPath } from '../../routes/paths'
+import { articleDetailPath, articleEditPath } from '../../routes/paths'
+import { useAdminView } from '../../hooks/useAdminView'
+import { useDeleteArticle } from '../../hooks/useArticleMutations'
+import { ConfirmDialog } from '../ConfirmDialog'
 
 // Clamp to two lines — titles and bodies never exceed two lines.
 // `overflowWrap: anywhere` lets long unbroken tokens (e.g. URLs) break and clamp
@@ -49,6 +55,9 @@ export function NewsCard({
     const navigate = useNavigate()
     const queryClient = useQueryClient()
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null)
+    const [confirmOpen, setConfirmOpen] = useState(false)
+    const { isAdminView } = useAdminView()
+    const deleteArticle = useDeleteArticle()
 
     const createdAt = new Date(article.createdAt)
     const timeAgo = formatRelativeTime(createdAt, t)
@@ -133,10 +142,11 @@ export function NewsCard({
                 </Box>
             </CardActionArea>
 
-            {/* The only menu action is "mark as read", so the ⋮ button is shown
-            only while the article is unread — otherwise it would open an empty
-            menu. When more actions arrive, relax this condition. */}
-            {isUnread && (
+            {/* The ⋮ button only appears when it has something to offer: "mark
+            as read" while unread, plus the administrator actions. On a read
+            article seen by a regular user there is nothing, so it stays hidden
+            rather than opening an empty menu (0.13). */}
+            {(isUnread || isAdminView) && (
                 <>
                     <IconButton
                         size="small"
@@ -167,20 +177,75 @@ export function NewsCard({
                             horizontal: 'right',
                         }}
                     >
-                        <MenuItem
-                            onClick={() => {
-                                setMenuAnchor(null)
-                                markAsReadMutation.mutate()
-                            }}
-                        >
-                            <ListItemIcon>
-                                <DoneIcon fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText>{t('feed.markAsRead')}</ListItemText>
-                        </MenuItem>
+                        {isUnread && (
+                            <MenuItem
+                                onClick={() => {
+                                    setMenuAnchor(null)
+                                    markAsReadMutation.mutate()
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <DoneIcon fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText>
+                                    {t('feed.markAsRead')}
+                                </ListItemText>
+                            </MenuItem>
+                        )}
+                        {/* Array, not a fragment, so MUI can still walk the
+                        items for keyboard navigation. */}
+                        {isAdminView && [
+                            isUnread ? <Divider key="admin-divider" /> : null,
+                            <MenuItem
+                                key="admin-edit"
+                                onClick={() => {
+                                    setMenuAnchor(null)
+                                    void navigate(articleEditPath(article.id))
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <EditOutlinedIcon fontSize="small" />
+                                </ListItemIcon>
+                                <ListItemText>{t('article.edit')}</ListItemText>
+                            </MenuItem>,
+                            <MenuItem
+                                key="admin-delete"
+                                onClick={() => {
+                                    setMenuAnchor(null)
+                                    setConfirmOpen(true)
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <DeleteOutlinedIcon
+                                        fontSize="small"
+                                        color="error"
+                                    />
+                                </ListItemIcon>
+                                <ListItemText sx={{ color: 'error.main' }}>
+                                    {t('article.delete')}
+                                </ListItemText>
+                            </MenuItem>,
+                        ]}
                     </Menu>
                 </>
             )}
+
+            <ConfirmDialog
+                open={confirmOpen}
+                title={t('article.deleteConfirm.title')}
+                description={t('article.deleteConfirm.body', {
+                    title: article.title,
+                })}
+                confirmLabel={t('article.delete')}
+                destructive
+                loading={deleteArticle.isPending}
+                onConfirm={() =>
+                    deleteArticle.mutate(article.id, {
+                        onSuccess: () => setConfirmOpen(false),
+                    })
+                }
+                onClose={() => setConfirmOpen(false)}
+            />
         </Card>
     )
 }

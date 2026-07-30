@@ -9,8 +9,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 import SwapVertIcon from '@mui/icons-material/SwapVert'
+import PostAddOutlinedIcon from '@mui/icons-material/PostAddOutlined'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { useAdminView } from '../../hooks/useAdminView'
 import { useFeeds } from '../../hooks/useFeeds'
 import { useDeleteFeed } from '../../hooks/useFeedMutations'
 import { LazyFeedFormDialog } from './LazyFeedFormDialog'
@@ -26,6 +28,7 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
     const navigate = useNavigate()
     const { data: feeds } = useFeeds()
     const deleteFeed = useDeleteFeed()
+    const { isAdminView } = useAdminView()
 
     const [menuAnchor, setMenuAnchor] = useState<HTMLElement | null>(null)
     const [editOpen, setEditOpen] = useState(false)
@@ -113,6 +116,23 @@ export function FeedActionsMenu({ feedId }: { feedId: string }) {
                     </ListItemIcon>
                     <ListItemText>{t('feed.reorder')}</ListItemText>
                 </MenuItem>
+                {/* Array, not a fragment, so MUI can still walk the items for
+                keyboard navigation. */}
+                {isAdminView && [
+                    <Divider key="admin-divider" />,
+                    <MenuItem
+                        key="admin-new-article"
+                        onClick={() => {
+                            setMenuAnchor(null)
+                            void navigate(RoutePath.ArticleNew)
+                        }}
+                    >
+                        <ListItemIcon>
+                            <PostAddOutlinedIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>{t('article.create')}</ListItemText>
+                    </MenuItem>,
+                ]}
             </Menu>
 
             <LazyFeedFormDialog

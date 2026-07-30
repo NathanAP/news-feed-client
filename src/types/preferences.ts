@@ -1,17 +1,7 @@
 // Enums mirror the API. Kept as `as const` objects (not TS enums) to stay
 // compatible with the `erasableSyntaxOnly` tsconfig flag.
 
-// Target language for on-demand content translation. Distinct from the UI
-// language switcher (PT/EN, client-side). `null` means translation is off.
-export const Language = {
-    Pt: 'pt',
-    En: 'en',
-    Es: 'es',
-    Fr: 'fr',
-    De: 'de',
-    It: 'it',
-} as const
-export type Language = (typeof Language)[keyof typeof Language]
+import type { Language } from './language'
 
 // Tone the AI adopts when translating content.
 export const AiPersonality = {

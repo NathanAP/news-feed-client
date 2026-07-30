@@ -13,6 +13,12 @@ export interface ListSourcesResult {
     totalCount: number
 }
 
+export interface ListSourcesParams {
+    page?: number
+    // Case-insensitive substring match on the name, applied by the API.
+    name?: string
+}
+
 export class SourcesService {
     private readonly client: ApiClient
 
@@ -23,9 +29,15 @@ export class SourcesService {
     // Paginated listing of every source known to the system. Reading is open to
     // any authenticated user; only the write routes are admin-only. The page
     // size follows the API default (20).
-    async list(page: number): Promise<ListSourcesResult> {
+    async list(params: ListSourcesParams = {}): Promise<ListSourcesResult> {
+        const query = new URLSearchParams({
+            page: String(params.page ?? 1),
+        })
+        if (params.name !== undefined && params.name !== '') {
+            query.set('name', params.name)
+        }
         const data = await this.client.get<PaginatedResponse<SourceResponse>>(
-            `/sources?page=${String(page)}`,
+            `/sources?${query.toString()}`,
         )
         return {
             items: data.docs.map((item) => toSource(item)),

@@ -18,11 +18,8 @@ import {
     usePreferences,
     useUpdatePreferences,
 } from '../../hooks/usePreferences'
-import {
-    Language,
-    AiPersonality,
-    type UserPreferences,
-} from '../../types/preferences'
+import { AiPersonality, type UserPreferences } from '../../types/preferences'
+import { Language } from '../../types/language'
 
 const schema = z.object({
     languageToTranslate: z.enum(Language).nullable(),
@@ -137,9 +134,7 @@ export function PreferencesDialog({
                                                     key={value}
                                                     value={value}
                                                 >
-                                                    {t(
-                                                        `preferences.languageOptions.${value}`,
-                                                    )}
+                                                    {t(`languages.${value}`)}
                                                 </MenuItem>
                                             ),
                                         )}
